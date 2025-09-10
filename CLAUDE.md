@@ -386,6 +386,276 @@ def apply_advanced_sizing_to_spx_setup(monte_carlo_results, confidence_score):
 - **Maximum Single Position:** 5% of portfolio
 - **Risk Budget per Position:** 2-3% for 0DTE, 1-2% for longer-term
 
+## Integrated Trading System Framework (SPXFILE v2.0)
+
+**⚠️ CRITICAL RISK WARNING: 0DTE options expire worthless within hours. Maximum position size NEVER exceeds 1-2% of account per trade.**
+
+### 250-Point Probability Scoring System
+```bash
+def calculate_probability_score(market_data):
+    """
+    Comprehensive 250-point scoring system for trade probability assessment
+    """
+    score_components = {
+        'ema_alignment': 25,        # EMA structure alignment
+        'fast_ema': 20,            # 9/21 EMA positioning
+        'choppiness': 15,          # Market regime clarity
+        'bar_setup': 25,           # Candlestick patterns
+        'demand_zones': 30,        # Supply/demand levels
+        'sp500_momentum': 40,      # Broader market context
+        'technical_levels': 15,    # Key S/R levels
+        'volume': 15,              # Volume confirmation
+        'options_flow': 10,        # Unusual options activity
+        'strike_efficiency': 25,   # Strike selection quality
+        'model_consensus': 10,     # Model agreement
+        'ml_patterns': 10,         # Machine learning signals
+        'market_conditions': 10,   # Market regime factor
+        'gex_dex': 20,            # Gamma/delta exposure
+        'time_decay': 5,          # Time value consideration
+        'quant_levels': 10         # Quantitative level proximity
+    }
+    
+    # Calculate individual scores (implement scoring logic)
+    total_score = sum(component_scores.values())
+    
+    return {
+        'total_score': total_score,
+        'direction': 'BULLISH' if total_score > 150 else 'BEARISH',
+        'confidence_pct': total_score / 250 * 100,
+        'components': score_components
+    }
+
+# MINIMUM REQUIREMENTS:
+# Entry: ≥150/250 (60%)
+# Optimal: ≥200/250 (80%) 
+# Maximum Position: ≥218/250 (87%)
+```
+
+### SBIRS (Smart Breakout/Reversal Signal System)
+```bash
+def detect_sbirs_signals(market_data, timeframe='5min'):
+    """
+    Advanced breakout and reversal pattern detection
+    """
+    signals = []
+    
+    # Breakout Detection
+    breakout_signal = {
+        'type': 'BULLISH_BREAKOUT',
+        'confidence': 85,           # 0-100 confidence score
+        'direction': 'BULLISH',
+        'entry_price': 6455,
+        'stop_loss': 6445,
+        'targets': [6465, 6475, 6485],
+        'risk_reward': 2.0,
+        'pattern': 'FLAG_BREAKOUT',
+        'volume_confirmation': True,
+        'ema_alignment': True
+    }
+    
+    # Reversal Detection  
+    reversal_signal = {
+        'type': 'BEARISH_REVERSAL',
+        'confidence': 78,
+        'direction': 'BEARISH', 
+        'entry_price': 6485,
+        'stop_loss': 6495,
+        'targets': [6475, 6465, 6455],
+        'risk_reward': 1.8,
+        'pattern': 'DOUBLE_TOP',
+        'divergence': True,
+        'momentum_shift': True
+    }
+    
+    return signals
+
+# MINIMUM REQUIREMENTS:
+# SBIRS Confidence: ≥70%
+# Pattern Validation: TRUE
+# Risk/Reward: ≥1.5:1
+```
+
+### Unified Trading Rules Framework
+```bash
+INTEGRATED_TRADING_RULES = {
+    'ENTRY_REQUIREMENTS': {
+        'probability_score': {
+            'minimum': 150,        # 60% minimum (150/250)
+            'optimal': 200,        # 80% optimal (200/250)
+            'maximum_position': 218 # 87% for max position (218/250)
+        },
+        'gex_dex_score': {
+            'minimum': 75,         # 75% minimum
+            'optimal': 85,         # 85% optimal
+            'maximum_position': 95  # 95% for max position
+        },
+        'sbirs_confidence': {
+            'minimum': 70,         # 70% minimum
+            'optimal': 80,         # 80% optimal
+            'maximum_position': 90  # 90% for max position
+        },
+        'consensus_required': {
+            'all_systems_agree': True,     # ALL systems must agree on direction
+            'direction_alignment': True,   # BULLISH/BEARISH alignment required
+            'min_confirming_systems': 3    # Minimum 3 systems confirming
+        }
+    },
+    
+    'POSITION_SIZING_ENHANCED': {
+        'base_risk': 0.01,         # 1% base risk
+        'max_risk': 0.02,          # 2% maximum risk per trade
+        'max_daily_risk': 0.06,    # 6% maximum daily risk
+        'max_concurrent': 3,       # Maximum concurrent positions
+        'confidence_scaling': {
+            'high_confidence': 1.5,    # 1.5x for 85%+ confidence
+            'very_high': 2.0,          # 2x for 90%+ confidence
+            'extreme': 2.5             # 2.5x for 95%+ (capped at 2%)
+        }
+    },
+    
+    'ABORT_CONDITIONS_STRICT': {
+        'probability_drop': 30,       # Exit if probability drops 30 points
+        'gex_score_drop': 15,        # Exit if GEX/DEX drops 15 points
+        'sbirs_invalidation': True,  # Exit if SBIRS pattern breaks
+        'max_loss': 0.6,             # Exit at 60% loss
+        'consensus_break': True,     # Exit if systems disagree
+        'regime_change': True        # Exit on market regime change
+    }
+}
+```
+
+### Multi-System Integration Protocol
+```bash
+def integrated_trading_decision(market_data, account_balance):
+    """
+    Multi-system consensus decision making
+    """
+    # Step 1: Calculate all scores
+    prob_analysis = calculate_probability_score(market_data)
+    gex_dex_analysis = analyze_gex_dex(market_data)
+    sbirs_signals = detect_sbirs_signals(market_data)
+    
+    # Step 2: Check minimum requirements
+    if prob_analysis['total_score'] < 150:
+        return {'trade': False, 'reason': 'Probability score too low'}
+    
+    if gex_dex_analysis['entry_score'] < 75:
+        return {'trade': False, 'reason': 'GEX/DEX score too low'}
+    
+    if not sbirs_signals or sbirs_signals[0]['confidence'] < 70:
+        return {'trade': False, 'reason': 'SBIRS confidence insufficient'}
+    
+    # Step 3: Check direction consensus
+    prob_direction = prob_analysis['direction']
+    gex_direction = gex_dex_analysis['bias']
+    sbirs_direction = sbirs_signals[0]['direction']
+    
+    if not (prob_direction == gex_direction == sbirs_direction):
+        return {'trade': False, 'reason': 'Direction disagreement'}
+    
+    # Step 4: Calculate position size (use most conservative)
+    position_sizes = [
+        calculate_position_from_probability(prob_analysis['total_score'], account_balance),
+        calculate_position_from_gex(gex_dex_analysis['entry_score'], account_balance),
+        calculate_position_from_sbirs(sbirs_signals[0]['confidence'], account_balance)
+    ]
+    
+    position_size = min(position_sizes)
+    position_size = min(position_size, account_balance * 0.02)  # 2% hard cap
+    
+    # Step 5: Generate trade decision
+    return {
+        'trade': True,
+        'direction': prob_direction,
+        'entry_price': sbirs_signals[0]['entry_price'],
+        'stop_loss': sbirs_signals[0]['stop_loss'],
+        'targets': sbirs_signals[0]['targets'],
+        'position_size': position_size,
+        'confidence': (prob_analysis['total_score']/250 + 
+                      gex_dex_analysis['entry_score']/100 + 
+                      sbirs_signals[0]['confidence']/100) / 3,
+        'systems_consensus': f"Prob:{prob_analysis['total_score']}/250, GEX:{gex_dex_analysis['entry_score']}/100, SBIRS:{sbirs_signals[0]['confidence']}/100"
+    }
+```
+
+### Performance Tracking Integration
+```bash
+def track_performance(trade_result):
+    """
+    Comprehensive performance tracking for integrated system
+    """
+    performance_metrics = {
+        'trade_data': {
+            'timestamp': trade_result['timestamp'],
+            'direction': trade_result['direction'],
+            'entry_price': trade_result['entry_price'],
+            'exit_price': trade_result['exit_price'],
+            'pnl': trade_result['pnl'],
+            'pnl_pct': trade_result['pnl_pct'],
+            'hold_time_minutes': trade_result['hold_time'],
+            'exit_reason': trade_result['exit_reason']
+        },
+        'system_scores': {
+            'probability_score': trade_result['entry_probability_score'],
+            'gex_dex_score': trade_result['entry_gex_score'],
+            'sbirs_confidence': trade_result['entry_sbirs_confidence'],
+            'consensus_strength': trade_result['consensus_strength']
+        },
+        'risk_metrics': {
+            'position_size_pct': trade_result['position_size_pct'],
+            'max_drawdown': trade_result['max_drawdown'],
+            'risk_reward_actual': trade_result['actual_risk_reward']
+        }
+    }
+    
+    # Save to .spx/performance_log.json
+    save_performance_data(performance_metrics)
+    
+    return calculate_running_metrics()
+
+def calculate_running_metrics():
+    """Calculate real-time performance metrics"""
+    trades = load_performance_data()
+    
+    if not trades:
+        return {}
+    
+    df = pd.DataFrame(trades)
+    
+    return {
+        'total_trades': len(df),
+        'win_rate': (df['pnl'] > 0).mean() * 100,
+        'avg_win_pct': df[df['pnl'] > 0]['pnl_pct'].mean(),
+        'avg_loss_pct': df[df['pnl'] <= 0]['pnl_pct'].mean(),
+        'profit_factor': abs(df[df['pnl'] > 0]['pnl'].sum() / 
+                           df[df['pnl'] <= 0]['pnl'].sum()) if df[df['pnl'] <= 0]['pnl'].sum() != 0 else float('inf'),
+        'sharpe_ratio': df['pnl_pct'].mean() / df['pnl_pct'].std() if df['pnl_pct'].std() > 0 else 0,
+        'max_drawdown_pct': (df['pnl'].cumsum() - df['pnl'].cumsum().cummax()).min(),
+        'system_accuracy': {
+            'probability_system': calculate_system_accuracy(df, 'probability_score'),
+            'gex_dex_system': calculate_system_accuracy(df, 'gex_dex_score'),
+            'sbirs_system': calculate_system_accuracy(df, 'sbirs_confidence')
+        }
+    }
+```
+
+### Integration Commands for SPX Analysis
+```bash
+spx integrated        # Run full integrated system analysis (250pt + GEX/DEX + SBIRS)
+spx consensus        # Multi-system consensus check with detailed scoring
+spx sbirs           # SBIRS breakout/reversal signal detection only
+spx score250        # 250-point probability scoring breakdown
+spx performance     # Show running performance metrics
+spx systems check   # Verify all systems operational and aligned
+```
+
+**CRITICAL INTEGRATION RULES:**
+- **ALL SYSTEMS MUST AGREE** on direction before trade entry
+- **Minimum Scores:** Probability ≥150, GEX/DEX ≥75, SBIRS ≥70
+- **Maximum Risk:** 2% per trade, 6% daily, never exceed hard caps
+- **Consensus Breaking:** Immediate exit if systems disagree post-entry
+- **Performance Tracking:** Every trade logged with full system context
+
 ## Discord Webhook Integration
 
 **Auto-Send Triggers:** Automatically send to Discord when user uses these phrases:
