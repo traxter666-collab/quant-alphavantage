@@ -1,0 +1,112 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Trading data and sensitive files
+*.json
+!.spx/*.json
+!package*.json
+!tsconfig.json
+
+# API keys and credentials
+.env
+.env.local
+.env.production
+.env.staging
+**/apikey*
+**/api_key*
+**/secret*
+**/token*
+
+# Trading session data (keep structure but not data)
+.spx/session.json
+.spx/levels.json
+.spx/notes.txt
+.spx/monte_carlo_results.json
+.spx/last_analysis.json
+
+# Logs
+*.log
+logs/
+.npm
+.eslintcache
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# MCP local binaries (keep structure)
+.local/bin/mcp.exe
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
