@@ -395,10 +395,12 @@ spxw_options = mcp__alphavantage__REALTIME_OPTIONS("SPXW", require_greeks=true, 
 # Primary: Real-time bulk quotes for all major symbols
 bulk_quotes = mcp__alphavantage__REALTIME_BULK_QUOTES("SPY,NVDA,MSFT,GOOGL,TSLA,AAPL,AMZN,META", entitlement="realtime")
 
-# Extract SPX Price using Put-Call Parity from ATM Options
-# Formula: SPX Price = (Call Price - Put Price) + Strike Price  
-# Find ATM strike where |Call Delta| ≈ |Put Delta| ≈ 0.5
-current_spx_price = extract_spx_from_options(spxw_options)
+# Extract SPX Price using Put-Call Parity from SPXW Options
+# METHOD: Use deep ITM options (2000 strike) for accurate pricing
+# Formula: SPX Price = (Call Mark - Put Mark) + Strike Price
+# Example: SPX = ($4598.65 - $0.01) + $2000 = $6,598.64
+# Claude extracts call mark, put mark from 2000 strike SPXW options data
+current_spx_price = (call_mark_2000 - put_mark_2000) + 2000
 
 # Technical Context with real-time data
 spy_rsi = mcp__alphavantage__RSI("SPY", "5min", 14, "close", entitlement="realtime")
@@ -415,6 +417,8 @@ spy_volume = mcp__alphavantage__TIME_SERIES_INTRADAY("SPY", "5min", entitlement=
 4. **Verify timestamps show current date/time** before making trading decisions
 5. **NEVER use delayed data** - all MCP functions must include entitlement="realtime" parameter
 6. **Prioritize REALTIME_BULK_QUOTES** over individual GLOBAL_QUOTE calls for efficiency
+7. **NEVER use SPY as proxy for SPX price** - always extract SPX from SPXW 2000 strike using put-call parity
+8. **SPX EXTRACTION METHOD:** SPX = (2000_call_mark - 2000_put_mark) + 2000 from SPXW options data
 
 ### AUTO-EXECUTION & SEAMLESS WORKFLOW PROTOCOL
 
@@ -583,12 +587,13 @@ spy_bars = mcp__alphavantage__TIME_SERIES_INTRADAY("SPY", "5min", entitlement="r
 ### Real-Time SPXW Options Protocol
 ```bash
 # DIRECT SPXW Options Data - No Proxy Needed
-spxw_options = mcp__alphavantage__REALTIME_OPTIONS("SPXW")
+spxw_options = mcp__alphavantage__REALTIME_OPTIONS("SPXW", entitlement="realtime")
 
-# Extract current SPX price using put-call parity from ATM options
-# Method: Find strike where Call - Put ≈ SPX - Strike
-# SPX Price = (Call Price - Put Price) + Strike Price
-# Example: 6530 Call ($15.50) - 6530 Put ($13.46) + 6530 = $6,532.04
+# Extract current SPX price using put-call parity - USE 2000 STRIKE
+# Method: Use deep ITM 2000 strike for most accurate pricing
+# SPX Price = (Call Mark - Put Mark) + Strike Price  
+# Example: ($4598.65 - $0.01) + $2000 = $6,598.64
+# CRITICAL: Always use 2000 strike call/put marks from SPXW options data
 
 # Real SPXW option pricing with bid/ask/volume/open_interest
 # Direct access to 0DTE option strike selection with exact pricing
