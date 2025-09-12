@@ -378,37 +378,43 @@ Line 2000-2100: 🚨 Emergency Protocols
 
 **MCP Functions (Real-Time SPXW Options):**
 ```bash
-# Direct SPXW options data with real-time pricing:
-mcp__alphavantage__REALTIME_OPTIONS(symbol="SPXW", require_greeks=true)  # Real-time SPXW options
-mcp__alphavantage__GLOBAL_QUOTE(symbol="SPY")           # Backup quote if needed
-mcp__alphavantage__TIME_SERIES_INTRADAY(symbol, interval) # Market context data
+# CRITICAL: ALWAYS use real-time entitlement for live trading
+mcp__alphavantage__REALTIME_BULK_QUOTES(symbol="SPY,NVDA,MSFT,GOOGL,TSLA,AAPL,AMZN,META", entitlement="realtime")  # Primary real-time quotes
+mcp__alphavantage__REALTIME_OPTIONS(symbol="SPXW", require_greeks=true, entitlement="realtime")  # Real-time SPXW options
+mcp__alphavantage__GLOBAL_QUOTE(symbol="SPY", entitlement="realtime")    # Individual quotes with real-time data
+mcp__alphavantage__TIME_SERIES_INTRADAY(symbol, interval, entitlement="realtime") # Market context data
 ```
 
 **DIRECT SPXW OPTIONS PROTOCOL (PRIMARY METHOD):**
 ```bash
 # API Key: Premium Live3 with real-time entitlement (via MCP)
 
-# Primary: Real-time SPXW Options Data
-spxw_options = mcp__alphavantage__REALTIME_OPTIONS("SPXW", require_greeks=true)
+# Primary: Real-time SPXW Options Data  
+spxw_options = mcp__alphavantage__REALTIME_OPTIONS("SPXW", require_greeks=true, entitlement="realtime")
+
+# Primary: Real-time bulk quotes for all major symbols
+bulk_quotes = mcp__alphavantage__REALTIME_BULK_QUOTES("SPY,NVDA,MSFT,GOOGL,TSLA,AAPL,AMZN,META", entitlement="realtime")
 
 # Extract SPX Price using Put-Call Parity from ATM Options
 # Formula: SPX Price = (Call Price - Put Price) + Strike Price  
 # Find ATM strike where |Call Delta| ≈ |Put Delta| ≈ 0.5
 current_spx_price = extract_spx_from_options(spxw_options)
 
-# Backup: SPY Technical Context (if needed)
-spy_rsi = mcp__alphavantage__RSI("SPY", "5min", 14, "close")
-spy_volume = mcp__alphavantage__TIME_SERIES_INTRADAY("SPY", "5min")
+# Technical Context with real-time data
+spy_rsi = mcp__alphavantage__RSI("SPY", "5min", 14, "close", entitlement="realtime")
+spy_volume = mcp__alphavantage__TIME_SERIES_INTRADAY("SPY", "5min", entitlement="realtime")
 ```
 
 ### MANDATORY Real-Time Data Rules
 
 **CRITICAL RULES FOR LIVE SPXW TRADING:**
 
-1. **ALWAYS use SPXW options data as primary source** via mcp__alphavantage__REALTIME_OPTIONS
-2. **Extract SPX price using put-call parity** from ATM SPXW options (most accurate)
-3. **Verify timestamps show current date/time** before making trading decisions
-4. **Use SPY data only as backup context** for volume/technical indicators when needed
+1. **ALWAYS use mcp__alphavantage__REALTIME_BULK_QUOTES with entitlement="realtime"** for MAG 7 and SPY data
+2. **ALWAYS use SPXW options data as primary source** via mcp__alphavantage__REALTIME_OPTIONS with entitlement="realtime"
+3. **Extract SPX price using put-call parity** from ATM SPXW options (most accurate)
+4. **Verify timestamps show current date/time** before making trading decisions
+5. **NEVER use delayed data** - all MCP functions must include entitlement="realtime" parameter
+6. **Prioritize REALTIME_BULK_QUOTES** over individual GLOBAL_QUOTE calls for efficiency
 
 ### AUTO-EXECUTION & SEAMLESS WORKFLOW PROTOCOL
 
@@ -558,14 +564,17 @@ ACTION: BUY
 # STEP 0: GET LIVE MARKET DATA - USE DIRECT API ONLY
 # Before ANY real-time SPX analysis, MUST use:
 
-# Live SPY Quote (current timestamp required)
-spy_quote = mcp__alphavantage__GLOBAL_QUOTE("SPY")
+# CRITICAL: Use REALTIME_BULK_QUOTES for most accurate real-time data
+bulk_quotes = mcp__alphavantage__REALTIME_BULK_QUOTES("SPY,NVDA,MSFT,GOOGL,TSLA,AAPL,AMZN,META", entitlement="realtime")
+
+# Live SPY Quote (current timestamp required) 
+spy_quote = mcp__alphavantage__GLOBAL_QUOTE("SPY", entitlement="realtime")
 
 # Live 5min RSI (verify latest timestamp)  
-spy_rsi = mcp__alphavantage__RSI("SPY", "5min", 14, "close")
+spy_rsi = mcp__alphavantage__RSI("SPY", "5min", 14, "close", entitlement="realtime")
 
 # Live Intraday Bars (for momentum analysis)
-spy_bars = mcp__alphavantage__TIME_SERIES_INTRADAY("SPY", "5min")
+spy_bars = mcp__alphavantage__TIME_SERIES_INTRADAY("SPY", "5min", entitlement="realtime")
 
 # VERIFY: All timestamps must show current trading day
 # REJECT: Any data not from current session for live trading
