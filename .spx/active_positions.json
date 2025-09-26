@@ -1,0 +1,72 @@
+{
+  "timestamp": "2025-09-29T00:00:00",
+  "status": "ACTIVE POSITIONS - NEW TRADING WEEK",
+
+  "current_positions": {
+    "spy_662c_930": {
+      "symbol": "SPY",
+      "strike": 662,
+      "type": "CALL",
+      "expiration": "2025-09-30",
+      "entry_details": {
+        "fill_price": 2.40,
+        "fill_date": "2025-09-26",
+        "fill_time": "After market close",
+        "entry_rationale": "Weekend swing play on SPX momentum"
+      },
+      "contract_analysis": {
+        "days_to_expiration": 4,
+        "breakeven_price": 664.40,
+        "percentage_move_needed": "1.13% from Friday close",
+        "time_decay_risk": "MODERATE - Weekend theta burn"
+      },
+      "technical_context": {
+        "spy_friday_close": "~657-658 (derived from SPX 6644.90)",
+        "distance_to_strike": "$5.00 OTM",
+        "key_resistance": "SPY 662-665 zone",
+        "support_level": "SPY 655 area"
+      },
+      "risk_management": {
+        "max_loss": "$240 per contract",
+        "stop_loss_level": "SPY 661 (SPX 6610)",
+        "profit_target": "SPY 665+ (SPX 6650+)",
+        "time_exit": "Thursday if no progress"
+      },
+      "monday_outlook": {
+        "bullish_scenario": "SPX breaks 6650 Call Wall → SPY 665+ → Profitable",
+        "neutral_scenario": "SPX 6630-6650 range → Time decay challenge",
+        "bearish_scenario": "SPX breaks 6645 support → Loss likely",
+        "probability_assessment": "50% neutral, 30% bullish, 20% bearish"
+      }
+    }
+  },
+
+  "position_monitoring_framework": {
+    "real_time_tracking": {
+      "spy_price_alerts": "Monitor SPY movement vs 662 strike",
+      "spx_correlation": "Track SPX vs 6650 Call Wall proximity",
+      "volume_confirmation": "Watch for institutional participation",
+      "time_decay_impact": "Daily theta calculation"
+    },
+    "decision_triggers": {
+      "profit_taking": "SPY > 665 or 50%+ gain",
+      "stop_loss": "SPY < 661 or 50%+ loss",
+      "time_management": "Exit Thursday if flat",
+      "resistance_rejection": "Multiple rejections at SPY 662-664"
+    }
+  },
+
+  "portfolio_context": {
+    "current_exposure": "Single SPY call position",
+    "risk_percentage": "Position dependent on contract quantity",
+    "correlation_risk": "Aligned with SPX bullish thesis",
+    "diversification": "Consider additional positions if opportunities arise"
+  },
+
+  "integration_with_analysis": {
+    "heatseeker_context": "SPY 662 aligns with SPX 6620 (below 6650 Gatekeeper)",
+    "dealer_structure": "Position benefits from King Node support at SPX 6625",
+    "momentum_thesis": "Friday's 6645 breakthrough supports upside case",
+    "risk_factors": "6650 Call Wall major resistance for full profit realization"
+  }
+}
