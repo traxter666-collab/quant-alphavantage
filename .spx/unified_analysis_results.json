@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-09-27T18:17:49.270484",
+  "spx_price": 6702.251140000001,
+  "market_analysis": {
+    "consensus_score": "189/275 (68.7%)",
+    "directional_bias": "BEARISH",
+    "rsi_context": 40.4886,
+    "confidence_level": "NO_TRADE"
+  },
+  "risk_management": {
+    "portfolio_heat": "15.0%",
+    "position_size": "1.0%",
+    "vix_estimate": 17.70684,
+    "risk_multiplier": 1.0
+  },
+  "trading_decision": {
+    "action": "AVOID_TRADING",
+    "threshold_met": false,
+    "reasoning": "Score 68.7% vs 75% threshold"
+  }
+}
