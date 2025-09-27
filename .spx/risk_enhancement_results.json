@@ -1,0 +1,247 @@
+{
+  "timestamp": "2025-09-26T23:05:17.270378",
+  "step": "RISK_MANAGEMENT_ENHANCEMENT",
+  "current_params": {
+    "max_portfolio_heat": 15.0,
+    "max_single_position": 4.0,
+    "max_concurrent_positions": 5,
+    "max_same_direction": 6.0,
+    "kelly_cap": 25.0,
+    "min_position_size": 0.5,
+    "stop_loss_max": 50.0,
+    "daily_loss_limit": 6.0,
+    "time_exit_0dte": 30,
+    "chop_filter_threshold": 70
+  },
+  "confidence_levels": [
+    {
+      "name": "HIGH_CONFIDENCE",
+      "score_range": "92-100%",
+      "base_size": 3.0
+    },
+    {
+      "name": "MEDIUM_CONFIDENCE",
+      "score_range": "84-92%",
+      "base_size": 2.0
+    },
+    {
+      "name": "LOW_CONFIDENCE",
+      "score_range": "75-84%",
+      "base_size": 1.0
+    },
+    {
+      "name": "NO_TRADE",
+      "score_range": "0-75%",
+      "base_size": 0.0
+    }
+  ],
+  "market_conditions": [
+    {
+      "condition": "NORMAL_MARKET",
+      "description": "Standard market conditions",
+      "heat_multiplier": 1.0,
+      "max_positions": 5,
+      "recommended_heat": 15.0
+    },
+    {
+      "condition": "HIGH_VOLATILITY",
+      "description": "VIX > 25, elevated volatility",
+      "heat_multiplier": 0.7,
+      "max_positions": 3,
+      "recommended_heat": 10.5
+    },
+    {
+      "condition": "LOW_VOLATILITY",
+      "description": "VIX < 15, compressed volatility",
+      "heat_multiplier": 1.2,
+      "max_positions": 6,
+      "recommended_heat": 18.0
+    },
+    {
+      "condition": "TREND_MARKET",
+      "description": "Strong directional trend",
+      "heat_multiplier": 1.1,
+      "max_positions": 5,
+      "recommended_heat": 16.5
+    },
+    {
+      "condition": "CHOPPY_MARKET",
+      "description": "Chop score > 70",
+      "heat_multiplier": 0.5,
+      "max_positions": 2,
+      "recommended_heat": 7.5
+    },
+    {
+      "condition": "NEWS_EVENT",
+      "description": "Major news/earnings pending",
+      "heat_multiplier": 0.6,
+      "max_positions": 3,
+      "recommended_heat": 9.0
+    }
+  ],
+  "kelly_results": [
+    {
+      "scenario": "High Confidence",
+      "kelly_percentage": 25.0,
+      "parameters": {
+        "name": "High Confidence",
+        "win_rate": 75,
+        "avg_win": 100,
+        "avg_loss": 50,
+        "confidence": 1.0
+      }
+    },
+    {
+      "scenario": "Medium Confidence",
+      "kelly_percentage": 25.0,
+      "parameters": {
+        "name": "Medium Confidence",
+        "win_rate": 65,
+        "avg_win": 80,
+        "avg_loss": 50,
+        "confidence": 0.8
+      }
+    },
+    {
+      "scenario": "Low Confidence",
+      "kelly_percentage": 10.500000000000004,
+      "parameters": {
+        "name": "Low Confidence",
+        "win_rate": 55,
+        "avg_win": 60,
+        "avg_loss": 50,
+        "confidence": 0.6
+      }
+    },
+    {
+      "scenario": "Conservative",
+      "kelly_percentage": 25.0,
+      "parameters": {
+        "name": "Conservative",
+        "win_rate": 70,
+        "avg_win": 50,
+        "avg_loss": 50,
+        "confidence": 0.9
+      }
+    },
+    {
+      "scenario": "Aggressive",
+      "kelly_percentage": 25.0,
+      "parameters": {
+        "name": "Aggressive",
+        "win_rate": 80,
+        "avg_win": 150,
+        "avg_loss": 50,
+        "confidence": 1.2
+      }
+    }
+  ],
+  "risk_controls": {
+    "portfolio_heat_scaling": {
+      "low_volatility": {
+        "multiplier": 1.2,
+        "condition": "VIX < 15"
+      },
+      "normal_volatility": {
+        "multiplier": 1.0,
+        "condition": "15 <= VIX <= 25"
+      },
+      "high_volatility": {
+        "multiplier": 0.7,
+        "condition": "VIX > 25"
+      },
+      "extreme_volatility": {
+        "multiplier": 0.4,
+        "condition": "VIX > 35"
+      }
+    },
+    "position_count_limits": {
+      "trending_market": {
+        "max_positions": 6,
+        "condition": "Strong trend detected"
+      },
+      "normal_market": {
+        "max_positions": 5,
+        "condition": "Standard conditions"
+      },
+      "choppy_market": {
+        "max_positions": 3,
+        "condition": "Chop score > 60"
+      },
+      "extreme_chop": {
+        "max_positions": 1,
+        "condition": "Chop score > 80"
+      }
+    },
+    "time_based_controls": {
+      "market_open": {
+        "heat_reduction": 0.8,
+        "condition": "First 30 minutes"
+      },
+      "mid_session": {
+        "heat_reduction": 1.0,
+        "condition": "Normal trading hours"
+      },
+      "final_hour": {
+        "heat_reduction": 0.6,
+        "condition": "Last hour, 0DTE risk"
+      },
+      "final_15min": {
+        "heat_reduction": 0.2,
+        "condition": "Final 15 min, exit mode"
+      }
+    },
+    "drawdown_protection": {
+      "minor_drawdown": {
+        "heat_reduction": 0.9,
+        "condition": "2-4% daily loss"
+      },
+      "moderate_drawdown": {
+        "heat_reduction": 0.7,
+        "condition": "4-6% daily loss"
+      },
+      "major_drawdown": {
+        "heat_reduction": 0.3,
+        "condition": "6-8% daily loss"
+      },
+      "emergency_stop": {
+        "heat_reduction": 0.0,
+        "condition": "> 8% daily loss"
+      }
+    }
+  },
+  "test_results": {
+    "current_conditions": {
+      "vix_level": 18.5,
+      "chop_score": 45,
+      "time_to_close": 120,
+      "daily_pnl": -1.2,
+      "open_positions": 2,
+      "account_size": 50000,
+      "consensus_score": 203
+    },
+    "adjustments": {
+      "vix_multiplier": 1.0,
+      "chop_multiplier": 1.0,
+      "time_multiplier": 1.0,
+      "drawdown_multiplier": 1.0,
+      "combined_multiplier": 1.0
+    },
+    "adjusted_parameters": {
+      "portfolio_heat": 15.0,
+      "position_size": 0.0,
+      "position_confidence": "NO_TRADE"
+    },
+    "dollar_amounts": {
+      "max_portfolio_risk": 7500.0,
+      "max_position_risk": 0.0
+    },
+    "recommendation": {
+      "action": "NO TRADING",
+      "risk_level": "NONE"
+    }
+  },
+  "enhancement_successful": true,
+  "duration_seconds": 0.000702,
+  "next_step": "PATTERN_RECOGNITION_VALIDATION"
+}
