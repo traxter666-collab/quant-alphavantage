@@ -128,6 +128,32 @@ def test_api_connectivity():
         tests.append({'test': 'RSI_INDICATOR', 'status': 'ERROR', 'error': str(e)})
         print(f"  ERROR - {e}")
 
+    # Test 5: IWM Quote
+    print("Testing IWM quote...")
+    start_time = time.time()
+    try:
+        url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IWM&apikey={api_key}'
+        response = requests.get(url, timeout=10)
+        data = response.json()
+        response_time = time.time() - start_time
+
+        if 'Global Quote' in data:
+            iwm_price = float(data['Global Quote']['05. price'])
+            tests.append({
+                'test': 'IWM_QUOTE',
+                'status': 'PASS',
+                'response_time': response_time,
+                'data': f"IWM: ${iwm_price:.2f}"
+            })
+            print(f"  PASS - IWM: ${iwm_price:.2f} ({response_time:.2f}s)")
+        else:
+            tests.append({'test': 'IWM_QUOTE', 'status': 'FAIL', 'error': 'No data'})
+            print(f"  FAIL - No IWM data")
+
+    except Exception as e:
+        tests.append({'test': 'IWM_QUOTE', 'status': 'ERROR', 'error': str(e)})
+        print(f"  ERROR - {e}")
+
     return tests
 
 def test_individual_systems():
@@ -209,6 +235,30 @@ def test_individual_systems():
         })
         print(f"  SPY System: ERROR - {e}")
 
+    # Test IWM System
+    print("Testing IWM system...")
+    start_time = time.time()
+    try:
+        from spy_integration import run_iwm_analysis
+        iwm_result = run_iwm_analysis()
+        response_time = time.time() - start_time
+
+        system_tests.append({
+            'system': 'IWM_INTEGRATION',
+            'status': 'PASS' if iwm_result else 'FAIL',
+            'response_time': response_time,
+            'result': iwm_result
+        })
+        print(f"  IWM System: {'PASS' if iwm_result else 'FAIL'} ({response_time:.2f}s)")
+
+    except Exception as e:
+        system_tests.append({
+            'system': 'IWM_INTEGRATION',
+            'status': 'ERROR',
+            'error': str(e)
+        })
+        print(f"  IWM System: ERROR - {e}")
+
     return system_tests
 
 def test_multi_asset_system():
@@ -216,7 +266,7 @@ def test_multi_asset_system():
     print("\nMULTI-ASSET SYSTEM TEST")
     print("=" * 50)
 
-    print("Testing complete three-asset system...")
+    print("Testing complete four-asset system...")
     start_time = time.time()
     try:
         from trade_all import run_multi_asset_analysis
@@ -260,15 +310,28 @@ def validate_data_accuracy():
         with open('.spx/multi_asset_complete_results.json', 'r') as f:
             multi_data = json.load(f)
 
+        # Try to load IWM data if available
+        try:
+            with open('.spx/iwm_analysis_results.json', 'r') as f:
+                iwm_data = json.load(f)
+                iwm_available = True
+        except:
+            iwm_data = None
+            iwm_available = False
+
         # Validate SPX data
         spx_price = spx_data.get('spx_price', 0)
         spx_consensus = spx_data['market_analysis']['consensus_score']
         print(f"SPX Data: Price={spx_price}, Consensus={spx_consensus}")
 
+        # Fix validation logic - check if price > 0 and consensus exists (not empty)
+        spx_price_valid = spx_price > 0
+        spx_consensus_valid = spx_consensus is not None and str(spx_consensus).strip() != ""
+
         validation_tests.append({
             'test': 'SPX_DATA_INTEGRITY',
-            'status': 'PASS' if spx_price > 0 and 'consensus_score' in str(spx_consensus) else 'FAIL',
-            'data': f"Price: {spx_price}, Consensus: {spx_consensus}"
+            'status': 'PASS' if spx_price_valid and spx_consensus_valid else 'FAIL',
+            'data': f"Price: {spx_price:.2f}, Consensus: {spx_consensus}"
         })
 
         # Validate QQQ data
@@ -300,8 +363,26 @@ def validate_data_accuracy():
         validation_tests.append({
             'test': 'MULTI_ASSET_CONSISTENCY',
             'status': 'PASS' if tradeable_count >= 0 else 'FAIL',
-            'data': f"Tradeable: {tradeable_count}/3 assets"
+            'data': f"Tradeable: {tradeable_count}/4 assets"
         })
+
+        # Validate IWM data if available
+        if iwm_available:
+            iwm_price = iwm_data['iwm_analysis']['current_price']
+            iwm_consensus = iwm_data['iwm_consensus']['total_score']
+            print(f"IWM Data: Price={iwm_price}, Consensus={iwm_consensus}")
+
+            validation_tests.append({
+                'test': 'IWM_DATA_INTEGRITY',
+                'status': 'PASS' if iwm_price > 0 and iwm_consensus > 0 else 'FAIL',
+                'data': f"Price: {iwm_price}, Consensus: {iwm_consensus}"
+            })
+        else:
+            validation_tests.append({
+                'test': 'IWM_DATA_INTEGRITY',
+                'status': 'FAIL',
+                'data': "IWM data not available"
+            })
 
     except Exception as e:
         validation_tests.append({
@@ -329,14 +410,14 @@ def run_performance_backtest():
         asset_ranking = current_data.get('asset_ranking', [])
 
         print(f"Current Analysis Results:")
-        print(f"  Tradeable Assets: {len(tradeable_assets)}/3")
+        print(f"  Tradeable Assets: {len(tradeable_assets)}/4")
         print(f"  Asset Ranking: {asset_ranking}")
 
         # Simulate backtest scenarios
         scenarios = [
-            {'name': 'Bull Market', 'spy_move': +2.0, 'qqq_move': +2.5, 'spx_move': +20},
-            {'name': 'Bear Market', 'spy_move': -2.0, 'qqq_move': -2.5, 'spx_move': -20},
-            {'name': 'Sideways', 'spy_move': +0.1, 'qqq_move': -0.1, 'spx_move': +1}
+            {'name': 'Bull Market', 'spy_move': +2.0, 'qqq_move': +2.5, 'spx_move': +20, 'iwm_move': +2.8},
+            {'name': 'Bear Market', 'spy_move': -2.0, 'qqq_move': -2.5, 'spx_move': -20, 'iwm_move': -3.2},
+            {'name': 'Sideways', 'spy_move': +0.1, 'qqq_move': -0.1, 'spx_move': +1, 'iwm_move': +0.2}
         ]
 
         for scenario in scenarios:
@@ -359,6 +440,11 @@ def run_performance_backtest():
                 spx_pnl = scenario['spx_move'] / 10 * 1.5  # Convert to % and leverage
                 hypothetical_pnl += spx_pnl
                 print(f"  SPX P&L: {spx_pnl:+.1f}%")
+
+            if 'IWM' in tradeable_assets:
+                iwm_pnl = scenario['iwm_move'] * 1.5  # Leverage effect
+                hypothetical_pnl += iwm_pnl
+                print(f"  IWM P&L: {iwm_pnl:+.1f}%")
 
             total_positions = len(tradeable_assets)
             avg_pnl = hypothetical_pnl / total_positions if total_positions > 0 else 0
@@ -460,6 +546,48 @@ def generate_system_health_report(api_tests, system_tests, multi_test, validatio
     else:
         print(f"\nIWM Integration Status: NOT AVAILABLE")
 
+    # Add system health improvement recommendations
+    print(f"\nSYSTEM HEALTH IMPROVEMENT RECOMMENDATIONS:")
+
+    # Check for failing tests
+    failing_tests = []
+    for test in api_tests + system_tests + validation_tests:
+        if test['status'] != 'PASS':
+            failing_tests.append(test)
+
+    if not failing_tests:
+        print(f"  CHECK All tests passing - system health excellent")
+    else:
+        print(f"  FIX Address {len(failing_tests)} failing test(s):")
+        for test in failing_tests:
+            test_name = test.get('test', test.get('system', 'Unknown'))
+            print(f"    - {test_name}: {test['status']}")
+
+    # Response time optimizations
+    slow_tests = []
+    for test in api_tests + system_tests:
+        if 'response_time' in test and test['response_time'] > 5.0:
+            slow_tests.append(test)
+
+    if slow_tests:
+        print(f"  SPEED Optimize {len(slow_tests)} slow test(s) (>5s response time):")
+        for test in slow_tests:
+            test_name = test.get('test', test.get('system', 'Unknown'))
+            print(f"    - {test_name}: {test['response_time']:.1f}s")
+
+    # Multi-asset integration improvements
+    if iwm_available:
+        print(f"  ASSETS 4-Asset integration complete - consider correlation analysis")
+    else:
+        print(f"  ASSETS Add IWM integration for complete 4-asset coverage")
+
+    # Error handling improvements
+    error_tests = [test for test in api_tests + system_tests + validation_tests if test['status'] == 'ERROR']
+    if error_tests:
+        print(f"  ERRORS Fix {len(error_tests)} error condition(s) for better reliability")
+
+    print(f"  TARGET Achieve 95%+ system health for optimal trading performance")
+
     # System recommendations
     print(f"\nSYSTEM RECOMMENDATIONS:")
     if overall_score >= 90:
@@ -492,7 +620,7 @@ def generate_system_health_report(api_tests, system_tests, multi_test, validatio
 def run_complete_system_validation():
     """Run complete system validation and testing"""
     print("COMPLETE SYSTEM VALIDATION & BACKTEST")
-    print("Testing all components of the three-asset trading system")
+    print("Testing all components of the four-asset trading system")
     print("=" * 80)
 
     start_time = datetime.now()
@@ -524,7 +652,7 @@ if __name__ == "__main__":
 
     if success:
         print(f"\nSYSTEM VALIDATION: PASSED")
-        print("Multi-asset trading system is operational and ready")
+        print("Four-asset trading system is operational and ready")
     else:
         print(f"\nSYSTEM VALIDATION: FAILED")
         print("System issues detected - review health report for details")
