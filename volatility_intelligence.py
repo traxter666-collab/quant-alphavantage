@@ -629,7 +629,7 @@ def main():
     """Test Volatility Intelligence Engine"""
     volatility_engine = VolatilityIntelligence()
 
-    print("🌪️ Volatility Intelligence Engine Test")
+    print(" Volatility Intelligence Engine Test")
     print("=" * 50)
 
     # Sample market data
@@ -646,7 +646,7 @@ def main():
     # Run volatility analysis
     analysis = volatility_engine.analyze_volatility_environment(sample_data)
 
-    print(f"\n📊 Volatility Analysis Results:")
+    print(f"\nCHART Volatility Analysis Results:")
     print(f"- VIX Level: {analysis['current_vix']}")
     print(f"- VIX Percentile: {analysis['vix_percentile']}%")
     print(f"- Regime: {analysis['regime_classification']['regime_type']}")
@@ -654,14 +654,14 @@ def main():
 
     # Display signals
     signals = analysis.get('volatility_signals', [])
-    print(f"\n🚨 Volatility Signals ({len(signals)}):")
+    print(f"\nALERT Volatility Signals ({len(signals)}):")
     for signal in signals:
         print(f"- {signal['signal_type']}: {signal['direction']} (Strength: {signal['strength']:.1%})")
         print(f"  Reasoning: {signal['reasoning']}")
 
     # Display recommendations
     recommendations = analysis.get('trading_recommendations', [])
-    print(f"\n💡 Trading Recommendations ({len(recommendations)}):")
+    print(f"\nIDEA Trading Recommendations ({len(recommendations)}):")
     for rec in recommendations:
         print(f"- {rec['strategy']} (Confidence: {rec['confidence']:.1%})")
         print(f"  Reasoning: {rec['reasoning']}")
@@ -669,11 +669,11 @@ def main():
     # Risk adjustments
     risk_adj = analysis.get('risk_adjustments', {})
     pos_multiplier = risk_adj.get('position_size_multiplier', 1.0)
-    print(f"\n🛡️ Risk Adjustments:")
+    print(f"\nSHIELD Risk Adjustments:")
     print(f"- Position Size Multiplier: {pos_multiplier:.1f}x")
     print(f"- Stop Loss Tightening: {risk_adj.get('stop_loss_tightening', 1.0):.1f}x")
 
-    print("\n✅ Volatility Intelligence Engine test completed!")
+    print("\nSUCCESS Volatility Intelligence Engine test completed!")
 
 if __name__ == "__main__":
     main()

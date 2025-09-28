@@ -106,7 +106,7 @@ class TradingDashboard:
 
     def start_dashboard(self, auto_mode: bool = False):
         """Start the trading dashboard"""
-        print("🎪 TRADING DASHBOARD STARTING")
+        print("CIRCUS TRADING DASHBOARD STARTING")
         print("=" * 60)
 
         self.dashboard_state["auto_mode"] = auto_mode
@@ -119,10 +119,10 @@ class TradingDashboard:
         self.display_dashboard_status()
 
         if auto_mode:
-            print("🤖 AUTO MODE ACTIVATED - Continuous monitoring enabled")
+            print("ROBOT AUTO MODE ACTIVATED - Continuous monitoring enabled")
             self.start_auto_monitoring()
         else:
-            print("📊 MANUAL MODE - Use commands for analysis")
+            print("CHART MANUAL MODE - Use commands for analysis")
             self.display_available_commands()
 
     def start_auto_monitoring(self):
@@ -155,7 +155,7 @@ class TradingDashboard:
         )
         performance_thread.start()
 
-        print("✅ All monitoring threads started successfully")
+        print("SUCCESS All monitoring threads started successfully")
 
     def continuous_health_monitoring(self):
         """Continuous system health monitoring"""
@@ -233,20 +233,20 @@ class TradingDashboard:
     def perform_comprehensive_analysis(self) -> Dict:
         """Perform complete market analysis with all systems"""
         try:
-            print(f"\n🔄 Running comprehensive analysis at {datetime.now().strftime('%H:%M:%S')}")
+            print(f"\n Running comprehensive analysis at {datetime.now().strftime('%H:%M:%S')}")
 
             # Run system validation first
             health_result = self.run_system_validation()
 
             if not health_result.get("healthy", False):
-                print("⚠️ System health check failed - skipping analysis")
+                print("WARNING System health check failed - skipping analysis")
                 return None
 
             # Get fresh market data
             market_data = self.get_market_data()
 
             if not market_data:
-                print("❌ Failed to get market data")
+                print("ERROR Failed to get market data")
                 return None
 
             # Run ML pattern analysis
@@ -269,7 +269,7 @@ class TradingDashboard:
 
             self.dashboard_state["last_analysis"] = analysis_result
 
-            print(f"✅ Analysis complete - {len(signals)} signals generated")
+            print(f"SUCCESS Analysis complete - {len(signals)} signals generated")
             return analysis_result
 
         except Exception as e:
@@ -483,7 +483,7 @@ class TradingDashboard:
     def process_trading_signal(self, signal: TradingSignal):
         """Process a trading signal"""
         try:
-            print(f"\n🎯 TRADING SIGNAL GENERATED")
+            print(f"\nTARGET TRADING SIGNAL GENERATED")
             print(f"Symbol: {signal.symbol}")
             print(f"Direction: {signal.direction}")
             print(f"Consensus: {signal.consensus_score}/275")
@@ -528,31 +528,31 @@ class TradingDashboard:
 
     def display_dashboard_status(self):
         """Display current dashboard status"""
-        print(f"\n🎪 DASHBOARD STATUS - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"\nCIRCUS DASHBOARD STATUS - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print("=" * 60)
 
         # System Health
         if self.dashboard_state["system_health"]:
             health = self.dashboard_state["system_health"]
-            print(f"🏥 System Health: {health.overall_health}% ({health.status})")
+            print(f" System Health: {health.overall_health}% ({health.status})")
 
         # Active Signals
         active_count = len(self.dashboard_state["active_signals"])
-        print(f"📊 Active Signals: {active_count}")
+        print(f"CHART Active Signals: {active_count}")
 
         # Alerts Pending
-        print(f"🚨 Alerts Pending: {self.dashboard_state['alerts_pending']}")
+        print(f"ALERT Alerts Pending: {self.dashboard_state['alerts_pending']}")
 
         # Portfolio Heat
-        print(f"🔥 Portfolio Heat: {self.dashboard_state['portfolio_heat']:.1f}%")
+        print(f"HOT Portfolio Heat: {self.dashboard_state['portfolio_heat']:.1f}%")
 
         # Auto Mode Status
         mode = "AUTO" if self.dashboard_state["auto_mode"] else "MANUAL"
-        print(f"🤖 Mode: {mode}")
+        print(f"ROBOT Mode: {mode}")
 
     def display_available_commands(self):
         """Display available dashboard commands"""
-        print(f"\n📋 AVAILABLE COMMANDS:")
+        print(f"\n AVAILABLE COMMANDS:")
         print("=" * 40)
         print("analyze          - Run full market analysis")
         print("health           - Check system health")
@@ -585,7 +585,7 @@ class TradingDashboard:
 
     def stop_dashboard(self):
         """Stop the dashboard"""
-        print("\n🛑 Stopping Trading Dashboard...")
+        print("\n Stopping Trading Dashboard...")
         self.dashboard_state["monitoring_active"] = False
 
         # Save final state
@@ -595,13 +595,13 @@ class TradingDashboard:
         except Exception as e:
             print(f"Error saving dashboard state: {e}")
 
-        print("✅ Dashboard stopped successfully")
+        print("SUCCESS Dashboard stopped successfully")
 
 def main():
     """Main dashboard interface"""
     dashboard = TradingDashboard()
 
-    print("🎪 INTEGRATED TRADING DASHBOARD")
+    print("CIRCUS INTEGRATED TRADING DASHBOARD")
     print("Advanced automation interface with real-time monitoring")
     print("=" * 70)
 
@@ -612,12 +612,12 @@ def main():
         # Command loop
         while dashboard.dashboard_state["monitoring_active"]:
             try:
-                command = input("\n💡 Enter command (or 'help' for options): ").strip().lower()
+                command = input("\nIDEA Enter command (or 'help' for options): ").strip().lower()
 
                 if command == "analyze":
                     result = dashboard.perform_comprehensive_analysis()
                     if result:
-                        print("✅ Analysis completed successfully")
+                        print("SUCCESS Analysis completed successfully")
 
                 elif command == "health":
                     dashboard.check_system_health()
@@ -625,7 +625,7 @@ def main():
 
                 elif command == "signals":
                     signals = dashboard.dashboard_state["active_signals"]
-                    print(f"\n📊 Active Signals ({len(signals)}):")
+                    print(f"\nCHART Active Signals ({len(signals)}):")
                     for i, signal in enumerate(signals[-5:], 1):  # Show last 5
                         print(f"{i}. {signal['symbol']} {signal['direction']} - "
                               f"Consensus: {signal['consensus_score']}")
@@ -633,7 +633,7 @@ def main():
                 elif command == "performance":
                     perf = dashboard.performance_analytics.get_real_time_performance()
                     overview = perf["overview"]
-                    print(f"\n📈 Performance Overview:")
+                    print(f"\nUP Performance Overview:")
                     print(f"- Total Trades: {overview['total_trades']}")
                     print(f"- Win Rate: {overview['win_rate']}%")
                     print(f"- Total Return: {overview['total_return_percent']:+.1f}%")
@@ -641,10 +641,10 @@ def main():
 
                 elif command == "alerts":
                     results = dashboard.alert_system.process_alert_queue()
-                    print(f"📨 Processed {results['processed']} alerts")
+                    print(f" Processed {results['processed']} alerts")
 
                 elif command == "auto":
-                    print("🤖 Starting auto mode...")
+                    print("ROBOT Starting auto mode...")
                     dashboard.start_auto_monitoring()
                     dashboard.dashboard_state["auto_mode"] = True
 
@@ -658,7 +658,7 @@ def main():
                     break
 
                 else:
-                    print("❌ Unknown command. Type 'help' for available commands.")
+                    print("ERROR Unknown command. Type 'help' for available commands.")
 
             except KeyboardInterrupt:
                 break

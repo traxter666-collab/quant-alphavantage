@@ -804,7 +804,7 @@ def main():
     """Test Market Microstructure Engine"""
     microstructure_engine = MarketMicrostructure()
 
-    print("🏗️ Market Microstructure Analysis Engine Test")
+    print(" Market Microstructure Analysis Engine Test")
     print("=" * 50)
 
     # Sample market data
@@ -823,7 +823,7 @@ def main():
     # Run microstructure analysis
     analysis = microstructure_engine.analyze_market_microstructure(sample_data)
 
-    print(f"\n📊 Microstructure Analysis Results:")
+    print(f"\nCHART Microstructure Analysis Results:")
 
     # Order flow
     order_flow = analysis["order_flow_analysis"]
@@ -845,29 +845,29 @@ def main():
 
     # Signals
     signals = analysis.get('microstructure_signals', [])
-    print(f"\n🚨 Microstructure Signals ({len(signals)}):")
+    print(f"\nALERT Microstructure Signals ({len(signals)}):")
     for signal in signals:
         print(f"- {signal['signal_type']}: {signal['direction']} (Strength: {signal['strength']:.1%})")
         print(f"  {signal['reasoning']}")
         if signal['institutional_signature']:
-            print(f"  ⭐ Institutional signature detected")
+            print(f"  STAR Institutional signature detected")
 
     # Execution metrics
     execution = analysis.get('execution_metrics', {})
     if execution:
-        print(f"\n💰 Execution Metrics:")
+        print(f"\nMONEY Execution Metrics:")
         print(f"- Total Execution Cost: {execution.get('execution_cost_bps', 0):.1f} bps")
         print(f"- Optimal Order Size: {execution.get('optimal_order_size', 'N/A')}")
         print(f"- Execution Urgency: {execution.get('execution_urgency', 'N/A')}")
 
     # Recommendations
     recommendations = analysis.get('trading_recommendations', [])
-    print(f"\n💡 Trading Recommendations ({len(recommendations)}):")
+    print(f"\nIDEA Trading Recommendations ({len(recommendations)}):")
     for rec in recommendations:
         print(f"- {rec['strategy']} (Confidence: {rec['confidence']:.1%})")
         print(f"  {rec['reasoning']}")
 
-    print("\n✅ Market Microstructure Engine test completed!")
+    print("\nSUCCESS Market Microstructure Engine test completed!")
 
 if __name__ == "__main__":
     main()

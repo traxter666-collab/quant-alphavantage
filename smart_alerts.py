@@ -58,18 +58,18 @@ class SmartAlertSystem:
 
         if health_percentage < 90:
             priority = AlertPriority.CRITICAL
-            message = f"🚨 CRITICAL: System health dropped to {health_percentage}%"
+            message = f"ALERT CRITICAL: System health dropped to {health_percentage}%"
         elif health_percentage < 95:
             priority = AlertPriority.HIGH
-            message = f"⚠️ WARNING: System health at {health_percentage}%"
+            message = f"WARNING WARNING: System health at {health_percentage}%"
         elif health_percentage < 98:
             priority = AlertPriority.MEDIUM
-            message = f"🟡 NOTICE: System health at {health_percentage}%"
+            message = f"YELLOW NOTICE: System health at {health_percentage}%"
         else:
             # Don't alert for healthy systems unless it's a recovery
             if health_percentage == 100.0 and self._was_system_unhealthy():
                 priority = AlertPriority.INFO
-                message = f"✅ RECOVERY: System health restored to 100%"
+                message = f"SUCCESS RECOVERY: System health restored to 100%"
             else:
                 return None
 
@@ -90,24 +90,24 @@ class SmartAlertSystem:
         # Determine priority based on signal strength
         if consensus_score >= 250 and pattern_confidence >= 90:
             priority = AlertPriority.CRITICAL
-            message = f"🔥 ULTRA-HIGH SIGNAL: {consensus_score}/275 consensus, {pattern_confidence}% pattern confidence"
+            message = f"HOT ULTRA-HIGH SIGNAL: {consensus_score}/275 consensus, {pattern_confidence}% pattern confidence"
         elif consensus_score >= 220 and pattern_confidence >= 85:
             priority = AlertPriority.HIGH
-            message = f"🎯 HIGH CONFIDENCE: {consensus_score}/275 consensus, {pattern_confidence}% pattern confidence"
+            message = f"TARGET HIGH CONFIDENCE: {consensus_score}/275 consensus, {pattern_confidence}% pattern confidence"
         elif consensus_score >= 200 and pattern_confidence >= 75:
             priority = AlertPriority.MEDIUM
-            message = f"📊 MEDIUM SIGNAL: {consensus_score}/275 consensus, {pattern_confidence}% pattern confidence"
+            message = f"CHART MEDIUM SIGNAL: {consensus_score}/275 consensus, {pattern_confidence}% pattern confidence"
         elif consensus_score >= 180:
             priority = AlertPriority.LOW
-            message = f"🟡 LOW SIGNAL: {consensus_score}/275 consensus"
+            message = f"YELLOW LOW SIGNAL: {consensus_score}/275 consensus"
         else:
             return None  # Don't alert for weak signals
 
         # Add trade details
         if 'recommended_trade' in signal_data:
             trade = signal_data['recommended_trade']
-            message += f"\n📈 Trade: {trade.get('symbol', 'SPX')} {trade.get('strike', '')} {trade.get('type', '')}"
-            message += f"\n💰 Entry: ${trade.get('entry_price', 'N/A')} | Target: ${trade.get('target_price', 'N/A')}"
+            message += f"\nUP Trade: {trade.get('symbol', 'SPX')} {trade.get('strike', '')} {trade.get('type', '')}"
+            message += f"\nMONEY Entry: ${trade.get('entry_price', 'N/A')} | Target: ${trade.get('target_price', 'N/A')}"
 
         return Alert(
             message=message,
@@ -126,13 +126,13 @@ class SmartAlertSystem:
 
         if heat_ratio >= 0.95:  # 95% of limit
             priority = AlertPriority.CRITICAL
-            message = f"🚨 PORTFOLIO HEAT CRITICAL: {current_heat}% (Limit: {max_heat_limit}%)"
+            message = f"ALERT PORTFOLIO HEAT CRITICAL: {current_heat}% (Limit: {max_heat_limit}%)"
         elif heat_ratio >= 0.85:  # 85% of limit
             priority = AlertPriority.HIGH
-            message = f"⚠️ PORTFOLIO HEAT HIGH: {current_heat}% (Limit: {max_heat_limit}%)"
+            message = f"WARNING PORTFOLIO HEAT HIGH: {current_heat}% (Limit: {max_heat_limit}%)"
         elif heat_ratio >= 0.70:  # 70% of limit
             priority = AlertPriority.MEDIUM
-            message = f"🟡 PORTFOLIO HEAT ELEVATED: {current_heat}% (Limit: {max_heat_limit}%)"
+            message = f"YELLOW PORTFOLIO HEAT ELEVATED: {current_heat}% (Limit: {max_heat_limit}%)"
         else:
             return None  # Don't alert for normal heat levels
 
@@ -152,21 +152,21 @@ class SmartAlertSystem:
 
         if confidence >= 90:
             priority = AlertPriority.HIGH
-            message = f"🎪 PATTERN DETECTED: {pattern_name} ({confidence}% confidence)"
+            message = f"CIRCUS PATTERN DETECTED: {pattern_name} ({confidence}% confidence)"
         elif confidence >= 80:
             priority = AlertPriority.MEDIUM
-            message = f"📊 PATTERN: {pattern_name} ({confidence}% confidence)"
+            message = f"CHART PATTERN: {pattern_name} ({confidence}% confidence)"
         elif confidence >= 70:
             priority = AlertPriority.LOW
-            message = f"🟡 WEAK PATTERN: {pattern_name} ({confidence}% confidence)"
+            message = f"YELLOW WEAK PATTERN: {pattern_name} ({confidence}% confidence)"
         else:
             return None
 
         # Add pattern details
         if 'direction' in pattern_data:
-            message += f"\n📈 Direction: {pattern_data['direction'].upper()}"
+            message += f"\nUP Direction: {pattern_data['direction'].upper()}"
         if 'expected_move' in pattern_data:
-            message += f"\n🎯 Expected Move: {pattern_data['expected_move']}"
+            message += f"\nTARGET Expected Move: {pattern_data['expected_move']}"
 
         return Alert(
             message=message,
@@ -186,13 +186,13 @@ class SmartAlertSystem:
         if total_trades >= 10:  # Only alert after minimum trades
             if win_rate >= 85:
                 priority = AlertPriority.HIGH
-                message = f"🏆 EXCELLENT PERFORMANCE: {win_rate}% win rate over {total_trades} trades"
+                message = f"TROPHY EXCELLENT PERFORMANCE: {win_rate}% win rate over {total_trades} trades"
             elif win_rate >= 75:
                 priority = AlertPriority.MEDIUM
-                message = f"✅ GOOD PERFORMANCE: {win_rate}% win rate over {total_trades} trades"
+                message = f"SUCCESS GOOD PERFORMANCE: {win_rate}% win rate over {total_trades} trades"
             elif win_rate < 60:
                 priority = AlertPriority.HIGH
-                message = f"⚠️ PERFORMANCE CONCERN: {win_rate}% win rate over {total_trades} trades"
+                message = f"WARNING PERFORMANCE CONCERN: {win_rate}% win rate over {total_trades} trades"
             else:
                 return None
         else:
@@ -200,7 +200,7 @@ class SmartAlertSystem:
 
         # Add daily P&L context
         if abs(daily_pnl) >= 5:
-            message += f"\n💰 Daily P&L: {daily_pnl:+.1f}%"
+            message += f"\nMONEY Daily P&L: {daily_pnl:+.1f}%"
 
         return Alert(
             message=message,
@@ -222,26 +222,26 @@ class SmartAlertSystem:
         if vix_level >= 30:
             alerts.append({
                 'priority': AlertPriority.HIGH,
-                'message': f"🌪️ VIX SPIKE: {vix_level} - High volatility environment"
+                'message': f" VIX SPIKE: {vix_level} - High volatility environment"
             })
         elif vix_level >= 25:
             alerts.append({
                 'priority': AlertPriority.MEDIUM,
-                'message': f"⚡ ELEVATED VIX: {vix_level} - Increased volatility"
+                'message': f"FAST ELEVATED VIX: {vix_level} - Increased volatility"
             })
 
         # Chop zone alert
         if chop_score >= 70:
             alerts.append({
                 'priority': AlertPriority.HIGH,
-                'message': f"🚫 CHOP ZONE: {chop_score} - Trading blocked"
+                'message': f" CHOP ZONE: {chop_score} - Trading blocked"
             })
 
         # Market regime change
         if market_regime in ['HIGH_VOLATILITY', 'TRANSITION']:
             alerts.append({
                 'priority': AlertPriority.MEDIUM,
-                'message': f"🔄 REGIME CHANGE: {market_regime}"
+                'message': f" REGIME CHANGE: {market_regime}"
             })
 
         # Return highest priority alert
@@ -442,7 +442,7 @@ def main():
     """Test Smart Alert System"""
     alert_system = SmartAlertSystem()
 
-    print("🚨 Smart Alert System Test")
+    print("ALERT Smart Alert System Test")
     print("=" * 50)
 
     # Test system health alert
@@ -455,7 +455,7 @@ def main():
     health_alert = alert_system.create_system_health_alert(health_data)
     if health_alert:
         alert_system.add_alert(health_alert)
-        print(f"✅ System Health Alert Created: {health_alert.priority.name}")
+        print(f"SUCCESS System Health Alert Created: {health_alert.priority.name}")
 
     # Test trading signal alert
     signal_data = {
@@ -473,7 +473,7 @@ def main():
     signal_alert = alert_system.create_trading_signal_alert(signal_data)
     if signal_alert:
         alert_system.add_alert(signal_alert)
-        print(f"✅ Trading Signal Alert Created: {signal_alert.priority.name}")
+        print(f"SUCCESS Trading Signal Alert Created: {signal_alert.priority.name}")
 
     # Test portfolio heat alert
     portfolio_data = {
@@ -484,7 +484,7 @@ def main():
     heat_alert = alert_system.create_portfolio_heat_alert(portfolio_data)
     if heat_alert:
         alert_system.add_alert(heat_alert)
-        print(f"✅ Portfolio Heat Alert Created: {heat_alert.priority.name}")
+        print(f"SUCCESS Portfolio Heat Alert Created: {heat_alert.priority.name}")
 
     # Process alerts
     print(f"\nProcessing {len(alert_system.alert_queue)} alerts...")
@@ -501,7 +501,7 @@ def main():
     print(f"- Rate Limit: {stats['rate_limit_remaining']} remaining this minute")
     print(f"- History: {stats['alert_history_count']} total alerts")
 
-    print("\n✅ Smart Alert System initialized successfully!")
+    print("\nSUCCESS Smart Alert System initialized successfully!")
 
 if __name__ == "__main__":
     main()
