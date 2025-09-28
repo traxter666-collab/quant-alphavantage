@@ -9,6 +9,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
 import json
+from typing import Any
 
 # Current market data from alphavantage MCP
 SPX_CURRENT = 6503
@@ -173,7 +174,7 @@ if __name__ == "__main__":
     # Save results to JSON for further analysis
     with open('.spx/monte_carlo_results.json', 'w') as f:
         # Convert numpy types to native Python types for JSON serialization
-        json_results = {}
+        json_results: dict[str, dict[str, Any]] = {}
         for scenario, data in results.items():
             json_results[scenario] = {}
             for key, value in data.items():

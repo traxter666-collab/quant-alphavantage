@@ -109,6 +109,160 @@ def get_spx_price():
         }
     return {'success': False}
 
+def analyze_multi_strikes(symbol, start_strike, end_strike, option_type):
+    """Analyze multiple strikes in a range"""
+    if symbol.upper() != 'SPX':
+        return "Multi-strike analysis currently supports SPX only"
+
+    current_data = get_spx_price()
+    if not current_data['success']:
+        return "Failed to get SPX price"
+
+    current_price = current_data['price']
+    results = []
+
+    print(f"\nMULTI-STRIKE ANALYSIS - SPX: ${current_price:.2f}")
+    print("=" * 60)
+
+    # Generate strikes in 5-point increments
+    strikes = list(range(int(start_strike), int(end_strike) + 5, 5))
+
+    for strike in strikes:
+        if option_type.upper() == 'C':
+            distance = current_price - strike
+            itm = distance > 0
+            status = "ITM" if itm else "OTM"
+        else:  # Put
+            distance = strike - current_price
+            itm = distance > 0
+            status = "ITM" if itm else "OTM"
+
+        intrinsic = max(0, distance)
+        move_needed = abs(distance) if not itm else 0
+        move_pct = (move_needed / current_price) * 100 if move_needed > 0 else 0
+
+        # Probability assessment
+        if move_pct < 0.05:
+            probability = "EXCELLENT"
+        elif move_pct < 0.15:
+            probability = "VERY GOOD"
+        elif move_pct < 0.3:
+            probability = "GOOD"
+        elif move_pct < 0.5:
+            probability = "MODERATE"
+        else:
+            probability = "LOW"
+
+        results.append({
+            'strike': strike,
+            'distance': distance,
+            'status': status,
+            'intrinsic': intrinsic,
+            'move_needed': move_needed,
+            'move_pct': move_pct,
+            'probability': probability
+        })
+
+        print(f"{strike}{option_type.upper()}: {status} by ${abs(distance):.1f} | "
+              f"Move: {move_needed:.1f}pts ({move_pct:.2f}%) | {probability}")
+
+    # Find best opportunities
+    if option_type.upper() == 'C':
+        best = min([r for r in results if not r['status'] == 'ITM'],
+                  key=lambda x: x['move_needed'], default=None)
+    else:
+        best = min([r for r in results if not r['status'] == 'ITM'],
+                  key=lambda x: x['move_needed'], default=None)
+
+    if best:
+        print(f"\n🎯 BEST OPPORTUNITY: {best['strike']}{option_type.upper()}")
+        print(f"   Distance: {best['move_needed']:.1f} points ({best['move_pct']:.2f}%)")
+        print(f"   Probability: {best['probability']}")
+
+    return results
+
+def detect_put_walls():
+    """Detect potential put/call walls from SPXW options data"""
+    try:
+        url = f"https://www.alphavantage.co/query?function=REALTIME_OPTIONS&symbol=SPXW&entitlement=realtime&apikey={API_KEY}"
+        response = requests.get(url, timeout=10)
+        data = response.json()
+
+        if "data" not in data:
+            return "Unable to get options data for wall detection"
+
+        options = data["data"]
+        today = datetime.now().strftime("%Y-%m-%d")
+
+        # Aggregate open interest by strike
+        strike_oi = {}
+
+        for option in options:
+            if option.get("expiration") == today:
+                strike = float(option.get("strike", 0))
+                oi = int(option.get("open_interest", 0))
+                option_type = option.get("type", "")
+
+                if 6500 <= strike <= 6700:  # Focus on relevant range
+                    key = f"{int(strike)}"
+                    if key not in strike_oi:
+                        strike_oi[key] = {"calls": 0, "puts": 0, "strike": strike}
+
+                    if option_type == "call":
+                        strike_oi[key]["calls"] += oi
+                    elif option_type == "put":
+                        strike_oi[key]["puts"] += oi
+
+        if not strike_oi:
+            return "No options data found for wall detection"
+
+        # Calculate potential walls
+        print(f"\nPUT/CALL WALL DETECTION")
+        print("=" * 40)
+
+        walls = []
+        for strike_key, data in strike_oi.items():
+            strike = data["strike"]
+            calls = data["calls"]
+            puts = data["puts"]
+            total_oi = calls + puts
+
+            if total_oi > 1000:  # Significant open interest
+                wall_type = "CALL WALL" if calls > puts * 2 else "PUT WALL" if puts > calls * 2 else "MIXED"
+
+                walls.append({
+                    "strike": strike,
+                    "calls": calls,
+                    "puts": puts,
+                    "total": total_oi,
+                    "type": wall_type
+                })
+
+        # Sort by total open interest
+        walls.sort(key=lambda x: x["total"], reverse=True)
+
+        current_spx = get_spx_price()["price"]
+
+        for wall in walls[:10]:  # Top 10 walls
+            distance = current_spx - wall["strike"]
+            print(f"{int(wall['strike'])}: {wall['type']} | "
+                  f"C:{wall['calls']:,} P:{wall['puts']:,} | "
+                  f"Total:{wall['total']:,} | {distance:+.0f}pts")
+
+        # Identify critical walls
+        critical_walls = [w for w in walls if w["total"] > 5000]
+
+        if critical_walls:
+            print(f"\n🚨 CRITICAL WALLS (>5K OI):")
+            for wall in critical_walls:
+                distance = current_spx - wall["strike"]
+                print(f"   {int(wall['strike'])}: {wall['type']} - {wall['total']:,} contracts ({distance:+.0f}pts)")
+
+        return walls
+
+    except Exception as e:
+        return f"Wall detection failed: {e}"
+
 def analyze_option(symbol, strike, option_type, entry_price=None):
     """Analyze option position"""
     # Get current price
@@ -192,6 +346,93 @@ Status: {"BULLISH" if float(data['change']) > 0 else "BEARISH" if float(data['ch
 """
     return result
 
+def get_news_sentiment(symbol=None, search_terms=None, limit=50):
+    """Get news sentiment for stocks - enhanced for NAK/Northern Dynasty"""
+    try:
+        # Try multiple approaches for NAK
+        if symbol and symbol.upper() == 'NAK':
+            print("Searching for Northern Dynasty Minerals (NAK) news...")
+            # Try mining/financial sector news first
+            urls_to_try = [
+                f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&topics=financial_markets&limit={limit}&apikey={API_KEY}",
+                f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&topics=energy_transportation&limit={limit}&apikey={API_KEY}",
+                f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&limit={limit}&apikey={API_KEY}"
+            ]
+        else:
+            # Standard approach for other stocks
+            if search_terms:
+                urls_to_try = [f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&keywords={search_terms}&limit={limit}&apikey={API_KEY}"]
+            else:
+                urls_to_try = [f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&topics=financial_markets&limit={limit}&apikey={API_KEY}"]
+
+        all_relevant_news = []
+
+        for url in urls_to_try:
+            try:
+                response = requests.get(url, timeout=15)
+                data = response.json()
+
+                if "Error Message" in data or "Note" in data:
+                    print(f"API Issue with this search: {data}")
+                    continue
+
+                if "feed" in data:
+                    all_news = data["feed"]
+
+                    if symbol:
+                        # Enhanced filtering for NAK/Northern Dynasty
+                        if symbol.upper() == 'NAK':
+                            search_keywords = ['NAK', 'NORTHERN DYNASTY', 'PEBBLE', 'ALASKA', 'MINING', 'COPPER', 'GOLD']
+                        else:
+                            search_keywords = [symbol.upper()]
+
+                        for article in all_news:
+                            title_text = article.get("title", "").upper()
+                            summary_text = article.get("summary", "").upper()
+
+                            # Check if any keyword appears in title or summary
+                            if any(keyword in title_text or keyword in summary_text
+                                  for keyword in search_keywords):
+                                all_relevant_news.append(article)
+                    else:
+                        all_relevant_news.extend(all_news[:limit])
+
+                    # If we found relevant news, we can break
+                    if all_relevant_news and symbol:
+                        break
+
+            except Exception as e:
+                print(f"Error with one search attempt: {e}")
+                continue
+
+        if all_relevant_news:
+            print(f"Found {len(all_relevant_news)} relevant articles for {symbol}")
+            # Remove duplicates based on title
+            seen_titles = set()
+            unique_articles = []
+            for article in all_relevant_news:
+                title = article.get('title', '')
+                if title not in seen_titles:
+                    seen_titles.add(title)
+                    unique_articles.append(article)
+
+            return unique_articles[:10]  # Return top 10
+        else:
+            print(f"No specific news found for {symbol}. Trying general market news...")
+            # Fallback to general news
+            url = f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&topics=financial_markets&limit=10&apikey={API_KEY}"
+            response = requests.get(url, timeout=15)
+            data = response.json()
+
+            if "feed" in data:
+                return data["feed"][:5]
+
+            return None
+
+    except Exception as e:
+        print(f"NEWS_SENTIMENT error: {e}")
+        return None
+
 def parse_option_string(option_str):
     """Parse option string like '663C' or '230P'"""
     option_str = option_str.upper()
@@ -225,19 +466,75 @@ def get_market_status():
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python market_engine.py [SYMBOL] [STRIKE][C/P] [ENTRY]")
+        print("Usage: python market_engine.py [COMMAND]")
         print("Examples:")
-        print("  python market_engine.py AAPL")
-        print("  python market_engine.py SPY 663C")
-        print("  python market_engine.py SPX 6635C 2.50")
+        print("  python market_engine.py SPX                    # Current SPX level")
+        print("  python market_engine.py SPX 6635C 2.50         # Single option")
+        print("  python market_engine.py range 6600-6650 C      # Multi-strike calls")
+        print("  python market_engine.py range 6580-6620 P      # Multi-strike puts")
+        print("  python market_engine.py walls                  # Put/call wall detection")
+        print("  python market_engine.py news NAK               # News analysis for NAK")
+        print("  python market_engine.py AAPL                   # Any stock")
         return
 
-    symbol = sys.argv[1].upper()
+    command = sys.argv[1].upper()
 
     # Get market status
     market_status, status_msg = get_market_status()
     print(f"Market Status: {market_status} - {status_msg}")
     print()
+
+    # Handle special commands
+    if command == "NEWS" and len(sys.argv) >= 3:
+        # News sentiment analysis: news NAK
+        symbol = sys.argv[2].upper()
+        print(f"\nNEWS SENTIMENT ANALYSIS - {symbol}")
+        print("=" * 50)
+
+        news_articles = get_news_sentiment(symbol)
+        if news_articles:
+            for i, article in enumerate(news_articles[:10], 1):
+                title = article.get('title', 'No title')
+                summary = article.get('summary', 'No summary')[:200] + "..."
+                time_published = article.get('time_published', 'Unknown time')
+
+                # Get sentiment scores
+                sentiment = article.get('overall_sentiment_score', 0)
+                sentiment_label = article.get('overall_sentiment_label', 'NEUTRAL')
+
+                print(f"\n{i}. {title}")
+                print(f"   Time: {time_published}")
+                print(f"   Sentiment: {sentiment_label} ({sentiment:.3f})")
+                print(f"   Summary: {summary}")
+
+                # Show ticker-specific sentiment if available
+                if 'ticker_sentiment' in article:
+                    for ticker in article['ticker_sentiment']:
+                        if ticker.get('ticker', '').upper() == symbol:
+                            ticker_sentiment = ticker.get('relevance_score', 'N/A')
+                            ticker_label = ticker.get('ticker_sentiment_label', 'N/A')
+                            print(f"   {symbol} Relevance: {ticker_sentiment} ({ticker_label})")
+        else:
+            print("No recent news found or API issue")
+        return
+
+    if command == "RANGE" and len(sys.argv) >= 4:
+        # Multi-strike analysis: range 6600-6650 C
+        try:
+            strike_range = sys.argv[2]
+            start_strike, end_strike = map(float, strike_range.split('-'))
+            option_type = sys.argv[3].upper()
+            analyze_multi_strikes("SPX", start_strike, end_strike, option_type)
+        except:
+            print("Usage: python market_engine.py range 6600-6650 C")
+        return
+
+    if command == "WALLS":
+        # Put/call wall detection
+        detect_put_walls()
+        return
+
+    symbol = command
 
     # If only symbol provided, do stock analysis
     if len(sys.argv) == 2:
