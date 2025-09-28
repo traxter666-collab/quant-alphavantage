@@ -19,31 +19,47 @@ def test_api_connectivity():
     api_key = 'ZFL38ZY98GSN7E1S'
     tests = []
 
-    # Test 1: SPY Quote
+    # Test 1: SPY Quote with retry logic
     print("Testing SPY quote...")
     start_time = time.time()
-    try:
-        url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=SPY&apikey={api_key}'
-        response = requests.get(url, timeout=10)
-        data = response.json()
-        response_time = time.time() - start_time
+    success = False
+    max_retries = 3
 
-        if 'Global Quote' in data:
-            spy_price = float(data['Global Quote']['05. price'])
-            tests.append({
-                'test': 'SPY_QUOTE',
-                'status': 'PASS',
-                'response_time': response_time,
-                'data': f"SPY: ${spy_price:.2f}"
-            })
-            print(f"  PASS - SPY: ${spy_price:.2f} ({response_time:.2f}s)")
-        else:
-            tests.append({'test': 'SPY_QUOTE', 'status': 'FAIL', 'error': 'No data'})
-            print(f"  FAIL - No SPY data")
+    for attempt in range(max_retries):
+        try:
+            url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=SPY&apikey={api_key}'
+            response = requests.get(url, timeout=15)
+            data = response.json()
+            response_time = time.time() - start_time
 
-    except Exception as e:
-        tests.append({'test': 'SPY_QUOTE', 'status': 'ERROR', 'error': str(e)})
-        print(f"  ERROR - {e}")
+            if 'Global Quote' in data:
+                spy_price = float(data['Global Quote']['05. price'])
+                tests.append({
+                    'test': 'SPY_QUOTE',
+                    'status': 'PASS',
+                    'response_time': response_time,
+                    'data': f"SPY: ${spy_price:.2f}"
+                })
+                print(f"  PASS - SPY: ${spy_price:.2f} ({response_time:.2f}s)")
+                success = True
+                break
+            else:
+                if attempt < max_retries - 1:
+                    print(f"  RETRY {attempt + 1} - No SPY data, retrying...")
+                    time.sleep(2)  # Wait 2 seconds before retry
+                    continue
+                else:
+                    tests.append({'test': 'SPY_QUOTE', 'status': 'FAIL', 'error': 'No data after retries'})
+                    print(f"  FAIL - No SPY data after {max_retries} attempts")
+
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(f"  RETRY {attempt + 1} - Connection error, retrying...")
+                time.sleep(2)  # Wait 2 seconds before retry
+                continue
+            else:
+                tests.append({'test': 'SPY_QUOTE', 'status': 'ERROR', 'error': str(e)})
+                print(f"  ERROR - {e} after {max_retries} attempts")
 
     # Test 2: QQQ Quote
     print("Testing QQQ quote...")
@@ -71,31 +87,45 @@ def test_api_connectivity():
         tests.append({'test': 'QQQ_QUOTE', 'status': 'ERROR', 'error': str(e)})
         print(f"  ERROR - {e}")
 
-    # Test 3: SPY Options
+    # Test 3: SPY Options with retry logic
     print("Testing SPY options...")
     start_time = time.time()
-    try:
-        url = f'https://www.alphavantage.co/query?function=REALTIME_OPTIONS&symbol=SPY&apikey={api_key}'
-        response = requests.get(url, timeout=15)
-        data = response.json()
-        response_time = time.time() - start_time
+    max_retries = 3
 
-        if 'data' in data and len(data['data']) > 0:
-            option_count = len(data['data'])
-            tests.append({
-                'test': 'SPY_OPTIONS',
-                'status': 'PASS',
-                'response_time': response_time,
-                'data': f"{option_count} contracts"
-            })
-            print(f"  PASS - {option_count} SPY options ({response_time:.2f}s)")
-        else:
-            tests.append({'test': 'SPY_OPTIONS', 'status': 'FAIL', 'error': 'No options data'})
-            print(f"  FAIL - No SPY options data")
+    for attempt in range(max_retries):
+        try:
+            url = f'https://www.alphavantage.co/query?function=REALTIME_OPTIONS&symbol=SPY&apikey={api_key}'
+            response = requests.get(url, timeout=20)  # Longer timeout for options
+            data = response.json()
+            response_time = time.time() - start_time
 
-    except Exception as e:
-        tests.append({'test': 'SPY_OPTIONS', 'status': 'ERROR', 'error': str(e)})
-        print(f"  ERROR - {e}")
+            if 'data' in data and len(data['data']) > 0:
+                option_count = len(data['data'])
+                tests.append({
+                    'test': 'SPY_OPTIONS',
+                    'status': 'PASS',
+                    'response_time': response_time,
+                    'data': f"{option_count} contracts"
+                })
+                print(f"  PASS - {option_count} SPY options ({response_time:.2f}s)")
+                break
+            else:
+                if attempt < max_retries - 1:
+                    print(f"  RETRY {attempt + 1} - No options data, retrying...")
+                    time.sleep(3)  # Longer wait for options
+                    continue
+                else:
+                    tests.append({'test': 'SPY_OPTIONS', 'status': 'FAIL', 'error': 'No options data after retries'})
+                    print(f"  FAIL - No SPY options data after {max_retries} attempts")
+
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(f"  RETRY {attempt + 1} - Connection error, retrying...")
+                time.sleep(3)
+                continue
+            else:
+                tests.append({'test': 'SPY_OPTIONS', 'status': 'ERROR', 'error': str(e)})
+                print(f"  ERROR - {e} after {max_retries} attempts")
 
     # Test 4: RSI Technical Indicator
     print("Testing RSI indicator...")
