@@ -78,6 +78,19 @@ market microstructure       # Order flow analysis
 spx institutional           # Institutional activity detection
 ```
 
+## **📊 NDX & MULTI-ASSET ANALYSIS**
+```bash
+ndx analysis                 # NASDAQ-100 index options analysis
+ndx options                  # NDX options chain analysis
+ndx consensus               # NDX consensus scoring
+nasdaq 100 analysis         # Complete NASDAQ-100 analysis
+ndx now                     # Real-time NDX analysis
+five asset analysis         # Complete 5-asset system (SPX+QQQ+SPY+IWM+NDX)
+complete multi asset        # Full portfolio analysis
+full portfolio analysis     # Comprehensive multi-asset trading
+spx qqq spy iwm ndx         # All five assets analysis
+```
+
 ## **📱 DISCORD INTEGRATION (Auto-Post)**
 ```bash
 spx now discord              # Send current analysis to Discord
