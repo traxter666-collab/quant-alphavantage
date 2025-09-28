@@ -1,0 +1,120 @@
+{
+  "timestamp": "2025-09-26T16:27:00",
+  "session_type": "MONDAY SESSION PREPARATION - LIVE DATA CAPTURE",
+  "market_status": "CLOSED - Equity markets closed, Forex closed until Sunday 5PM EST",
+
+  "current_market_data": {
+    "spy_quote": {
+      "price": 661.74,
+      "daily_change": 3.69,
+      "percentage_change": 0.56,
+      "previous_close": 658.05,
+      "status": "After hours data"
+    },
+    "spx_derived": {
+      "estimated_price": 6617.40,
+      "calculation": "SPY 661.74 × 10",
+      "vs_friday_close": "6617.40 vs 6644.90 = -27.50 points (-0.41%)",
+      "gap_analysis": "GAP DOWN from Friday's 6644.90 close"
+    }
+  },
+
+  "active_position_impact": {
+    "spy_662c_930": {
+      "current_spy": 661.74,
+      "strike": 662.00,
+      "distance_to_strike": "+0.26 points (ITM)",
+      "vs_breakeven": "661.74 vs 664.40 = -2.66 points below breakeven",
+      "status": "SLIGHTLY IN THE MONEY but below breakeven",
+      "weekend_change": "Position improved from $5 OTM to $0.26 ITM"
+    }
+  },
+
+  "key_level_analysis": {
+    "vs_6650_call_wall": {
+      "current_distance": "6617.40 vs 6650 = -32.60 points below",
+      "friday_distance": "6644.90 vs 6650 = -5.10 points below",
+      "change": "Moved AWAY from Call Wall by 27.50 points",
+      "heatseeker_implication": "Reduced Gatekeeper proximity"
+    },
+    "vs_6645_support": {
+      "current_distance": "6617.40 vs 6645 = -27.60 points below",
+      "friday_status": "Above 6645 by +1.65 points",
+      "change": "BROKE BELOW Friday's breakthrough level",
+      "support_failure": "6645 support test failed"
+    },
+    "vs_6625_king_node": {
+      "current_distance": "6617.40 vs 6625 = -7.60 points below",
+      "friday_status": "Above 6625 by +19.90 points",
+      "change": "Approaching King Node from above",
+      "heatseeker_status": "Near King Node magnetic zone"
+    }
+  },
+
+  "market_structure_update": {
+    "range_position": {
+      "current_range": "6625 King Node to 6650 Call Wall (25 points)",
+      "friday_position": "76% through range (upper portion)",
+      "current_position": "30% through range (lower portion)",
+      "position_change": "Significant retreat toward King Node"
+    },
+    "heatseeker_implications": {
+      "6625_king_node": "Approaching from above - magnetic pull active",
+      "6645_minor_gatekeeper": "Support failed - now resistance",
+      "6650_call_wall": "Distant resistance - reduced immediate threat",
+      "overall_bias": "King Node test likely - EOD settlement area"
+    }
+  },
+
+  "gap_analysis": {
+    "gap_type": "GAP DOWN",
+    "gap_size": "-27.50 points (-0.41%)",
+    "gap_significance": "Moderate gap - not extreme",
+    "fill_probability": "High probability of gap fill attempt",
+    "key_levels": "6625 King Node critical support area"
+  },
+
+  "monday_trading_implications": {
+    "primary_scenario": {
+      "description": "King Node test and potential bounce",
+      "target": "6625 area magnetic attraction",
+      "spy_equivalent": "SPY 662.5 support test",
+      "probability": "HIGH - Heatseeker King Node behavior"
+    },
+    "bullish_case": {
+      "trigger": "Bounce from 6625 King Node",
+      "target": "Reclaim 6645, test 6650",
+      "spy_662c_impact": "POSITIVE - Back toward profitability",
+      "probability": "MODERATE - Depends on King Node hold"
+    },
+    "bearish_case": {
+      "trigger": "Break below 6625 King Node",
+      "target": "6600 Put Wall area",
+      "spy_662c_impact": "NEGATIVE - Further OTM",
+      "probability": "LOW - King Node strong support"
+    }
+  },
+
+  "position_management_update": {
+    "spy_662c_assessment": {
+      "current_status": "Slightly ITM but below breakeven",
+      "weekend_improvement": "Moved from $5 OTM to $0.26 ITM",
+      "monday_focus": "Watch King Node bounce for profitability",
+      "risk_level": "MODERATE - Time decay vs bounce potential"
+    },
+    "monday_strategy": {
+      "watch_levels": "SPY 662.5 (6625 equivalent) for bounce",
+      "profit_scenario": "King Node bounce → 6645 reclaim → 6650 test",
+      "stop_consideration": "SPY breaks below 661 (6610 equivalent)",
+      "time_management": "3 trading days remaining"
+    }
+  },
+
+  "data_preparation_complete": {
+    "live_data_captured": "✅ SPY 661.74 after hours",
+    "gap_analysis_complete": "✅ -27.50 point gap down identified",
+    "position_impact_assessed": "✅ SPY 662C now 0.26 ITM",
+    "heatseeker_update": "✅ King Node proximity analysis complete",
+    "monday_framework": "✅ Trading scenarios prepared"
+  }
+}
