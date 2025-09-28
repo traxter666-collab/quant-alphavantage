@@ -491,7 +491,7 @@ def main():
     """Test Performance Analytics Engine"""
     analytics = PerformanceAnalytics()
 
-    print("📊 Performance Analytics Engine Test")
+    print("CHART Performance Analytics Engine Test")
     print("=" * 50)
 
     # Sample trade data
@@ -540,12 +540,12 @@ def main():
     for trade_data in sample_trades:
         trade_record = analytics.record_trade(trade_data)
         if trade_record:
-            print(f"✅ Recorded trade: {trade_record.symbol} "
+            print(f"SUCCESS Recorded trade: {trade_record.symbol} "
                   f"({trade_record.return_percent:+.1f}%)")
 
     # Get performance metrics
     performance = analytics.get_real_time_performance()
-    print(f"\n📈 Performance Overview:")
+    print(f"\nUP Performance Overview:")
     print(f"- Total Trades: {performance['overview']['total_trades']}")
     print(f"- Win Rate: {performance['overview']['win_rate']}%")
     print(f"- Total Return: {performance['overview']['total_return_percent']:+.1f}%")
@@ -554,11 +554,11 @@ def main():
     # Get system attribution
     attribution = analytics.get_system_attribution_analysis()
     if attribution['recommendations']:
-        print(f"\n💡 Optimization Recommendations:")
+        print(f"\nIDEA Optimization Recommendations:")
         for rec in attribution['recommendations']:
             print(f"- {rec}")
 
-    print("\n✅ Performance Analytics Engine initialized successfully!")
+    print("\nSUCCESS Performance Analytics Engine initialized successfully!")
 
 if __name__ == "__main__":
     main()

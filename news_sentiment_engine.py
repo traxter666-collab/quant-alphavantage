@@ -712,7 +712,7 @@ def main():
     """Test News Sentiment Engine"""
     sentiment_engine = NewsSentimentEngine()
 
-    print("📰 News Sentiment Analysis Engine Test")
+    print(" News Sentiment Analysis Engine Test")
     print("=" * 50)
 
     # Sample news data
@@ -742,7 +742,7 @@ def main():
     # Run sentiment analysis
     analysis = sentiment_engine.analyze_news_sentiment(sample_news)
 
-    print(f"\n📊 Sentiment Analysis Results:")
+    print(f"\nCHART Sentiment Analysis Results:")
     aggregate = analysis["aggregate_sentiment"]
     print(f"- Overall Sentiment: {aggregate['overall_sentiment']:.3f}")
     print(f"- Bias: {aggregate['bias']}")
@@ -750,32 +750,32 @@ def main():
 
     # Display signals
     signals = analysis.get('sentiment_signals', [])
-    print(f"\n🚨 Sentiment Signals ({len(signals)}):")
+    print(f"\nALERT Sentiment Signals ({len(signals)}):")
     for signal in signals:
         print(f"- {signal['signal_type']}: {signal['direction']} (Strength: {signal['strength']:.1%})")
         print(f"  Reasoning: {signal['reasoning']}")
 
     # Display market impact
     impact = analysis.get('market_impact_assessment', {})
-    print(f"\n💥 Market Impact Assessment:")
+    print(f"\n Market Impact Assessment:")
     print(f"- Volatility Impact: {impact.get('volatility_impact', 'N/A')}")
     print(f"- Directional Impact: {impact.get('directional_impact', 'N/A')}")
     print(f"- Expected Move: {impact.get('expected_move', 'N/A')}")
 
     # Display recommendations
     recommendations = analysis.get('trading_recommendations', [])
-    print(f"\n💡 Trading Recommendations ({len(recommendations)}):")
+    print(f"\nIDEA Trading Recommendations ({len(recommendations)}):")
     for rec in recommendations:
         print(f"- {rec['strategy']} (Confidence: {rec['confidence']:.1%})")
         print(f"  {rec['reasoning']}")
 
     # News flow analysis
     flow = analysis.get('news_flow_analysis', {})
-    print(f"\n📊 News Flow Analysis:")
+    print(f"\nCHART News Flow Analysis:")
     print(f"- Flow Intensity: {flow.get('flow_intensity', 'N/A')}")
     print(f"- High Relevance Items: {flow.get('high_relevance_items', 0)}")
 
-    print("\n✅ News Sentiment Engine test completed!")
+    print("\nSUCCESS News Sentiment Engine test completed!")
 
 if __name__ == "__main__":
     main()

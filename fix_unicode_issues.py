@@ -125,7 +125,17 @@ def main():
         'smart_alerts.py',
         'trading_dashboard.py',
         'volatility_intelligence.py',
-        'market_microstructure.py'
+        'market_microstructure.py',
+        'spx_auto.py',
+        'error_handling_test.py',
+        'unified_spx_data.py',
+        'ndx_integration.py',
+        'five_asset_integration.py',
+        'news_sentiment_engine.py',
+        'performance_analytics.py',
+        'ml_pattern_engine.py',
+        'dealer_positioning_engine.py',
+        'dealer_positioning_integration.py'
     ]
 
     fixed_count = 0

@@ -39,7 +39,7 @@ def get_unified_spx_data():
                 is_current = trading_day == today
                 
                 result = {
-                    'source': 'Alphavantage (SPY→SPX)',
+                    'source': 'Alphavantage (SPY->SPX)',
                     'price': spx_price,
                     'change': spx_change,
                     'change_pct': (spx_change / (spx_price - spx_change)) * 100,
@@ -52,14 +52,14 @@ def get_unified_spx_data():
                 }
                 
                 if is_current:
-                    print(f"✅ Alphavantage: SPX ${spx_price:.2f} (current)")
+                    print(f"SUCCESS Alphavantage: SPX ${spx_price:.2f} (current)")
                     return result
                 else:
-                    print(f"⚠️  Alphavantage: SPX ${spx_price:.2f} (stale - {trading_day})")
+                    print(f"WARNING  Alphavantage: SPX ${spx_price:.2f} (stale - {trading_day})")
                     print("Falling back to Yahoo Finance...")
                     
         except Exception as e:
-            print(f"❌ Alphavantage failed: {e}")
+            print(f"ERROR Alphavantage failed: {e}")
             print("Falling back to Yahoo Finance...")
     
     # Yahoo Finance backup
@@ -99,11 +99,11 @@ def get_unified_spx_data():
                     'success': True
                 }
                 
-                print(f"✅ Yahoo Finance: SPX ${current_price:.2f} (real-time)")
+                print(f"SUCCESS Yahoo Finance: SPX ${current_price:.2f} (real-time)")
                 return result
                 
     except Exception as e:
-        print(f"❌ Yahoo Finance failed: {e}")
+        print(f"ERROR Yahoo Finance failed: {e}")
     
     # Both failed
     return {
@@ -116,7 +116,7 @@ def format_spx_data(spx_data):
     """Format SPX data for display"""
     
     if not spx_data['success']:
-        return f"❌ {spx_data['message']}"
+        return f"ERROR {spx_data['message']}"
     
     price = spx_data['price']
     change = spx_data['change']
@@ -133,7 +133,7 @@ Range: {high - low:.2f} points
 """
     
     if 'spy_price' in spx_data:
-        formatted += f"SPY: ${spx_data['spy_price']:.2f} (×10 = SPX)\n"
+        formatted += f"SPY: ${spx_data['spy_price']:.2f} (*10 = SPX)\n"
     
     return formatted.strip()
 
@@ -159,12 +159,12 @@ def analyze_with_unified_data():
     print(f"\nQUANT LEVELS ANALYSIS:")
     
     if spx_current >= 6560:
-        print(f"🚨 AT/ABOVE 6560 HIGH REVERSAL ZONE")
+        print(f"ALERT AT/ABOVE 6560 HIGH REVERSAL ZONE")
         print(f"Strategy: FADE/SHORT - High probability reversal")
         print(f"Primary: SPXW250910P{int((spx_current-10)/5)*5}.0")
         
     elif spx_current >= 6542:
-        print(f"⚠️  ABOVE RESISTANCE ZONE (6542)")
+        print(f"WARNING  ABOVE RESISTANCE ZONE (6542)")
         if spx_current >= 6555:
             print(f"Strategy: APPROACHING 6560 reversal - Fade rallies")
             print(f"Primary: SPXW250910P{int((spx_current-5)/5)*5}.0")
@@ -173,12 +173,12 @@ def analyze_with_unified_data():
             print(f"Primary: SPXW250910C{int((spx_current+5)/5)*5}.0")
             
     elif spx_current >= 6510:
-        print(f"✅ ABOVE KEY RESISTANCE (6510)")
+        print(f"SUCCESS ABOVE KEY RESISTANCE (6510)")
         print(f"Strategy: BULLISH bias toward 6542-6560")
         print(f"Primary: SPXW250910C{int((spx_current+10)/5)*5}.0")
         
     else:
-        print(f"⬇️  BELOW KEY RESISTANCE (6510)")
+        print(f"  BELOW KEY RESISTANCE (6510)")
         print(f"Strategy: BEARISH toward 6498 support")
         print(f"Primary: SPXW250910P{int((spx_current-10)/5)*5}.0")
     
@@ -191,7 +191,7 @@ if __name__ == "__main__":
     result = analyze_with_unified_data()
     
     if result:
-        print(f"\n✅ Data source working: {result['source']}")
+        print(f"\nSUCCESS Data source working: {result['source']}")
     else:
-        print(f"\n❌ All data sources failed")
+        print(f"\nERROR All data sources failed")
         print(f"Use screenshot analysis or manual entry")

@@ -504,7 +504,7 @@ def main():
         "price_change": 5.2
     }
 
-    print("🎯 ML Pattern Recognition Engine Test")
+    print("TARGET ML Pattern Recognition Engine Test")
     print("=" * 50)
 
     # Detect patterns
@@ -523,7 +523,7 @@ def main():
     stats = engine.get_pattern_statistics()
     print(f"\nPattern Database: {stats['total_patterns_tracked']} patterns tracked")
 
-    print("\n✅ ML Pattern Engine initialized successfully!")
+    print("\nSUCCESS ML Pattern Engine initialized successfully!")
 
 if __name__ == "__main__":
     main()
