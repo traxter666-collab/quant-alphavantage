@@ -104,6 +104,13 @@ class SPXCommandRouter:
             'spx qqq spy iwm ndx': 'five_asset_integration.py',
             'full portfolio analysis': 'five_asset_integration.py',
 
+            # Performance & Testing
+            'performance optimization': 'performance_optimizer.py',
+            'component validation': 'component_validator.py',
+            'monday testing protocol': 'monday_testing_protocol.py',
+            'high frequency analysis': 'performance_optimizer.py',
+            'system validation': 'component_validator.py',
+
             # Technical Analysis
             'chop zone': 'spx_auto.py',
             'gex analysis': 'gex_analyzer.py',
