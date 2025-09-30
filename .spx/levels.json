@@ -1,0 +1,58 @@
+{
+  "spx_levels": {
+    "timestamp": "2025-09-30T00:18:00",
+    "current_price": 6661.21,
+    "support_levels": [
+      {
+        "level": 6560,
+        "strength": "HIGH",
+        "type": "reversal_probability",
+        "description": "High reversal probability zone"
+      },
+      {
+        "level": 6542,
+        "strength": "MEDIUM",
+        "type": "resistance_zone",
+        "description": "Resistance zone"
+      },
+      {
+        "level": 6510,
+        "strength": "HIGH",
+        "type": "key_resistance",
+        "description": "Key resistance level"
+      },
+      {
+        "level": 6498,
+        "strength": "HIGH",
+        "type": "strong_support",
+        "description": "Strong support level"
+      }
+    ],
+    "resistance_levels": [
+      {
+        "level": 6677,
+        "strength": "MEDIUM",
+        "type": "daily_high",
+        "description": "Current session high"
+      },
+      {
+        "level": 6700,
+        "strength": "HIGH",
+        "type": "psychological",
+        "description": "Major psychological resistance"
+      },
+      {
+        "level": 6750,
+        "strength": "MEDIUM",
+        "type": "weekly_resistance",
+        "description": "Weekly resistance zone"
+      }
+    ],
+    "trading_range": {
+      "lower": 6560,
+      "upper": 6700,
+      "bias": "BEARISH_REVERSAL",
+      "confidence": "HIGH"
+    }
+  }
+}

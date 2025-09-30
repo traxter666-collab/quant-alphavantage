@@ -14,7 +14,7 @@
       "dollar_value": 331839.99999999994,
       "margin_day": 500,
       "margin_overnight": 12500,
-      "timestamp": "2025-09-29T21:57:44.637562",
+      "timestamp": "2025-09-30T08:30:55.363099",
       "pricing_source": "SPY_CONVERSION"
     },
     "technical_indicators": {
@@ -22,20 +22,20 @@
       "momentum": "NEUTRAL"
     },
     "consensus": {
-      "total_score": 180,
+      "total_score": 175,
       "max_score": 250,
       "components": {
         "price_momentum": 30,
         "technical_alignment": 35,
         "contract_factors": 35,
         "volume_context": 25,
-        "market_timing": 15,
+        "market_timing": 10,
         "risk_assessment": 40
       },
       "direction": "BULLISH",
       "confidence": "MEDIUM",
-      "percentage": 72.0,
-      "timestamp": "2025-09-29T21:57:45.263952"
+      "percentage": 70.0,
+      "timestamp": "2025-09-30T08:30:55.775703"
     },
     "position_sizing": {
       "recommended_contracts": 1,
@@ -59,10 +59,10 @@
         "max_risk": 6636.799999999999,
         "reasoning": "MEDIUM confidence bullish setup in ES",
         "risk_reward": "1:2",
-        "confidence_score": 72.0
+        "confidence_score": 70.0
       }
     ],
-    "timestamp": "2025-09-29T21:57:45.263994"
+    "timestamp": "2025-09-30T08:30:55.775751"
   },
   "enhanced_analysis": {
     "symbol": "ES",
@@ -70,14 +70,14 @@
     "change_percent": 0.281,
     "enhanced_analysis": {
       "session": {
-        "current_hour": 21,
-        "current_day": 0,
-        "session": "asian",
-        "characteristics": "range_bound",
-        "recommended_strategy": "range_trading",
-        "position_multiplier": 0.8,
-        "risk_adjustment": 0.9,
-        "preferred_style": "fade_extremes"
+        "current_hour": 8,
+        "current_day": 1,
+        "session": "us_premarket",
+        "characteristics": "news_driven",
+        "recommended_strategy": "news_reaction",
+        "position_multiplier": 0.7,
+        "risk_adjustment": 1.2,
+        "preferred_style": "gap_analysis"
       },
       "volatility": {
         "regime": "ultra_low",
@@ -129,24 +129,24 @@
     },
     "position_sizing": {
       "base_position_pct": 1.0,
-      "session_multiplier": 0.8,
+      "session_multiplier": 0.7,
       "volatility_multiplier": 1.5,
       "correlation_adjustment": 1.0,
-      "final_position_pct": 1.2,
-      "position_dollars": 300.0,
+      "final_position_pct": 1.0499999999999998,
+      "position_dollars": 262.5,
       "recommended_contracts": 1,
       "max_risk_dollars": 1398.7056,
       "risk_percent_of_account": 5.5948224,
       "stop_distance_points": 27.974112,
       "session_info": {
-        "current_hour": 21,
-        "current_day": 0,
-        "session": "asian",
-        "characteristics": "range_bound",
-        "recommended_strategy": "range_trading",
-        "position_multiplier": 0.8,
-        "risk_adjustment": 0.9,
-        "preferred_style": "fade_extremes"
+        "current_hour": 8,
+        "current_day": 1,
+        "session": "us_premarket",
+        "characteristics": "news_driven",
+        "recommended_strategy": "news_reaction",
+        "position_multiplier": 0.7,
+        "risk_adjustment": 1.2,
+        "preferred_style": "gap_analysis"
       },
       "volatility_info": {
         "regime": "ultra_low",
@@ -188,16 +188,16 @@
       "action": "STRONG_BUY",
       "confidence": "HIGH",
       "contracts": 1,
-      "session_strategy": "range_trading",
-      "reasoning": "HIGH signal strength (70.0%) during asian session",
+      "session_strategy": "news_reaction",
+      "reasoning": "HIGH signal strength (70.0%) during us_premarket session",
       "risk_percent": 5.5948224,
       "stop_distance": 27.974112
     },
-    "timestamp": "2025-09-29T21:57:50.674322"
+    "timestamp": "2025-09-30T08:30:59.036569"
   },
   "combined_insights": {
-    "combined_score": 71.19999999999999,
-    "base_score": 72.0,
+    "combined_score": 70.0,
+    "base_score": 70.0,
     "enhanced_score": 70.0,
     "direction_agreement": true,
     "base_direction": "BULLISH",
@@ -206,14 +206,14 @@
     "combined_risk_percent": 16.0710112,
     "market_conditions": {
       "session": {
-        "current_hour": 21,
-        "current_day": 0,
-        "session": "asian",
-        "characteristics": "range_bound",
-        "recommended_strategy": "range_trading",
-        "position_multiplier": 0.8,
-        "risk_adjustment": 0.9,
-        "preferred_style": "fade_extremes"
+        "current_hour": 8,
+        "current_day": 1,
+        "session": "us_premarket",
+        "characteristics": "news_driven",
+        "recommended_strategy": "news_reaction",
+        "position_multiplier": 0.7,
+        "risk_adjustment": 1.2,
+        "preferred_style": "gap_analysis"
       },
       "volatility": {
         "regime": "ultra_low",
@@ -269,13 +269,13 @@
     "action": "BUY",
     "confidence": "HIGH",
     "contracts": 0,
-    "combined_score": 71.19999999999999,
+    "combined_score": 70.0,
     "direction_agreement": true,
     "risk_percent": 16.0710112,
-    "reasoning": "Good consensus (71.2%); Both systems agree on bullish direction; High risk (16.1%)",
-    "market_session": "asian",
+    "reasoning": "Good consensus (70.0%); Both systems agree on bullish direction; High risk (16.1%)",
+    "market_session": "us_premarket",
     "volatility_regime": "ultra_low",
     "risk_regime": "NEUTRAL"
   },
-  "timestamp": "2025-09-29T21:57:50.674344"
+  "timestamp": "2025-09-30T08:30:59.036619"
 }

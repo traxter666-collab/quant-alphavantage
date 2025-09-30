@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-09-30T09:04:54.960319",
+  "mode": "PRE_MARKET_PREP",
+  "systems": {
+    "api": {
+      "status": "OK",
+      "api": "alphavantage"
+    },
+    "validation": "PASS"
+  },
+  "market_data": {
+    "timestamp": "2025-09-30T09:05:15.153556",
+    "spy": 663.68,
+    "qqq": 598.73,
+    "iwm": 241.62,
+    "spx": 6661.21
+  }
+}

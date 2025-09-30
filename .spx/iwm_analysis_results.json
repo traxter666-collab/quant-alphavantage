@@ -1,0 +1,76 @@
+{
+  "timestamp": "2025-09-30T09:05:15.094516",
+  "iwm_analysis": {
+    "current_price": 241.62,
+    "change": 0.28,
+    "change_percent": 0.116,
+    "key_levels": {
+      "support_levels": [
+        210,
+        215,
+        220,
+        225,
+        230
+      ],
+      "resistance_levels": [
+        235,
+        240,
+        245,
+        250,
+        255
+      ],
+      "psychological_levels": [
+        220,
+        240,
+        260
+      ]
+    },
+    "nearest_levels": [
+      [
+        240,
+        1.6200000000000045
+      ],
+      [
+        245,
+        3.3799999999999955
+      ],
+      [
+        235,
+        6.6200000000000045
+      ]
+    ]
+  },
+  "iwm_consensus": {
+    "total_score": 165,
+    "components": {
+      "SmallCap_Momentum": 22,
+      "Level_Proximity": 15,
+      "Options_Activity": 18,
+      "Risk_Appetite": 12,
+      "Trend_Consistency": 13,
+      "Base_Technical": 85
+    },
+    "directional_bias": "BULLISH",
+    "rsi_context": 60.3168,
+    "iwm_price": 241.62
+  },
+  "threshold_percentage": 82.5,
+  "confidence_level": "TRADE_WORTHY",
+  "action_recommendation": "CONSIDER_TRADING",
+  "optimal_strikes": {
+    "ATM_Call": {
+      "strike": 242.0,
+      "bid": 0.0,
+      "ask": 0.01,
+      "volume": 112240,
+      "open_interest": 4224
+    },
+    "OTM_Call": {
+      "strike": 242.0,
+      "bid": 0.0,
+      "ask": 0.01,
+      "volume": 112240,
+      "open_interest": 4224
+    }
+  }
+}

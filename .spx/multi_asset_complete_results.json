@@ -1,0 +1,34 @@
+{
+  "timestamp": "2025-09-30T09:05:15.126026",
+  "analysis_type": "COMPLETE_MULTI_ASSET_SPX_QQQ_SPY_IWM",
+  "spx_success": true,
+  "qqq_success": true,
+  "spy_success": true,
+  "iwm_success": true,
+  "best_opportunity": "THREE ASSETS TRADEABLE: QQQ + SPY + IWM",
+  "recommendation": "Strong multi-asset approach with QQQ + SPY + IWM",
+  "correlation_status": "PARTIAL ALIGNMENT",
+  "tradeable_assets": [
+    "QQQ",
+    "SPY",
+    "IWM"
+  ],
+  "asset_ranking": [
+    [
+      "SPY",
+      82.72727272727273
+    ],
+    [
+      "IWM",
+      82.5
+    ],
+    [
+      "QQQ",
+      75.8974358974359
+    ],
+    [
+      "SPX",
+      66.2
+    ]
+  ]
+}

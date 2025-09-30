@@ -12,7 +12,7 @@
     "dollar_value": 331839.99999999994,
     "margin_day": 500,
     "margin_overnight": 12500,
-    "timestamp": "2025-09-29T22:01:13.807887",
+    "timestamp": "2025-09-30T08:30:55.363099",
     "pricing_source": "SPY_CONVERSION"
   },
   "technical_indicators": {
@@ -20,20 +20,20 @@
     "momentum": "NEUTRAL"
   },
   "consensus": {
-    "total_score": 180,
+    "total_score": 175,
     "max_score": 250,
     "components": {
       "price_momentum": 30,
       "technical_alignment": 35,
       "contract_factors": 35,
       "volume_context": 25,
-      "market_timing": 15,
+      "market_timing": 10,
       "risk_assessment": 40
     },
     "direction": "BULLISH",
     "confidence": "MEDIUM",
-    "percentage": 72.0,
-    "timestamp": "2025-09-29T22:01:15.208879"
+    "percentage": 70.0,
+    "timestamp": "2025-09-30T08:30:55.775703"
   },
   "position_sizing": {
     "recommended_contracts": 1,
@@ -57,8 +57,8 @@
       "max_risk": 6636.799999999999,
       "reasoning": "MEDIUM confidence bullish setup in ES",
       "risk_reward": "1:2",
-      "confidence_score": 72.0
+      "confidence_score": 70.0
     }
   ],
-  "timestamp": "2025-09-29T22:01:15.208911"
+  "timestamp": "2025-09-30T08:30:55.775751"
 }

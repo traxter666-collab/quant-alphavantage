@@ -1,0 +1,61 @@
+{
+  "timestamp": "2025-09-30T09:05:11.094796",
+  "qqq_analysis": {
+    "current_price": 598.73,
+    "change": 2.76,
+    "change_percent": 0.4631,
+    "key_levels": {
+      "support_levels": [
+        490,
+        485,
+        480,
+        475,
+        470
+      ],
+      "resistance_levels": [
+        500,
+        505,
+        510,
+        515,
+        520
+      ],
+      "psychological_levels": [
+        475,
+        500,
+        525
+      ]
+    },
+    "nearest_levels": [
+      [
+        520,
+        78.73000000000002
+      ],
+      [
+        515,
+        83.73000000000002
+      ],
+      [
+        510,
+        88.73000000000002
+      ]
+    ]
+  },
+  "qqq_consensus": {
+    "total_score": 148,
+    "components": {
+      "Tech_Momentum": 14,
+      "Level_Proximity": 8,
+      "Options_Flow": 16,
+      "Volatility_Assessment": 12,
+      "Trend_Strength": 8,
+      "Base_Technical": 90
+    },
+    "directional_bias": "NEUTRAL",
+    "rsi_context": 45.1127,
+    "qqq_price": 598.73
+  },
+  "threshold_percentage": 75.8974358974359,
+  "confidence_level": "TRADE_WORTHY",
+  "action_recommendation": "CONSIDER_TRADING",
+  "optimal_strikes": {}
+}

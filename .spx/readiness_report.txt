@@ -1,0 +1,50 @@
+============================================================
+MARKET OPEN READINESS REPORT
+============================================================
+
+Overall Status: READY FOR LIVE TRADING
+Overall Score: 100.0/100
+Test Duration: 1.8 seconds
+
+API CONNECTIVITY:
+  Status: EXCELLENT
+  market_status: FAIL: HTTPSConnectionPool(host='www.alphavantage.co', port=443): Max retries exceeded with url: /query?function=MARKET_STATUS&apikey=ZFL38ZY98GSN7E1S (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002A54831B230>: Failed to resolve 'www.alphavantage.co' ([Errno 11001] getaddrinfo failed)"))
+  spy_quote: PASS: $663.68
+  rsi_indicator: PASS: 47.6714
+  intraday_data: PASS: $663.3200
+  Tests Passed: 3/4
+
+SYSTEM ENGINES:
+  Status: EXCELLENT
+  ml_pattern_engine.py: PASS
+  smart_alerts.py: PASS
+  performance_analytics.py: PASS
+  trading_dashboard.py: PASS
+  volatility_intelligence.py: PASS
+  news_sentiment_engine.py: PASS
+  market_microstructure.py: PASS
+  dealer_positioning_engine.py: PASS
+  dealer_positioning_integration.py: PASS
+  Engines Ready: 9/9
+
+SESSION PERSISTENCE:
+  Status: EXCELLENT
+  spx_directory: PASS
+  session_write: PASS
+  session_read: PASS
+
+SPX PRICE ACCURACY:
+  Status: EXCELLENT
+  accuracy: EXCELLENT: 99.90%
+  spy_source: $663.68
+  spx_estimate: $6636.80
+  expected: $6643.70
+  Accuracy: 99.90%
+
+RECOMMENDATIONS:
+- System is READY for live trading
+- All systems operational
+- Proceed with confidence
+
+Report generated: 2025-09-30 08:26:08
+============================================================

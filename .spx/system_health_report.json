@@ -1,0 +1,118 @@
+{
+  "timestamp": "2025-09-30T09:05:15.134851",
+  "overall_score": 100.0,
+  "api_tests": [
+    {
+      "test": "SPY_QUOTE",
+      "status": "PASS",
+      "response_time": 0.43424320220947266,
+      "data": "SPY: $663.68"
+    },
+    {
+      "test": "QQQ_QUOTE",
+      "status": "PASS",
+      "response_time": 0.4373178482055664,
+      "data": "QQQ: $598.73"
+    },
+    {
+      "test": "SPY_OPTIONS",
+      "status": "PASS",
+      "response_time": 0.9914424419403076,
+      "data": "10380 contracts"
+    },
+    {
+      "test": "RSI_INDICATOR",
+      "status": "PASS",
+      "response_time": 0.5175669193267822,
+      "data": "RSI: 47.7"
+    },
+    {
+      "test": "IWM_QUOTE",
+      "status": "PASS",
+      "response_time": 0.4177687168121338,
+      "data": "IWM: $241.62"
+    }
+  ],
+  "system_tests": [
+    {
+      "system": "SPX_UNIFIED",
+      "status": "PASS",
+      "response_time": 2.024940013885498,
+      "result": true
+    },
+    {
+      "system": "QQQ_INTEGRATION",
+      "status": "PASS",
+      "response_time": 1.9746172428131104,
+      "result": true
+    },
+    {
+      "system": "SPY_INTEGRATION",
+      "status": "PASS",
+      "response_time": 2.532904863357544,
+      "result": true
+    },
+    {
+      "system": "IWM_INTEGRATION",
+      "status": "PASS",
+      "response_time": 2.054797649383545,
+      "result": true
+    }
+  ],
+  "multi_asset_test": {
+    "system": "MULTI_ASSET_COMPLETE",
+    "status": "PASS",
+    "response_time": 8.031935453414917,
+    "result": true
+  },
+  "validation_tests": [
+    {
+      "test": "SPX_DATA_INTEGRITY",
+      "status": "PASS",
+      "data": "Price: 6721.09, Consensus: 182/275 (66.2%)"
+    },
+    {
+      "test": "QQQ_DATA_INTEGRITY",
+      "status": "PASS",
+      "data": "Price: 598.73, Consensus: 148"
+    },
+    {
+      "test": "SPY_DATA_INTEGRITY",
+      "status": "PASS",
+      "data": "Price: 663.68, Consensus: 182"
+    },
+    {
+      "test": "MULTI_ASSET_CONSISTENCY",
+      "status": "PASS",
+      "data": "Tradeable: 3/4 assets"
+    },
+    {
+      "test": "IWM_DATA_INTEGRITY",
+      "status": "PASS",
+      "data": "Price: 241.62, Consensus: 165"
+    }
+  ],
+  "backtest_results": [
+    {
+      "scenario": "Bull Market",
+      "total_pnl": 10.95,
+      "avg_pnl": 3.65,
+      "positions": 3,
+      "status": "PROFIT"
+    },
+    {
+      "scenario": "Bear Market",
+      "total_pnl": -11.55,
+      "avg_pnl": -3.85,
+      "positions": 3,
+      "status": "LOSS"
+    },
+    {
+      "scenario": "Sideways",
+      "total_pnl": 0.30000000000000004,
+      "avg_pnl": 0.10000000000000002,
+      "positions": 3,
+      "status": "PROFIT"
+    }
+  ]
+}

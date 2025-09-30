@@ -1,0 +1,54 @@
+{
+  "pre_market_validation": {
+    "timestamp": "2025-09-30T00:15:49.297843",
+    "completion_time": "2025-09-30T00:15:58.177045",
+    "validation_time_seconds": 8.878886,
+    "readiness_score": 60.0,
+    "market_readiness": "NOT READY - REQUIRES ATTENTION",
+    "systems_tested": 5,
+    "systems_passed": 3,
+    "critical_failures": [
+      "Only 2 Python processes running (expected 5+)",
+      "POLYGON API validation failed"
+    ],
+    "validation_results": {
+      "streaming_systems": {
+        "python_processes": 2,
+        "expected_minimum": 5,
+        "status": "FAIL",
+        "timestamp": "2025-09-30T00:15:49.667572"
+      },
+      "api_connectivity": {
+        "alphavantage": {
+          "status": "PASS",
+          "response_time": "< 30s",
+          "timestamp": "2025-09-30T00:15:52.391084"
+        },
+        "polygon": {
+          "status": "FAIL",
+          "response_time": "< 30s",
+          "timestamp": "2025-09-30T00:15:52.442671"
+        },
+        "after_hours": {
+          "status": "PASS",
+          "response_time": "< 30s",
+          "timestamp": "2025-09-30T00:15:53.178486"
+        }
+      },
+      "discord": {
+        "status": "PASS",
+        "timestamp": "2025-09-30T00:15:55.404594"
+      },
+      "data_pipeline": {
+        "spx_data": "PASS",
+        "real_time_access": "VERIFIED",
+        "timestamp": "2025-09-30T00:15:56.885546"
+      },
+      "options_chain": {
+        "access_status": "PASS",
+        "spxw_available": "YES",
+        "timestamp": "2025-09-30T00:15:58.176699"
+      }
+    }
+  }
+}

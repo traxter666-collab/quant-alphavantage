@@ -1,0 +1,59 @@
+{
+  "timestamp": "2025-09-30T08:26:08.547905",
+  "overall_status": "READY FOR LIVE TRADING",
+  "overall_score": 100.0,
+  "test_duration": 1.778459,
+  "individual_tests": {
+    "api_connectivity": {
+      "status": "EXCELLENT",
+      "tests_passed": 3,
+      "tests_total": 4,
+      "details": {
+        "market_status": "FAIL: HTTPSConnectionPool(host='www.alphavantage.co', port=443): Max retries exceeded with url: /query?function=MARKET_STATUS&apikey=ZFL38ZY98GSN7E1S (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x000002A54831B230>: Failed to resolve 'www.alphavantage.co' ([Errno 11001] getaddrinfo failed)\"))",
+        "spy_quote": "PASS: $663.68",
+        "rsi_indicator": "PASS: 47.6714",
+        "intraday_data": "PASS: $663.3200"
+      },
+      "spy_price": 663.68
+    },
+    "system_engines": {
+      "status": "EXCELLENT",
+      "engines_tested": 9,
+      "engines_passed": 9,
+      "details": {
+        "ml_pattern_engine.py": "PASS",
+        "smart_alerts.py": "PASS",
+        "performance_analytics.py": "PASS",
+        "trading_dashboard.py": "PASS",
+        "volatility_intelligence.py": "PASS",
+        "news_sentiment_engine.py": "PASS",
+        "market_microstructure.py": "PASS",
+        "dealer_positioning_engine.py": "PASS",
+        "dealer_positioning_integration.py": "PASS"
+      }
+    },
+    "session_persistence": {
+      "status": "EXCELLENT",
+      "tests_passed": 3,
+      "tests_total": 3,
+      "details": {
+        "spx_directory": "PASS",
+        "session_write": "PASS",
+        "session_read": "PASS"
+      }
+    },
+    "spx_price_accuracy": {
+      "status": "EXCELLENT",
+      "spy_price": 663.68,
+      "spx_estimate": 6636.799999999999,
+      "expected_spx": 6643.7,
+      "accuracy_pct": 99.89614220991314,
+      "details": {
+        "accuracy": "EXCELLENT: 99.90%",
+        "spy_source": "$663.68",
+        "spx_estimate": "$6636.80",
+        "expected": "$6643.70"
+      }
+    }
+  }
+}

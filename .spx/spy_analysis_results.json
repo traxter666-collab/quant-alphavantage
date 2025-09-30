@@ -1,0 +1,61 @@
+{
+  "timestamp": "2025-09-30T09:05:13.168994",
+  "spy_analysis": {
+    "current_price": 663.68,
+    "change": 1.86,
+    "change_percent": 0.281,
+    "key_levels": {
+      "support_levels": [
+        650,
+        655,
+        660,
+        665,
+        670
+      ],
+      "resistance_levels": [
+        675,
+        680,
+        685,
+        690,
+        695
+      ],
+      "psychological_levels": [
+        650,
+        675,
+        700
+      ]
+    },
+    "nearest_levels": [
+      [
+        665,
+        1.32000000000005
+      ],
+      [
+        660,
+        3.67999999999995
+      ],
+      [
+        670,
+        6.32000000000005
+      ]
+    ]
+  },
+  "spy_consensus": {
+    "total_score": 182,
+    "components": {
+      "Market_Momentum": 16,
+      "Level_Proximity": 18,
+      "Options_Activity": 22,
+      "Market_Stability": 16,
+      "Trend_Consistency": 10,
+      "Base_Technical": 100
+    },
+    "directional_bias": "NEUTRAL",
+    "rsi_context": 47.6714,
+    "spy_price": 663.68
+  },
+  "threshold_percentage": 82.72727272727273,
+  "confidence_level": "TRADE_WORTHY",
+  "action_recommendation": "CONSIDER_TRADING",
+  "optimal_strikes": {}
+}

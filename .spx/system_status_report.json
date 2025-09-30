@@ -1,7 +1,7 @@
 {
   "system_monitor": {
-    "timestamp": "2025-09-30T00:06:19.959689",
-    "monitoring_start": "2025-09-30T00:06:09.547768",
+    "timestamp": "2025-09-30T00:21:06.276998",
+    "monitoring_start": "2025-09-30T00:20:59.508596",
     "system_status": {
       "streaming_systems": {
         "total_processes": 2,
@@ -37,7 +37,7 @@
       "api_endpoints": {
         "alphavantage": {
           "status": "HEALTHY",
-          "response_time": "4.31s"
+          "response_time": "2.68s"
         },
         "polygon": {
           "status": "UNHEALTHY",
@@ -45,17 +45,17 @@
         },
         "after_hours": {
           "status": "HEALTHY",
-          "response_time": "2.59s"
+          "response_time": "0.70s"
         },
         "discord": {
           "status": "HEALTHY",
-          "response_time": "0.82s"
+          "response_time": "0.98s"
         }
       },
       "data_pipeline": {
         "spx_data": "OPERATIONAL",
         "current_spx": "SPX: $6661.21 (+17.51, +0.26%)",
-        "last_update": "2025-09-30T00:06:18.692227",
+        "last_update": "2025-09-30T00:21:05.236117",
         "options_chain": "ACCESSIBLE"
       },
       "trading_infrastructure": {
@@ -63,15 +63,17 @@
           ".spx/session.json": {
             "status": "CURRENT",
             "size": 284,
-            "age_minutes": 260
+            "age_minutes": 275
           },
           ".spx/levels.json": {
-            "status": "MISSING"
+            "status": "CURRENT",
+            "size": 1354,
+            "age_minutes": 0
           },
           ".spx/market_open_status.json": {
             "status": "CURRENT",
             "size": 723,
-            "age_minutes": 6
+            "age_minutes": 5
           }
         },
         "risk_management": {
@@ -96,9 +98,9 @@
       "total_systems": 7,
       "overall_status": "DEGRADED",
       "trading_readiness": "LIMITED FUNCTIONALITY",
-      "market_status": "[TIMEOUT] OPENS IN 9:23:40",
-      "last_update": "2025-09-30T00:06:19.959508"
+      "market_status": "[TIMEOUT] OPENS IN 9:08:53",
+      "last_update": "2025-09-30T00:21:06.276843"
     },
-    "uptime_minutes": 0.1735321
+    "uptime_minutes": 0.11280676666666666
   }
 }

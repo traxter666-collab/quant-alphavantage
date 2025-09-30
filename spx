@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+"""
+SPX - UNIFIED SEAMLESS COMMAND
+One command for everything - zero friction trading
+"""
+
+import sys
+import subprocess
+import os
+
+def main():
+    base_path = os.path.dirname(os.path.abspath(__file__))
+
+    if len(sys.argv) == 1:
+        # Default: Run seamless market system
+        subprocess.run(['python', os.path.join(base_path, 'seamless_market_system.py')])
+    else:
+        cmd = ' '.join(sys.argv[1:]).lower()
+
+        # Command routing
+        if cmd in ['now', 'quick', 'analysis']:
+            subprocess.run(['python', os.path.join(base_path, 'seamless_market_system.py')])
+
+        elif cmd in ['monitor', 'stream', 'live']:
+            subprocess.run(['python', os.path.join(base_path, 'seamless_market_system.py'), 'monitor', '30'])
+
+        elif cmd in ['fast', 'realtime']:
+            subprocess.run(['python', os.path.join(base_path, 'seamless_market_system.py'), 'monitor', '10'])
+
+        elif cmd == 'validate' or cmd == 'health':
+            subprocess.run(['python', os.path.join(base_path, 'system_validation.py')])
+
+        elif cmd == 'multi' or cmd == 'all':
+            subprocess.run(['python', os.path.join(base_path, 'multi_asset_trader.py')])
+
+        else:
+            print("SPX - Unified Seamless Trading Command")
+            print("=" * 50)
+            print()
+            print("USAGE:")
+            print("  spx              Auto-analysis based on market time")
+            print("  spx now          Current market analysis")
+            print("  spx monitor      Continuous updates (30s)")
+            print("  spx fast         Fast updates (10s)")
+            print("  spx validate     System health check")
+            print("  spx multi        Multi-asset analysis")
+            print()
+            print("SMART MODES:")
+            print("  - Pre-market: Validation + prep")
+            print("  - Market hours: Live analysis")
+            print("  - After-hours: Extended trading data")
+
+if __name__ == "__main__":
+    main()
