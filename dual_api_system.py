@@ -131,14 +131,43 @@ class DualAPISystem:
                 }
 
     def get_spx_data_with_failover(self):
-        """Get SPX data using dual API system with SPY conversion"""
+        """Get SPX data using Polygon indices endpoint (primary) with SPY fallback"""
         print("Getting SPX data with dual API failover...")
 
-        # Get SPY data first
+        # Try Polygon I:SPX first (most accurate)
+        try:
+            from datetime import datetime
+            today = datetime.now().strftime('%Y-%m-%d')
+            url = f'https://api.polygon.io/v2/aggs/ticker/I:SPX/range/1/minute/{today}/{today}?adjusted=true&sort=desc&limit=1&apikey={self.polygon_api_key}'
+
+            response = requests.get(url, timeout=10)
+            data = response.json()
+
+            if 'results' in data and data['results']:
+                bar = data['results'][0]
+                spx_price = bar['c']  # Close price
+
+                print(f"[PASS] Polygon I:SPX direct: ${spx_price:.2f}")
+
+                return {
+                    'success': True,
+                    'spx_price': spx_price,
+                    'api_used': 'polygon_indices',
+                    'conversion_method': 'Direct I:SPX',
+                    'timestamp': datetime.fromtimestamp(bar['t'] / 1000),
+                    'reliability': 'VERY_HIGH',
+                    'open': bar['o'],
+                    'high': bar['h'],
+                    'low': bar['l']
+                }
+        except Exception as e:
+            print(f"[FAIL] Polygon I:SPX failed: {e}")
+
+        # Fallback: Get SPY and convert
+        print("Falling back to SPY conversion...")
         spy_result = self.get_stock_quote_with_failover('SPY')
 
         if spy_result['success']:
-            # Convert SPY to SPX (approximate 10x multiplier with adjustments)
             spy_price = spy_result['price']
             spx_price = spy_price * 10
 
