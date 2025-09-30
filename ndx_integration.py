@@ -90,53 +90,95 @@ class NDXOptionsIntegration:
             }
 
     def get_ndx_options(self) -> Dict[str, Any]:
-        """Get NDX options chain data"""
-        try:
-            # Try direct NDX options first
-            params = {
-                'function': 'REALTIME_OPTIONS',
-                'symbol': 'NDX',
-                'apikey': self.api_key
-            }
+        """Get NDX options chain data using proper NASDAQ-100 symbols"""
 
-            response = requests.get(self.base_url, params=params, timeout=20)
-            response.raise_for_status()
-            data = response.json()
+        # Try multiple NDX option symbols in order of preference
+        ndx_symbols = [
+            'NDX',    # Full-value NASDAQ-100 Index options (monthly AM-settled)
+            'NDXP',   # Daily/weekly NASDAQ-100 options (PM-settled)
+            'XND'     # Micro NDX options (1/100th value)
+        ]
 
-            if 'optionChain' in data or 'data' in data:
-                return {
-                    'success': True,
-                    'options_data': data,
-                    'source': 'DIRECT_NDX',
-                    'timestamp': datetime.now().isoformat()
-                }
-            else:
-                # Fallback: Use QQQ options as NASDAQ-100 proxy
-                print("Direct NDX options unavailable, using QQQ options as NASDAQ-100 proxy...")
-
-                qqq_params = {
+        for symbol in ndx_symbols:
+            try:
+                print(f"Trying {symbol} options...")
+                params = {
                     'function': 'REALTIME_OPTIONS',
-                    'symbol': 'QQQ',
+                    'symbol': symbol,
                     'apikey': self.api_key
                 }
 
-                qqq_response = requests.get(self.base_url, params=qqq_params, timeout=20)
-                qqq_data = qqq_response.json()
+                response = requests.get(self.base_url, params=params, timeout=20)
+                response.raise_for_status()
+                data = response.json()
 
-                return {
-                    'success': True,
-                    'options_data': qqq_data,
-                    'source': 'QQQ_PROXY',
-                    'timestamp': datetime.now().isoformat(),
-                    'note': 'Using QQQ options as NASDAQ-100 proxy'
-                }
+                if 'optionChain' in data or 'data' in data or 'option_chain' in data:
+                    print(f"SUCCESS: Found {symbol} options data")
+                    return {
+                        'success': True,
+                        'options_data': data,
+                        'source': f'DIRECT_{symbol}',
+                        'symbol_used': symbol,
+                        'timestamp': datetime.now().isoformat(),
+                        'description': self.get_symbol_description(symbol)
+                    }
+                elif 'Error Message' not in data and 'Note' not in data:
+                    # Data exists but might be in different format
+                    print(f"Found {symbol} data (non-standard format)")
+                    return {
+                        'success': True,
+                        'options_data': data,
+                        'source': f'DIRECT_{symbol}',
+                        'symbol_used': symbol,
+                        'timestamp': datetime.now().isoformat(),
+                        'description': self.get_symbol_description(symbol)
+                    }
+                else:
+                    print(f"{symbol} options not available: {data.get('Error Message', data.get('Note', 'Unknown'))}")
+
+            except Exception as e:
+                print(f"Error accessing {symbol} options: {e}")
+                continue
+
+        # If all direct NDX options fail, fallback to QQQ
+        print("All direct NDX options unavailable, using QQQ as NASDAQ-100 proxy...")
+        try:
+            qqq_params = {
+                'function': 'REALTIME_OPTIONS',
+                'symbol': 'QQQ',
+                'apikey': self.api_key
+            }
+
+            qqq_response = requests.get(self.base_url, params=qqq_params, timeout=20)
+            qqq_data = qqq_response.json()
+
+            return {
+                'success': True,
+                'options_data': qqq_data,
+                'source': 'QQQ_PROXY',
+                'symbol_used': 'QQQ',
+                'timestamp': datetime.now().isoformat(),
+                'note': 'Direct NDX options unavailable - using QQQ ETF as NASDAQ-100 proxy',
+                'description': 'QQQ ETF options (NASDAQ-100 ETF proxy)'
+            }
 
         except Exception as e:
             return {
                 'success': False,
                 'error': str(e),
-                'options_data': {}
+                'options_data': {},
+                'note': 'Both direct NDX and QQQ fallback failed'
             }
+
+    def get_symbol_description(self, symbol: str) -> str:
+        """Get description for NDX option symbols"""
+        descriptions = {
+            'NDX': 'Full-value NASDAQ-100 Index options (monthly AM-settled)',
+            'NDXP': 'Daily/weekly NASDAQ-100 options (PM-settled)',
+            'XND': 'Micro NDX options (1/100th value)',
+            'QQQ': 'QQQ ETF options (NASDAQ-100 ETF proxy)'
+        }
+        return descriptions.get(symbol, f'{symbol} options')
 
     def get_ndx_technical_indicators(self) -> Dict[str, Any]:
         """Get NDX technical indicators"""
@@ -272,64 +314,127 @@ class NDXOptionsIntegration:
             'timestamp': datetime.now().isoformat()
         }
 
-    def find_optimal_ndx_strikes(self, ndx_price: float, options_data: Dict, direction: str) -> List[Dict]:
-        """Find optimal NDX option strikes based on analysis"""
+    def find_optimal_ndx_strikes(self, ndx_price: float, options_data: Dict, direction: str, source: str = 'QQQ_PROXY') -> List[Dict]:
+        """Find optimal NDX option strikes based on analysis and data source"""
 
         optimal_strikes = []
 
         try:
-            # For QQQ proxy, recommend QQQ options with NDX context
             if ndx_price > 0:
-                # Calculate ATM and OTM levels for NDX context
                 atm_level = round(ndx_price)
 
-                if direction == "BULLISH":
-                    # Bullish NDX plays via QQQ calls
+                if source.startswith('DIRECT_'):
+                    # Direct NDX options available
+                    symbol_used = source.split('_')[1]  # Extract NDX, NDXP, or XND
+
+                    if symbol_used == 'XND':
+                        # Micro NDX options (1/100th value)
+                        xnd_price = ndx_price / 100
+
+                        if direction == "BULLISH":
+                            optimal_strikes.append({
+                                'type': 'CALL',
+                                'underlying': 'XND',
+                                'strike': round(xnd_price + 1),
+                                'reasoning': f'NDX bullish bias at {ndx_price:.0f}, XND micro call',
+                                'ndx_context': f'NDX target: {atm_level + 100:.0f}',
+                                'estimated_premium': '$0.50-1.50',
+                                'risk_reward': '1:3',
+                                'advantage': 'Lower capital requirement, direct NDX exposure'
+                            })
+
+                            optimal_strikes.append({
+                                'type': 'CALL',
+                                'underlying': 'XND',
+                                'strike': round(xnd_price + 2),
+                                'reasoning': f'NDX momentum play, XND OTM call',
+                                'ndx_context': f'NDX target: {atm_level + 200:.0f}',
+                                'estimated_premium': '$0.25-0.75',
+                                'risk_reward': '1:4'
+                            })
+
+                        elif direction == "BEARISH":
+                            optimal_strikes.append({
+                                'type': 'PUT',
+                                'underlying': 'XND',
+                                'strike': round(xnd_price - 1),
+                                'reasoning': f'NDX bearish bias at {ndx_price:.0f}, XND micro put',
+                                'ndx_context': f'NDX downside: {atm_level - 100:.0f}',
+                                'estimated_premium': '$0.50-1.25',
+                                'risk_reward': '1:3'
+                            })
+
+                    elif symbol_used in ['NDX', 'NDXP']:
+                        # Full-value NDX options
+                        if direction == "BULLISH":
+                            optimal_strikes.append({
+                                'type': 'CALL',
+                                'underlying': symbol_used,
+                                'strike': round(atm_level + 25),
+                                'reasoning': f'NDX bullish bias, direct {symbol_used} call',
+                                'ndx_context': f'NDX target: {atm_level + 100:.0f}',
+                                'estimated_premium': '$15.00-35.00',
+                                'risk_reward': '1:2',
+                                'advantage': 'Direct index exposure, tax-advantaged (Section 1256)'
+                            })
+
+                            optimal_strikes.append({
+                                'type': 'CALL',
+                                'underlying': symbol_used,
+                                'strike': round(atm_level + 50),
+                                'reasoning': f'NDX momentum play, {symbol_used} OTM call',
+                                'ndx_context': f'NDX target: {atm_level + 150:.0f}',
+                                'estimated_premium': '$8.00-20.00',
+                                'risk_reward': '1:3'
+                            })
+
+                        elif direction == "BEARISH":
+                            optimal_strikes.append({
+                                'type': 'PUT',
+                                'underlying': symbol_used,
+                                'strike': round(atm_level - 25),
+                                'reasoning': f'NDX bearish bias, direct {symbol_used} put',
+                                'ndx_context': f'NDX downside: {atm_level - 100:.0f}',
+                                'estimated_premium': '$15.00-30.00',
+                                'risk_reward': '1:2'
+                            })
+
+                else:
+                    # QQQ proxy fallback
                     qqq_estimate = ndx_price / 28.5  # Convert NDX to QQQ estimate
 
-                    optimal_strikes.append({
-                        'type': 'CALL',
-                        'underlying': 'QQQ',
-                        'strike': round(qqq_estimate),
-                        'reasoning': f'NDX bullish bias at {ndx_price:.0f}, QQQ ATM call',
-                        'ndx_context': f'NDX target: {atm_level + 100:.0f}',
-                        'estimated_premium': '$2.50-4.00',
-                        'risk_reward': '1:2'
-                    })
+                    if direction == "BULLISH":
+                        optimal_strikes.append({
+                            'type': 'CALL',
+                            'underlying': 'QQQ',
+                            'strike': round(qqq_estimate),
+                            'reasoning': f'NDX bullish bias at {ndx_price:.0f}, QQQ proxy call',
+                            'ndx_context': f'NDX target: {atm_level + 100:.0f}',
+                            'estimated_premium': '$2.50-4.00',
+                            'risk_reward': '1:2',
+                            'note': 'Using QQQ as NDX proxy - direct NDX options preferred'
+                        })
 
-                    optimal_strikes.append({
-                        'type': 'CALL',
-                        'underlying': 'QQQ',
-                        'strike': round(qqq_estimate + 2),
-                        'reasoning': f'NDX upside momentum, QQQ OTM call',
-                        'ndx_context': f'NDX target: {atm_level + 200:.0f}',
-                        'estimated_premium': '$1.00-2.00',
-                        'risk_reward': '1:3'
-                    })
+                        optimal_strikes.append({
+                            'type': 'CALL',
+                            'underlying': 'QQQ',
+                            'strike': round(qqq_estimate + 2),
+                            'reasoning': f'NDX upside momentum, QQQ OTM call',
+                            'ndx_context': f'NDX target: {atm_level + 200:.0f}',
+                            'estimated_premium': '$1.00-2.00',
+                            'risk_reward': '1:3'
+                        })
 
-                elif direction == "BEARISH":
-                    # Bearish NDX plays via QQQ puts
-                    qqq_estimate = ndx_price / 28.5
-
-                    optimal_strikes.append({
-                        'type': 'PUT',
-                        'underlying': 'QQQ',
-                        'strike': round(qqq_estimate),
-                        'reasoning': f'NDX bearish bias at {ndx_price:.0f}, QQQ ATM put',
-                        'ndx_context': f'NDX downside: {atm_level - 100:.0f}',
-                        'estimated_premium': '$2.00-3.50',
-                        'risk_reward': '1:2'
-                    })
-
-                    optimal_strikes.append({
-                        'type': 'PUT',
-                        'underlying': 'QQQ',
-                        'strike': round(qqq_estimate - 2),
-                        'reasoning': f'NDX breakdown scenario, QQQ OTM put',
-                        'ndx_context': f'NDX downside: {atm_level - 200:.0f}',
-                        'estimated_premium': '$0.80-1.50',
-                        'risk_reward': '1:3'
-                    })
+                    elif direction == "BEARISH":
+                        optimal_strikes.append({
+                            'type': 'PUT',
+                            'underlying': 'QQQ',
+                            'strike': round(qqq_estimate),
+                            'reasoning': f'NDX bearish bias at {ndx_price:.0f}, QQQ proxy put',
+                            'ndx_context': f'NDX downside: {atm_level - 100:.0f}',
+                            'estimated_premium': '$2.00-3.50',
+                            'risk_reward': '1:2'
+                        })
 
         except Exception as e:
             print(f"Error finding optimal strikes: {e}")

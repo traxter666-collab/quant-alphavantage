@@ -98,7 +98,54 @@ class SPXCommandRouter:
             'nasdaq 100 analysis': 'ndx_integration.py',
             'ndx now': 'ndx_integration.py',
 
-            # Five-Asset Integration
+            # Futures Integration
+            'es analysis': 'futures_integration.py',
+            'nq analysis': 'futures_integration.py',
+            'gc analysis': 'futures_integration.py',
+            'gold analysis': 'futures_integration.py',
+            'es futures': 'futures_integration.py',
+            'nq futures': 'futures_integration.py',
+            'gc futures': 'futures_integration.py',
+            'futures multi': 'futures_integration.py',
+            'multi futures': 'futures_integration.py',
+            'futures analysis': 'futures_integration.py',
+
+            # Smart Futures Integration (Enhanced Logic)
+            'smart es analysis': 'smart_futures_integration.py',
+            'smart nq analysis': 'smart_futures_integration.py',
+            'smart gc analysis': 'smart_futures_integration.py',
+            'smart futures': 'smart_futures_integration.py',
+            'enhanced futures': 'smart_futures_integration.py',
+            'intelligent futures': 'smart_futures_integration.py',
+            'smart multi futures': 'smart_futures_integration.py',
+
+            # Unified Trading Interface
+            'trade': 'unified_trading_interface.py',
+            'unified analysis': 'unified_trading_interface.py',
+            'natural language': 'unified_trading_interface.py',
+            'smart trade': 'unified_trading_interface.py',
+            'intelligent trade': 'unified_trading_interface.py',
+
+            # Trading Shortcuts
+            'quick es': 'trading_shortcuts.py',
+            'quick nq': 'trading_shortcuts.py',
+            'quick gc': 'trading_shortcuts.py',
+            'shortcuts': 'trading_shortcuts.py',
+
+            # Futures-NDX Integration
+            'nq ndx analysis': 'futures_ndx_integration.py',
+            'futures ndx integration': 'futures_ndx_integration.py',
+            'nq futures ndx options': 'futures_ndx_integration.py',
+            'nasdaq futures options': 'futures_ndx_integration.py',
+
+            # Multi-Asset System (Enhanced)
+            'multi asset analysis': 'multi_asset_system.py',
+            'complete portfolio analysis': 'multi_asset_system.py',
+            'options futures portfolio': 'multi_asset_system.py',
+            'full multi asset': 'multi_asset_system.py',
+            'portfolio allocation': 'multi_asset_system.py',
+
+            # Legacy Five-Asset Integration
             'five asset analysis': 'five_asset_integration.py',
             'complete multi asset': 'five_asset_integration.py',
             'spx qqq spy iwm ndx': 'five_asset_integration.py',

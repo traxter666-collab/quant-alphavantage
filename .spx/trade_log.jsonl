@@ -1,4 +1,0 @@
-{"symbol": "SPXW", "analysis": {"current": 0, "distance": 6550, "breakeven": 6550.6, "probability": 10}, "recommendation": "AVOID", "timestamp": "2025-09-10 14:16:29"}
-{"symbol": "SPXW", "analysis": {"current": 0, "distance": -6510, "breakeven": 6509.1, "probability": 90}, "recommendation": "BUY", "timestamp": "2025-09-10 14:16:30"}
-{"symbol": "ORCL", "analysis": {"current": 329.415, "distance": 9.41500000000002, "breakeven": 307.5, "probability": 40.58499999999998}, "recommendation": "CONSIDER", "timestamp": "2025-09-10 14:16:30"}
-{"symbol": "AAPL", "analysis": {"current": 226.83, "distance": 1.8300000000000125, "probability": 48.16999999999999}, "recommendation": "CONSIDER", "timestamp": "2025-09-10 14:16:32"}

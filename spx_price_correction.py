@@ -113,17 +113,17 @@ def validate_spx_correction():
     result = get_accurate_spx_price()
 
     if result:
-        print(f"✅ ACCURATE SPX: {result['spx_accurate']:.2f}")
+        print(f"ACCURATE SPX: {result['spx_accurate']:.2f}")
         if result['spy_price']:
-            print(f"📊 SPY Price: {result['spy_price']:.2f}")
-            print(f"❌ OLD METHOD (SPY×10): {result['spy_proxy_spx']:.2f}")
-            print(f"🔧 ACCURACY DIFFERENCE: {result['accuracy_difference']:+.2f} points")
+            print(f"SPY Price: {result['spy_price']:.2f}")
+            print(f"OLD METHOD (SPYx10): {result['spy_proxy_spx']:.2f}")
+            print(f"ACCURACY DIFFERENCE: {result['accuracy_difference']:+.2f} points")
 
             accuracy_pct = abs(result['accuracy_difference']) / result['spx_accurate'] * 100
-            print(f"📈 IMPROVEMENT: {accuracy_pct:.3f}% accuracy gain")
+            print(f"IMPROVEMENT: {accuracy_pct:.3f}% accuracy gain")
 
-        print(f"🎯 METHOD: {result['method']}")
-        print(f"📋 ESTIMATES USED: {result['estimates_used']}")
+        print(f"METHOD: {result['method']}")
+        print(f"ESTIMATES USED: {result['estimates_used']}")
 
         if result['sample_calculation']:
             sample = result['sample_calculation']
@@ -133,10 +133,10 @@ def validate_spx_correction():
             print(f"  Put Mark: {sample['put_mark']:.2f}")
             print(f"  SPX = {sample['call_mark']:.2f} - {sample['put_mark']:.2f} + {sample['strike']} = {sample['spx_estimate']:.2f}")
 
-        print("\n✅ SPX CORRECTION WORKING CORRECTLY")
+        print("\nSPX CORRECTION WORKING CORRECTLY")
         return True
     else:
-        print("❌ SPX CORRECTION FAILED")
+        print("SPX CORRECTION FAILED")
         return False
 
 if __name__ == "__main__":

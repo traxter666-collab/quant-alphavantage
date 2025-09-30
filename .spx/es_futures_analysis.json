@@ -1,0 +1,64 @@
+{
+  "symbol": "ES",
+  "price_data": {
+    "success": true,
+    "symbol": "ES",
+    "name": "E-mini S&P 500",
+    "price": 6636.799999999999,
+    "change": 18.6,
+    "change_percent": 0.281,
+    "point_value": 50,
+    "dollar_change": 930.0000000000001,
+    "dollar_value": 331839.99999999994,
+    "margin_day": 500,
+    "margin_overnight": 12500,
+    "timestamp": "2025-09-29T22:01:13.807887",
+    "pricing_source": "SPY_CONVERSION"
+  },
+  "technical_indicators": {
+    "rsi": 51.4782,
+    "momentum": "NEUTRAL"
+  },
+  "consensus": {
+    "total_score": 180,
+    "max_score": 250,
+    "components": {
+      "price_momentum": 30,
+      "technical_alignment": 35,
+      "contract_factors": 35,
+      "volume_context": 25,
+      "market_timing": 15,
+      "risk_assessment": 40
+    },
+    "direction": "BULLISH",
+    "confidence": "MEDIUM",
+    "percentage": 72.0,
+    "timestamp": "2025-09-29T22:01:15.208879"
+  },
+  "position_sizing": {
+    "recommended_contracts": 1,
+    "margin_required": 12500,
+    "notional_value": 331839.99999999994,
+    "max_risk_dollar": 6636.799999999999,
+    "risk_percent": 26.5472,
+    "stop_loss_points": 132.736,
+    "profit_target_points": 265.472,
+    "reasoning": "MEDIUM confidence BULLISH setup"
+  },
+  "signals": [
+    {
+      "action": "BUY",
+      "symbol": "ES",
+      "contracts": 1,
+      "entry_price": 6636.799999999999,
+      "stop_loss": 6504.063999999999,
+      "profit_target": 6902.271999999999,
+      "margin_required": 12500,
+      "max_risk": 6636.799999999999,
+      "reasoning": "MEDIUM confidence bullish setup in ES",
+      "risk_reward": "1:2",
+      "confidence_score": 72.0
+    }
+  ],
+  "timestamp": "2025-09-29T22:01:15.208911"
+}

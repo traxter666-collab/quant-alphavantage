@@ -1,0 +1,64 @@
+{
+  "timestamp": "2025-09-29T20:42:49.123420",
+  "confidence_score": 85,
+  "sizing_result": {
+    "kelly_fraction": 0.35438007233317176,
+    "fractional_kelly": 0.08859501808329294,
+    "confidence_adjusted": 0.075305765370799,
+    "final_position_size": 0.0,
+    "position_percentage": 0.0,
+    "input_parameters": {
+      "confidence_score": 85,
+      "adjusted_win_rate": 0.5992703897240377,
+      "avg_win": 0.8999999999999999,
+      "avg_loss": 0.55,
+      "trade_type": "0DTE",
+      "volatility_adjustment": 1.0,
+      "trade_count": 0
+    },
+    "risk_metrics": {
+      "expected_return": 0.31894206509985457,
+      "maximum_risk": 0.0,
+      "risk_per_dollar": 0.0,
+      "optimal_leverage": 0
+    }
+  },
+  "contract_result": {
+    "recommended_contracts": 1,
+    "cost_per_contract": 250.0,
+    "total_cost": 250.0,
+    "actual_position_size": 0.005,
+    "actual_percentage": 0.5,
+    "contracts_affordable": 10,
+    "risk_amount": 0.0
+  },
+  "portfolio_analysis": {
+    "current_heat": 0,
+    "new_position_size": 0.0,
+    "total_heat": 0.0,
+    "heat_percentage": 0.0,
+    "limits": {
+      "max_total_heat": 0.15,
+      "max_single_direction": 0.08,
+      "max_correlated_heat": 0.1
+    },
+    "directional_exposure": {
+      "bullish_heat": 0,
+      "bearish_heat": 0,
+      "net_exposure": 0
+    },
+    "correlation_exposure": {
+      "spx_heat": 0,
+      "tech_heat": 0
+    },
+    "risk_warnings": [],
+    "position_allowed": true,
+    "recommended_adjustment": 0
+  },
+  "historical_performance": {
+    "trade_count": 0,
+    "win_rate": 0.65,
+    "avg_win": 0.75,
+    "avg_loss": 0.5
+  }
+}

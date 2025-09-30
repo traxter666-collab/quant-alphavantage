@@ -1,0 +1,51 @@
+{
+  "symbol": "NQ",
+  "price_data": {
+    "success": true,
+    "symbol": "NQ",
+    "name": "E-mini NASDAQ",
+    "price": 2.2,
+    "change": -0.06,
+    "change_percent": -2.6549,
+    "point_value": 20,
+    "dollar_change": -1.2,
+    "dollar_value": 44.0,
+    "margin_day": 300,
+    "margin_overnight": 7500,
+    "timestamp": "2025-09-29T21:53:19.127725",
+    "pricing_source": "DIRECT"
+  },
+  "technical_indicators": {
+    "rsi": 48.7,
+    "rsi_note": "Fallback value",
+    "momentum": "NEUTRAL"
+  },
+  "consensus": {
+    "total_score": 110,
+    "max_score": 250,
+    "components": {
+      "price_momentum": 5,
+      "technical_alignment": 25,
+      "contract_factors": 15,
+      "volume_context": 25,
+      "market_timing": 15,
+      "risk_assessment": 25
+    },
+    "direction": "BEARISH",
+    "confidence": "LOW",
+    "percentage": 44.0,
+    "timestamp": "2025-09-29T21:53:19.499051"
+  },
+  "position_sizing": {
+    "recommended_contracts": 1,
+    "margin_required": 7500,
+    "notional_value": 44.0,
+    "max_risk_dollar": 0.8800000000000001,
+    "risk_percent": 0.00352,
+    "stop_loss_points": 0.044000000000000004,
+    "profit_target_points": 0.08800000000000001,
+    "reasoning": "LOW confidence BEARISH setup"
+  },
+  "signals": [],
+  "timestamp": "2025-09-29T21:53:19.499076"
+}

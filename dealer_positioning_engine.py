@@ -4,7 +4,7 @@ Dealer Positioning Analysis Engine - Heatseeker Methodology
 Institutional-grade dealer positioning intelligence for SPX/SPY/QQQ
 
 Features:
-- King Node identification using Volume × Open Interest scoring
+- King Node identification using Volume * Open Interest scoring
 - Gatekeeper Node detection for range boundary analysis
 - Touch probability tracking (first, second, third+ touches)
 - Put/Call wall detection with gamma exposure calculation
@@ -57,7 +57,7 @@ class DealerNode:
     vex_value: float  # Vanna exposure value
     volume: int
     open_interest: int
-    node_score: float  # Volume × Open Interest weighted score
+    node_score: float  # Volume * Open Interest weighted score
     node_type: NodeType
     touch_sequence: TouchSequence
     touch_count: int
@@ -222,7 +222,7 @@ class DealerPositioningEngine:
             return None
 
     def _calculate_node_score(self, volume: int, open_interest: int, gamma: float) -> float:
-        """Calculate Volume × Open Interest weighted node score"""
+        """Calculate Volume * Open Interest weighted node score"""
         base_score = volume * open_interest
         gamma_weight = 1.0 + (gamma * 1000)  # Gamma multiplier
         return base_score * gamma_weight

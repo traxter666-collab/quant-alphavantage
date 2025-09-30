@@ -1,0 +1,281 @@
+{
+  "symbol": "ES",
+  "base_analysis": {
+    "symbol": "ES",
+    "price_data": {
+      "success": true,
+      "symbol": "ES",
+      "name": "E-mini S&P 500",
+      "price": 6636.799999999999,
+      "change": 18.6,
+      "change_percent": 0.281,
+      "point_value": 50,
+      "dollar_change": 930.0000000000001,
+      "dollar_value": 331839.99999999994,
+      "margin_day": 500,
+      "margin_overnight": 12500,
+      "timestamp": "2025-09-29T21:57:44.637562",
+      "pricing_source": "SPY_CONVERSION"
+    },
+    "technical_indicators": {
+      "rsi": 51.4782,
+      "momentum": "NEUTRAL"
+    },
+    "consensus": {
+      "total_score": 180,
+      "max_score": 250,
+      "components": {
+        "price_momentum": 30,
+        "technical_alignment": 35,
+        "contract_factors": 35,
+        "volume_context": 25,
+        "market_timing": 15,
+        "risk_assessment": 40
+      },
+      "direction": "BULLISH",
+      "confidence": "MEDIUM",
+      "percentage": 72.0,
+      "timestamp": "2025-09-29T21:57:45.263952"
+    },
+    "position_sizing": {
+      "recommended_contracts": 1,
+      "margin_required": 12500,
+      "notional_value": 331839.99999999994,
+      "max_risk_dollar": 6636.799999999999,
+      "risk_percent": 26.5472,
+      "stop_loss_points": 132.736,
+      "profit_target_points": 265.472,
+      "reasoning": "MEDIUM confidence BULLISH setup"
+    },
+    "signals": [
+      {
+        "action": "BUY",
+        "symbol": "ES",
+        "contracts": 1,
+        "entry_price": 6636.799999999999,
+        "stop_loss": 6504.063999999999,
+        "profit_target": 6902.271999999999,
+        "margin_required": 12500,
+        "max_risk": 6636.799999999999,
+        "reasoning": "MEDIUM confidence bullish setup in ES",
+        "risk_reward": "1:2",
+        "confidence_score": 72.0
+      }
+    ],
+    "timestamp": "2025-09-29T21:57:45.263994"
+  },
+  "enhanced_analysis": {
+    "symbol": "ES",
+    "current_price": 6636.799999999999,
+    "change_percent": 0.281,
+    "enhanced_analysis": {
+      "session": {
+        "current_hour": 21,
+        "current_day": 0,
+        "session": "asian",
+        "characteristics": "range_bound",
+        "recommended_strategy": "range_trading",
+        "position_multiplier": 0.8,
+        "risk_adjustment": 0.9,
+        "preferred_style": "fade_extremes"
+      },
+      "volatility": {
+        "regime": "ultra_low",
+        "daily_change_pct": 0.281,
+        "estimated_atr": 27.974112,
+        "position_multiplier": 1.5,
+        "stop_multiplier": 0.7,
+        "risk_level": "LOW",
+        "recommended_stops": {
+          "tight": 13.987056,
+          "normal": 27.974112,
+          "wide": 41.961168
+        }
+      },
+      "correlation": {
+        "spy_qqq_correlation": {
+          "strength": "HIGH",
+          "score": 85,
+          "same_direction": true,
+          "divergence": 0.18209999999999998
+        },
+        "tech_leadership": "QQQ",
+        "market_breadth": {
+          "positive_count": 3,
+          "total_count": 3,
+          "breadth_percentage": 100.0,
+          "status": "STRONG_BULLISH"
+        },
+        "risk_regime": "NEUTRAL",
+        "flight_to_quality": false,
+        "dollar_impact": {
+          "dxy_change": 0,
+          "impact": "MINIMAL",
+          "equity_pressure": "NEUTRAL"
+        }
+      },
+      "signal_strength": {
+        "score": 70,
+        "max_score": 100,
+        "percentage": 70.0,
+        "category": "HIGH",
+        "components": {
+          "session_score": 25,
+          "volatility_score": 25,
+          "correlation_score": 20,
+          "momentum_score": 0
+        }
+      }
+    },
+    "position_sizing": {
+      "base_position_pct": 1.0,
+      "session_multiplier": 0.8,
+      "volatility_multiplier": 1.5,
+      "correlation_adjustment": 1.0,
+      "final_position_pct": 1.2,
+      "position_dollars": 300.0,
+      "recommended_contracts": 1,
+      "max_risk_dollars": 1398.7056,
+      "risk_percent_of_account": 5.5948224,
+      "stop_distance_points": 27.974112,
+      "session_info": {
+        "current_hour": 21,
+        "current_day": 0,
+        "session": "asian",
+        "characteristics": "range_bound",
+        "recommended_strategy": "range_trading",
+        "position_multiplier": 0.8,
+        "risk_adjustment": 0.9,
+        "preferred_style": "fade_extremes"
+      },
+      "volatility_info": {
+        "regime": "ultra_low",
+        "daily_change_pct": 0.281,
+        "estimated_atr": 27.974112,
+        "position_multiplier": 1.5,
+        "stop_multiplier": 0.7,
+        "risk_level": "LOW",
+        "recommended_stops": {
+          "tight": 13.987056,
+          "normal": 27.974112,
+          "wide": 41.961168
+        }
+      },
+      "correlation_info": {
+        "spy_qqq_correlation": {
+          "strength": "HIGH",
+          "score": 85,
+          "same_direction": true,
+          "divergence": 0.18209999999999998
+        },
+        "tech_leadership": "QQQ",
+        "market_breadth": {
+          "positive_count": 3,
+          "total_count": 3,
+          "breadth_percentage": 100.0,
+          "status": "STRONG_BULLISH"
+        },
+        "risk_regime": "NEUTRAL",
+        "flight_to_quality": false,
+        "dollar_impact": {
+          "dxy_change": 0,
+          "impact": "MINIMAL",
+          "equity_pressure": "NEUTRAL"
+        }
+      }
+    },
+    "recommendation": {
+      "action": "STRONG_BUY",
+      "confidence": "HIGH",
+      "contracts": 1,
+      "session_strategy": "range_trading",
+      "reasoning": "HIGH signal strength (70.0%) during asian session",
+      "risk_percent": 5.5948224,
+      "stop_distance": 27.974112
+    },
+    "timestamp": "2025-09-29T21:57:50.674322"
+  },
+  "combined_insights": {
+    "combined_score": 71.19999999999999,
+    "base_score": 72.0,
+    "enhanced_score": 70.0,
+    "direction_agreement": true,
+    "base_direction": "BULLISH",
+    "enhanced_direction": "BULLISH",
+    "smart_position_size": 1,
+    "combined_risk_percent": 16.0710112,
+    "market_conditions": {
+      "session": {
+        "current_hour": 21,
+        "current_day": 0,
+        "session": "asian",
+        "characteristics": "range_bound",
+        "recommended_strategy": "range_trading",
+        "position_multiplier": 0.8,
+        "risk_adjustment": 0.9,
+        "preferred_style": "fade_extremes"
+      },
+      "volatility": {
+        "regime": "ultra_low",
+        "daily_change_pct": 0.281,
+        "estimated_atr": 27.974112,
+        "position_multiplier": 1.5,
+        "stop_multiplier": 0.7,
+        "risk_level": "LOW",
+        "recommended_stops": {
+          "tight": 13.987056,
+          "normal": 27.974112,
+          "wide": 41.961168
+        }
+      },
+      "correlation": {
+        "spy_qqq_correlation": {
+          "strength": "HIGH",
+          "score": 85,
+          "same_direction": true,
+          "divergence": 0.18209999999999998
+        },
+        "tech_leadership": "QQQ",
+        "market_breadth": {
+          "positive_count": 3,
+          "total_count": 3,
+          "breadth_percentage": 100.0,
+          "status": "STRONG_BULLISH"
+        },
+        "risk_regime": "NEUTRAL",
+        "flight_to_quality": false,
+        "dollar_impact": {
+          "dxy_change": 0,
+          "impact": "MINIMAL",
+          "equity_pressure": "NEUTRAL"
+        }
+      },
+      "signal_strength": {
+        "score": 70,
+        "max_score": 100,
+        "percentage": 70.0,
+        "category": "HIGH",
+        "components": {
+          "session_score": 25,
+          "volatility_score": 25,
+          "correlation_score": 20,
+          "momentum_score": 0
+        }
+      }
+    },
+    "account_size": 25000
+  },
+  "final_recommendation": {
+    "action": "BUY",
+    "confidence": "HIGH",
+    "contracts": 0,
+    "combined_score": 71.19999999999999,
+    "direction_agreement": true,
+    "risk_percent": 16.0710112,
+    "reasoning": "Good consensus (71.2%); Both systems agree on bullish direction; High risk (16.1%)",
+    "market_session": "asian",
+    "volatility_regime": "ultra_low",
+    "risk_regime": "NEUTRAL"
+  },
+  "timestamp": "2025-09-29T21:57:50.674344"
+}

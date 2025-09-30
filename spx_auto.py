@@ -8,7 +8,7 @@ import json
 import os
 import sys
 from datetime import datetime
-from typing import Dict, Optional
+from typing import Dict, List, Optional, Any
 
 # Import enhanced systems
 try:
@@ -34,43 +34,43 @@ class SPXAuto:
 
     def run_complete_analysis(self, send_discord: bool = False) -> Dict:
         """Run complete SPX analysis with all systems"""
-        print("🎯 SPX AUTO ANALYSIS - All Systems Integration")
+        print("TARGET SPX AUTO ANALYSIS - All Systems Integration")
         print("=" * 60)
 
         try:
             # Step 1: System Health Check
-            print("🏥 Checking system health...")
+            print(" Checking system health...")
             health_result = self.check_system_health()
 
             if not health_result.get("healthy", False):
-                print(f"⚠️ System health warning: {health_result.get('health_percentage', 0)}%")
+                print(f"WARNING System health warning: {health_result.get('health_percentage', 0)}%")
 
             # Step 2: Get Market Data
-            print("📊 Fetching market data...")
+            print("CHART Fetching market data...")
             market_data = self.get_market_data()
 
             if not market_data:
-                print("❌ Failed to get market data")
+                print("ERROR Failed to get market data")
                 return {"success": False, "error": "No market data available"}
 
             # Step 3: Enhanced Pattern Analysis
-            print("🎪 Running ML pattern analysis...")
+            print("CIRCUS Running ML pattern analysis...")
             pattern_results = {}
             if self.systems_available:
                 pattern_results = self.ml_engine.detect_patterns(market_data)
 
             # Step 4: Generate Trading Recommendations
-            print("🎯 Generating trading recommendations...")
+            print("TARGET Generating trading recommendations...")
             recommendations = self.generate_recommendations(market_data, pattern_results)
 
             # Step 5: Calculate Performance Context
-            print("📈 Updating performance context...")
+            print("UP Updating performance context...")
             performance_context = {}
             if self.systems_available:
                 performance_context = self.performance_analytics.get_real_time_performance()
 
             # Step 6: Generate Alerts
-            print("🚨 Processing alerts...")
+            print("ALERT Processing alerts...")
             alerts_generated = 0
             if self.systems_available and recommendations.get("signal_strength", 0) >= 200:
                 alert = self.alert_system.create_trading_signal_alert({
@@ -106,13 +106,13 @@ class SPXAuto:
             # Display results
             self.display_analysis_results(complete_analysis)
 
-            print(f"\n✅ Complete analysis finished at {datetime.now().strftime('%H:%M:%S')}")
-            print(f"📁 Results saved to .spx/auto_analysis_results.json")
+            print(f"\nSUCCESS Complete analysis finished at {datetime.now().strftime('%H:%M:%S')}")
+            print(f" Results saved to .spx/auto_analysis_results.json")
 
             return complete_analysis
 
         except Exception as e:
-            print(f"❌ Error in complete analysis: {e}")
+            print(f"ERROR Error in complete analysis: {e}")
             return {"success": False, "error": str(e)}
 
     def check_system_health(self) -> Dict:
@@ -408,21 +408,21 @@ class SPXAuto:
 
     def display_analysis_results(self, analysis: Dict):
         """Display formatted analysis results"""
-        print(f"\n🎯 SPX AUTO ANALYSIS RESULTS")
+        print(f"\nTARGET SPX AUTO ANALYSIS RESULTS")
         print("=" * 50)
 
         # System Health
         health = analysis.get("system_health", {})
         health_status = health.get("status", "UNKNOWN")
         health_pct = health.get("health_percentage", 0)
-        print(f"🏥 System Health: {health_pct}% ({health_status})")
+        print(f" System Health: {health_pct}% ({health_status})")
 
         # Market Data
         market = analysis.get("market_data", {})
         current_price = market.get("current_price", 0)
         rsi = market.get("rsi", 0)
         volume = market.get("volume", 0)
-        print(f"📊 SPX: ${current_price:,.2f} | RSI: {rsi:.1f} | Volume: {volume:,}")
+        print(f"CHART SPX: ${current_price:,.2f} | RSI: {rsi:.1f} | Volume: {volume:,}")
 
         # Trading Recommendations
         recs = analysis.get("trading_recommendations", {})
@@ -431,27 +431,27 @@ class SPXAuto:
         bias = recs.get("market_bias", "NEUTRAL")
         action = recs.get("recommended_action", "WAIT")
 
-        print(f"🎯 Consensus: {consensus}/275 | Confidence: {confidence} | Bias: {bias}")
-        print(f"📋 Action: {action}")
+        print(f"TARGET Consensus: {consensus}/275 | Confidence: {confidence} | Bias: {bias}")
+        print(f" Action: {action}")
 
         # Strike Recommendations
         strikes = recs.get("strikes", [])
         if strikes:
-            print(f"\n💰 Strike Recommendations:")
+            print(f"\nMONEY Strike Recommendations:")
             for i, strike in enumerate(strikes[:2], 1):
                 strike_price = strike.get("strike", 0)
                 strike_type = strike.get("type", "")
                 premium = strike.get("premium", 0)
                 target = strike.get("target", 0)
                 strike_confidence = strike.get("confidence", "")
-                print(f"  {i}. {strike_price} {strike_type} @ ${premium:.2f} → ${target:.2f} ({strike_confidence})")
+                print(f"  {i}. {strike_price} {strike_type} @ ${premium:.2f} -> ${target:.2f} ({strike_confidence})")
 
         # Pattern Analysis
         patterns = analysis.get("pattern_analysis", {})
         if patterns.get("highest_confidence"):
             pattern_name = patterns["highest_confidence"].get("pattern", "None")
             pattern_conf = patterns["highest_confidence"].get("confidence", 0)
-            print(f"🎪 Top Pattern: {pattern_name} ({pattern_conf}% confidence)")
+            print(f"CIRCUS Top Pattern: {pattern_name} ({pattern_conf}% confidence)")
 
         # Performance Context
         perf = analysis.get("performance_context", {})
@@ -460,17 +460,17 @@ class SPXAuto:
             total_trades = overview.get("total_trades", 0)
             win_rate = overview.get("win_rate", 0)
             total_return = overview.get("total_return_percent", 0)
-            print(f"📈 Performance: {total_trades} trades, {win_rate}% win rate, {total_return:+.1f}% return")
+            print(f"UP Performance: {total_trades} trades, {win_rate}% win rate, {total_return:+.1f}% return")
 
         # Enhanced Systems Status
         enhanced_active = analysis.get("enhanced_systems_active", False)
-        status_icon = "✅" if enhanced_active else "⚠️"
+        status_icon = "SUCCESS" if enhanced_active else "WARNING"
         print(f"{status_icon} Enhanced Systems: {'ACTIVE' if enhanced_active else 'BASIC MODE'}")
 
         # Alerts
         alerts = analysis.get("alerts_generated", 0)
         if alerts > 0:
-            print(f"🚨 Alerts Generated: {alerts}")
+            print(f"ALERT Alerts Generated: {alerts}")
 
     def save_analysis_results(self, analysis: Dict):
         """Save analysis results to file"""
@@ -501,7 +501,7 @@ def main():
     """Main entry point"""
     if len(sys.argv) > 1 and sys.argv[1].lower() in ['discord', '--discord', '-d']:
         send_discord = True
-        print("🚨 Discord alerts enabled")
+        print("ALERT Discord alerts enabled")
     else:
         send_discord = False
 
@@ -509,21 +509,21 @@ def main():
     result = auto_analyzer.run_complete_analysis(send_discord=send_discord)
 
     if result.get("success"):
-        print(f"\n🎯 Analysis completed successfully!")
+        print(f"\nTARGET Analysis completed successfully!")
 
         # Quick action suggestion
         action = result.get("trading_recommendations", {}).get("recommended_action", "WAIT")
         consensus = result.get("trading_recommendations", {}).get("consensus_score", 0)
 
         if action == "ENTER_POSITION" and consensus >= 225:
-            print(f"💡 HIGH CONFIDENCE SIGNAL - Consider immediate action")
+            print(f"IDEA HIGH CONFIDENCE SIGNAL - Consider immediate action")
         elif action == "ENTER_POSITION":
-            print(f"📊 MEDIUM SIGNAL - Monitor for confirmation")
+            print(f"CHART MEDIUM SIGNAL - Monitor for confirmation")
         else:
-            print(f"⏸️ WAIT - Signal strength insufficient ({consensus}/275)")
+            print(f" WAIT - Signal strength insufficient ({consensus}/275)")
 
     else:
-        print(f"❌ Analysis failed: {result.get('error', 'Unknown error')}")
+        print(f"ERROR Analysis failed: {result.get('error', 'Unknown error')}")
         sys.exit(1)
 
 if __name__ == "__main__":

@@ -1,0 +1,93 @@
+{
+  "backtest_date": "2025-09-29T20:30:10.624966",
+  "period_days": 14,
+  "symbols": [
+    "SPY",
+    "QQQ",
+    "IWM"
+  ],
+  "strategies": [
+    "RSI_REVERSAL",
+    "EMA_MOMENTUM"
+  ],
+  "results": {
+    "SPY": {
+      "RSI_REVERSAL": {
+        "backtest": {
+          "strategy": "RSI_REVERSAL",
+          "trades": [],
+          "final_account_value": 10000,
+          "total_return": 0.0,
+          "trade_count": 0
+        },
+        "metrics": {
+          "error": "No trades to analyze"
+        }
+      },
+      "EMA_MOMENTUM": {
+        "backtest": {
+          "strategy": "EMA_MOMENTUM",
+          "trades": [],
+          "final_account_value": 10000,
+          "total_return": 0.0,
+          "trade_count": 0
+        },
+        "metrics": {
+          "error": "No trades to analyze"
+        }
+      }
+    },
+    "QQQ": {
+      "RSI_REVERSAL": {
+        "backtest": {
+          "strategy": "RSI_REVERSAL",
+          "trades": [],
+          "final_account_value": 10000,
+          "total_return": 0.0,
+          "trade_count": 0
+        },
+        "metrics": {
+          "error": "No trades to analyze"
+        }
+      },
+      "EMA_MOMENTUM": {
+        "backtest": {
+          "strategy": "EMA_MOMENTUM",
+          "trades": [],
+          "final_account_value": 10000,
+          "total_return": 0.0,
+          "trade_count": 0
+        },
+        "metrics": {
+          "error": "No trades to analyze"
+        }
+      }
+    },
+    "IWM": {
+      "RSI_REVERSAL": {
+        "backtest": {
+          "strategy": "RSI_REVERSAL",
+          "trades": [],
+          "final_account_value": 10000,
+          "total_return": 0.0,
+          "trade_count": 0
+        },
+        "metrics": {
+          "error": "No trades to analyze"
+        }
+      },
+      "EMA_MOMENTUM": {
+        "backtest": {
+          "strategy": "EMA_MOMENTUM",
+          "trades": [],
+          "final_account_value": 10000,
+          "total_return": 0.0,
+          "trade_count": 0
+        },
+        "metrics": {
+          "error": "No trades to analyze"
+        }
+      }
+    }
+  }
+}

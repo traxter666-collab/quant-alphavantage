@@ -1,0 +1,84 @@
+{
+  "market_data": {
+    "options_underlyings": {
+      "SPY": {
+        "price": 663.68,
+        "change": 1.86,
+        "change_percent": 0.281,
+        "success": true
+      },
+      "SPX_ESTIMATE": {
+        "price": 6636.799999999999,
+        "change_percent": 0.281
+      },
+      "QQQ": {
+        "price": 598.73,
+        "change": 2.76,
+        "change_percent": 0.4631,
+        "success": true
+      },
+      "NDX_ESTIMATE": {
+        "price": 17063.805,
+        "change_percent": 0.4631
+      },
+      "IWM": {
+        "price": 241.62,
+        "change": 0.28,
+        "change_percent": 0.116,
+        "success": true
+      }
+    },
+    "futures": {},
+    "timestamp": "2025-09-29T21:53:35.707011"
+  },
+  "correlations": {
+    "equity_correlation": {
+      "spy_qqq": 0.18209999999999998,
+      "es_nq": 0,
+      "spy_es": 0.281,
+      "qqq_nq": 0.4631
+    },
+    "market_regime": {
+      "risk_on_average": 0.186025,
+      "risk_off_average": -0.058,
+      "regime": "NEUTRAL"
+    }
+  },
+  "consensus": {
+    "total_score": 230.0,
+    "max_score": 400,
+    "components": {
+      "options_strength": 80.0,
+      "futures_strength": 60,
+      "correlation_alignment": 50,
+      "market_regime": 25,
+      "diversification_bonus": 15
+    },
+    "asset_scores": {
+      "SPY_options": 20,
+      "QQQ_options": 20,
+      "IWM_options": 20
+    },
+    "direction": "NEUTRAL",
+    "confidence": "LOW",
+    "percentage": 57.49999999999999,
+    "timestamp": "2025-09-29T21:53:40.161936"
+  },
+  "portfolio_allocation": {
+    "account_size": 100000,
+    "total_allocation": 0,
+    "allocations": {
+      "options": [],
+      "futures": []
+    },
+    "risk_management": {
+      "total_risk_pct": 0,
+      "max_allowed_risk_pct": 15.0,
+      "options_allocation_pct": 0,
+      "futures_allocation_pct": 0,
+      "compliance": true
+    },
+    "portfolio_heat": 0
+  },
+  "timestamp": "2025-09-29T21:53:40.161965"
+}

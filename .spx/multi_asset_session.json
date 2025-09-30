@@ -1,0 +1,77 @@
+{
+  "timestamp": "2025-09-29T20:43:59.482973",
+  "quotes": {
+    "SPX": {
+      "success": true,
+      "symbol": "SPY",
+      "price": 6636.799999999999,
+      "change": 1.86,
+      "change_pct": 0.281,
+      "volume": 72704995,
+      "timestamp": "2025-09-29 20:43:55.304673"
+    },
+    "QQQ": {
+      "success": true,
+      "symbol": "QQQ",
+      "price": 598.73,
+      "change": 2.76,
+      "change_pct": 0.4631,
+      "volume": 46418921,
+      "timestamp": "2025-09-29 20:43:57.344643"
+    },
+    "IWM": {
+      "success": true,
+      "symbol": "IWM",
+      "price": 241.62,
+      "change": 0.28,
+      "change_pct": 0.116,
+      "volume": 25594010,
+      "timestamp": "2025-09-29 20:43:58.778995"
+    }
+  },
+  "rsi_data": {
+    "SPX": {
+      "success": true,
+      "symbol": "SPY",
+      "rsi": 40.4886,
+      "timestamp": "2025-09-26 20:00"
+    },
+    "QQQ": {
+      "success": true,
+      "symbol": "QQQ",
+      "rsi": 50.0351,
+      "timestamp": "2025-09-26 19:55"
+    },
+    "IWM": {
+      "success": true,
+      "symbol": "IWM",
+      "rsi": 48.5437,
+      "timestamp": "2025-09-26 20:00"
+    }
+  },
+  "correlation_analysis": {
+    "correlations": {
+      "SPX_QQQ": 0.85,
+      "SPX_IWM": 0.75,
+      "QQQ_IWM": 0.65
+    },
+    "divergences": {
+      "SPX_QQQ_divergence": 0.18209999999999998,
+      "SPX_IWM_divergence": 0.16500000000000004,
+      "QQQ_IWM_divergence": 0.3471
+    },
+    "max_divergence": 0.3471,
+    "analysis_timestamp": "2025-09-29T20:43:59.482949"
+  },
+  "signals": {
+    "signals": [],
+    "signal_count": 0,
+    "max_confidence": 0,
+    "analysis_timestamp": "2025-09-29T20:43:59.482968"
+  },
+  "recommendations": {
+    "recommendations": [],
+    "recommendation_count": 0,
+    "analysis_timestamp": "2025-09-29T20:43:59.482972"
+  }
+}

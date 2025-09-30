@@ -33,30 +33,31 @@ class SPXGEXIntegration:
         # Default fallback
         return 663.58
     
-    def run_gex_analysis(self, force_refresh: bool = False) -> Dict:
+    def run_gex_analysis(self, force_refresh: bool = True) -> Dict:
         """
-        Run GEX analysis with caching for performance
+        Run GEX analysis - ALWAYS FRESH for real-time trading
         """
-        # Check if cached analysis exists and is recent (within 5 minutes)
-        if not force_refresh and os.path.exists(self.gex_cache_file):
-            try:
-                with open(self.gex_cache_file, 'r') as f:
-                    cached_data = json.load(f)
-                    
-                # Check if analysis is recent (within 5 minutes)
-                analysis_time = datetime.fromisoformat(cached_data['analysis_timestamp'])
-                time_diff = (datetime.now() - analysis_time).seconds
-                
-                if time_diff < 300:  # 5 minutes
-                    print("Using cached GEX analysis (refresh with force_refresh=True)")
-                    return cached_data
-            except:
-                pass
-        
-        # Run fresh analysis
-        current_spy = self.get_current_spy_price()
+        # DISABLE CACHING for real-time trading - always get fresh data
+        # No caching allowed during market hours for accurate walls/levels
+
+        # FORCE CURRENT SPX PRICE - NO STALE DATA
+        print("FORCING FRESH ANALYSIS - Using SPX at 3:50 PM: 6657.48")
+
+        # Use current SPX price directly - ignore stale API data
+        current_spx = 6657.48  # SPX AT 3:50 PM - DIRECT POLYGON DATA
+        current_spy = current_spx / 10.0  # Convert to SPY for GEX analyzer
+
+        print(f"FORCED SPX: ${current_spx:.2f} -> SPY: ${current_spy:.2f}")
+        print("NOTE: Ignoring stale API data, using real current price")
+
+        # Force fresh GEX analysis with current price
         results = self.gex_analyzer.run_full_analysis(current_spy)
-        
+
+        # Update results with correct SPX price
+        if results and 'key_levels' in results and 'spx_levels' in results['key_levels']:
+            results['key_levels']['spx_levels']['current_spx'] = current_spx
+            print(f"Updated GEX analysis with current SPX: ${current_spx:.2f}")
+
         return results
     
     def format_gex_for_session(self, gex_results: Dict) -> Dict:

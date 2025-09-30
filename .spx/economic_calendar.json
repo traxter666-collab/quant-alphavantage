@@ -1,0 +1,37 @@
+{
+  "economic_calendar": {
+    "FOMC_MEETING": {
+      "impact": "EXTREME",
+      "risk_adjustment": 0.25,
+      "time_window": "2 hours before/after",
+      "strategy": "Close positions 2hr before, wait for clarity"
+    },
+    "CPI_RELEASE": {
+      "impact": "HIGH",
+      "risk_adjustment": 0.4,
+      "time_window": "30 minutes before/after",
+      "strategy": "Reduce size, play volatility expansion"
+    },
+    "NFP_JOBS": {
+      "impact": "HIGH",
+      "risk_adjustment": 0.4,
+      "time_window": "30 minutes before/after",
+      "strategy": "Reduce exposure, momentum plays post-release"
+    }
+  },
+  "after_hours_analysis": {
+    "protection_strategies": {
+      "VIX_HEDGE": "Buy VIX calls for overnight protection",
+      "POSITION_REDUCTION": "Reduce position sizes by 50% after 3:30 PM",
+      "STOP_LOSSES": "Tighten stops to 1% for overnight holds"
+    }
+  },
+  "sector_rotation": {
+    "current_phase": "TECH_LEADERSHIP",
+    "strength": "MODERATE",
+    "duration_estimate": "3-5 weeks remaining",
+    "strategy": "Overweight QQQ calls, NDX momentum"
+  },
+  "current_adjustment": 0.4,
+  "timestamp": "2025-09-29T23:21:03.434091"
+}

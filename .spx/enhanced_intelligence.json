@@ -1,0 +1,157 @@
+{
+  "institutional_patterns": {
+    "ACCUMULATION": {
+      "description": "Large volume buying with price support",
+      "triggers": [
+        "volume > 2x average",
+        "price holding key level",
+        "multiple large orders"
+      ],
+      "confidence_threshold": 75,
+      "typical_duration": "2-5 days"
+    },
+    "DISTRIBUTION": {
+      "description": "Large volume selling into strength",
+      "triggers": [
+        "volume spike on rallies",
+        "price rejection at resistance",
+        "repeated selling"
+      ],
+      "confidence_threshold": 70,
+      "typical_duration": "1-3 days"
+    },
+    "INSTITUTIONAL_BREAKOUT": {
+      "description": "High volume breakout with institutional signatures",
+      "triggers": [
+        "volume > 3x average",
+        "clean breakout",
+        "sustained follow-through"
+      ],
+      "confidence_threshold": 85,
+      "typical_duration": "1-2 days"
+    },
+    "SWEEP_LOWER": {
+      "description": "Stop loss hunting before reversal",
+      "triggers": [
+        "brief spike below support",
+        "immediate recovery",
+        "volume surge"
+      ],
+      "confidence_threshold": 80,
+      "typical_duration": "Intraday"
+    },
+    "DARK_POOL_ACTIVITY": {
+      "description": "Large orders executed off-exchange",
+      "triggers": [
+        "price movement without visible volume",
+        "unusual option activity",
+        "block prints"
+      ],
+      "confidence_threshold": 65,
+      "typical_duration": "1-2 days"
+    }
+  },
+  "correlation_monitoring": {
+    "SPX_NDX": {
+      "normal_range": [
+        0.85,
+        0.95
+      ],
+      "current_correlation": 0.92,
+      "divergence_threshold": 0.1,
+      "status": "NORMAL"
+    },
+    "SPY_QQQ": {
+      "normal_range": [
+        0.8,
+        0.9
+      ],
+      "current_correlation": 0.87,
+      "divergence_threshold": 0.12,
+      "status": "NORMAL"
+    },
+    "SPX_VIX": {
+      "normal_range": [
+        -0.85,
+        -0.65
+      ],
+      "current_correlation": -0.78,
+      "divergence_threshold": 0.15,
+      "status": "NORMAL"
+    },
+    "SPX_IWM": {
+      "normal_range": [
+        0.75,
+        0.85
+      ],
+      "current_correlation": 0.81,
+      "divergence_threshold": 0.08,
+      "status": "NORMAL"
+    }
+  },
+  "alert_priorities": {
+    "CRITICAL": {
+      "conditions": [
+        "consensus > 90",
+        "institutional pattern > 80",
+        "correlation break"
+      ],
+      "discord_color": "red",
+      "frequency_limit": "immediate",
+      "examples": [
+        "Extreme consensus + institutional accumulation",
+        "Major correlation breakdown"
+      ]
+    },
+    "HIGH": {
+      "conditions": [
+        "consensus > 80",
+        "pattern confidence > 75",
+        "volume spike"
+      ],
+      "discord_color": "orange",
+      "frequency_limit": "5 minutes",
+      "examples": [
+        "Strong pattern + high consensus",
+        "Institutional breakout"
+      ]
+    },
+    "MEDIUM": {
+      "conditions": [
+        "consensus > 70",
+        "single system signal",
+        "normal conditions"
+      ],
+      "discord_color": "yellow",
+      "frequency_limit": "15 minutes",
+      "examples": [
+        "Standard trading signals",
+        "Single pattern detection"
+      ]
+    },
+    "INFO": {
+      "conditions": [
+        "market updates",
+        "status changes",
+        "low priority alerts"
+      ],
+      "discord_color": "blue",
+      "frequency_limit": "30 minutes",
+      "examples": [
+        "Routine market updates",
+        "System status changes"
+      ]
+    }
+  },
+  "performance_optimization": {
+    "recent_win_rate": 0.72,
+    "expected_win_rate": 0.7,
+    "performance_ratio": 1.03,
+    "confidence_adjustment": 1.02,
+    "last_20_trades": 14,
+    "streak_analysis": "neutral",
+    "volatility_adjustment": 1.0
+  },
+  "optimized_position_size": 1.03,
+  "timestamp": "2025-09-29T23:19:45.903875"
+}

@@ -1,0 +1,95 @@
+{
+  "numStartups": 2,
+  "installMethod": "unknown",
+  "autoUpdates": true,
+  "theme": "dark-ansi",
+  "tipsHistory": {
+    "new-user-warmup": 1,
+    "terminal-setup": 1,
+    "memory-command": 1
+  },
+  "cachedStatsigGates": {
+    "tengu_disable_bypass_permissions_mode": false
+  },
+  "userID": "36923fe31fe80d1da6f5dde9e71ebf5769ff72ee34e19e85d927b063fc501d59",
+  "projects": {
+    "C:\\Users\\traxt\\quant-alphavantage": {
+      "allowedTools": [],
+      "history": [
+        {
+          "display": "current spy",
+          "pastedContents": {}
+        }
+      ],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "ignorePatterns": [],
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false
+    },
+    "C:\\Users\\traxt": {
+      "allowedTools": [],
+      "history": [
+        {
+          "display": "review",
+          "pastedContents": {}
+        },
+        {
+          "display": "C:\\Users\\traxt\\quant-alphavantage",
+          "pastedContents": {}
+        },
+        {
+          "display": "gamma levels",
+          "pastedContents": {}
+        },
+        {
+          "display": "current spxw",
+          "pastedContents": {}
+        },
+        {
+          "display": "commands",
+          "pastedContents": {}
+        },
+        {
+          "display": "C:\\Users\\traxt\\quant-alphavantage",
+          "pastedContents": {}
+        }
+      ],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 2,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false
+    }
+  },
+  "fallbackAvailableWarningThreshold": 0.5,
+  "firstStartTime": "2025-09-11T12:12:20.166Z",
+  "oauthAccount": {
+    "accountUuid": "b414125a-29a0-4afa-b8ae-710206232e19",
+    "emailAddress": "traxter666@gmail.com",
+    "organizationUuid": "9ea51325-b92b-428a-b3bb-fe5d5f62afbb",
+    "organizationRole": "admin",
+    "workspaceRole": null,
+    "organizationName": "traxter666@gmail.com's Organization"
+  },
+  "claudeCodeFirstTokenDate": "2025-09-10T05:40:02.687506Z",
+  "hasCompletedOnboarding": true,
+  "lastOnboardingVersion": "1.0.111",
+  "hasOpusPlanDefault": false,
+  "subscriptionNoticeCount": 0,
+  "hasAvailableSubscription": false,
+  "s1mAccessCache": {
+    "9ea51325-b92b-428a-b3bb-fe5d5f62afbb": {
+      "hasAccess": false,
+      "timestamp": 1757593737017
+    }
+  },
+  "isQualifiedForDataSharing": false
+}

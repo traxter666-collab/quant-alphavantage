@@ -1,0 +1,196 @@
+{
+  "timestamp": "2025-09-29 21:53:25.684056",
+  "symbols_processed": [
+    {
+      "symbol": "SPY",
+      "timestamp": "2025-09-29 21:53:25.684121",
+      "market_data": {
+        "success": true,
+        "symbol": "SPY",
+        "price": 663.68,
+        "change": 1.86,
+        "change_pct": 0.281,
+        "volume": 72704995,
+        "high": 665.28,
+        "low": 661.86,
+        "timestamp": "2025-09-29 21:53:26.998011"
+      },
+      "alerts": [],
+      "forecast": null,
+      "probability_score": {
+        "timestamp": "2025-09-29T21:53:34.336309",
+        "symbol": "SPY",
+        "total_score": 132.124,
+        "max_possible": 265,
+        "percentage": 49.85811320754717,
+        "recommendation": "AVOID",
+        "confidence": "VERY LOW",
+        "component_scores": {
+          "ema": {
+            "score": 14,
+            "max_score": 25,
+            "details": [
+              "RSI neutral (12pts)",
+              "Low momentum (2pts)"
+            ],
+            "rsi": 47.6714,
+            "momentum": 0.281
+          },
+          "demand": {
+            "score": 15,
+            "max_score": 30,
+            "details": [
+              "Exceptional volume (15pts) - strong institutional interest"
+            ],
+            "volume_ratio": 950.0410959280954,
+            "price_level_strength": "MEDIUM"
+          },
+          "forecasting": {
+            "score": 11.124,
+            "max_score": 35,
+            "details": [
+              "Volatility model (1pts)",
+              "Support/resistance model (6pts)",
+              "Inactive hours (1pt)",
+              "Ensemble consensus bonus (3pts)"
+            ],
+            "model_consensus": "LOW"
+          },
+          "gex_dex": {
+            "score": 30,
+            "max_score": 30,
+            "details": [
+              "Positive gamma environment (15pts)",
+              "Strong delta flow (10pts)",
+              "Low volatility regime (5pts)"
+            ],
+            "gamma_regime": "POSITIVE",
+            "volatility_regime": "LOW"
+          },
+          "sbirs": {
+            "score": 5,
+            "max_score": 40,
+            "details": [
+              "No clear patterns (5pts)"
+            ],
+            "pattern_strength": "LOW"
+          },
+          "market": {
+            "score": 15,
+            "max_score": 25,
+            "details": [
+              "Excellent volume conditions (10pts)",
+              "Low momentum conditions (3pts)",
+              "Off-peak timing (2pts)"
+            ],
+            "market_timing": "FAIR"
+          },
+          "technical": {
+            "score": 5,
+            "max_score": 20,
+            "details": [
+              "Base technical confluence (5pts)"
+            ],
+            "level_strength": "MODERATE"
+          },
+          "time": {
+            "score": 7,
+            "max_score": 15,
+            "details": [
+              "Quiet trading period (2pts)",
+              "End/start week (2pts)",
+              "0DTE time decay factor (3pts)"
+            ],
+            "optimal_timing": false
+          },
+          "risk": {
+            "score": 15,
+            "max_score": 15,
+            "details": [
+              "No significant risk factors (15pts)"
+            ],
+            "risk_level": "LOW"
+          },
+          "multi_asset": {
+            "score": 15,
+            "max_score": 30,
+            "details": [
+              "Strong cross-asset correlation (15pts)"
+            ],
+            "correlation_strength": "MEDIUM"
+          }
+        },
+        "market_data": {
+          "success": true,
+          "symbol": "SPY",
+          "price": 663.68,
+          "change_pct": 0.281,
+          "volume": 72704995,
+          "rsi": 47.6714,
+          "avg_volume": 76528.26315789473,
+          "volume_ratio": 950.0410959280954
+        }
+      },
+      "status": "SUCCESS"
+    },
+    {
+      "symbol": "QQQ",
+      "timestamp": "2025-09-29 21:53:34.347245",
+      "market_data": {
+        "success": true,
+        "symbol": "QQQ",
+        "price": 598.73,
+        "change": 2.76,
+        "change_pct": 0.4631,
+        "volume": 46418921,
+        "high": 602.05,
+        "low": 597.41,
+        "timestamp": "2025-09-29 21:53:34.857491"
+      },
+      "alerts": [
+        {
+          "type": "PRICE_MOVEMENT",
+          "symbol": "QQQ",
+          "message": "QQQ moved +0.46% to $598.73",
+          "urgency": "MEDIUM",
+          "data": {
+            "success": true,
+            "symbol": "QQQ",
+            "price": 598.73,
+            "change": 2.76,
+            "change_pct": 0.4631,
+            "volume": 46418921,
+            "high": 602.05,
+            "low": 597.41,
+            "timestamp": "2025-09-29 21:53:34.857491"
+          }
+        }
+      ],
+      "forecast": null,
+      "probability_score": null,
+      "status": "SUCCESS"
+    },
+    {
+      "symbol": "IWM",
+      "timestamp": "2025-09-29 21:53:38.007020",
+      "market_data": {
+        "success": true,
+        "symbol": "IWM",
+        "price": 241.62,
+        "change": 0.28,
+        "change_pct": 0.116,
+        "volume": 25594010,
+        "high": 242.93,
+        "low": 240.81,
+        "timestamp": "2025-09-29 21:53:38.426948"
+      },
+      "alerts": [],
+      "forecast": null,
+      "probability_score": null,
+      "status": "SUCCESS"
+    }
+  ],
+  "total_alerts": 1,
+  "active_forecasts": 0,
+  "cycle_duration": 18.349157
+}

@@ -1,0 +1,268 @@
+{
+  "symbol": "NQ",
+  "base_analysis": {
+    "symbol": "NQ",
+    "price_data": {
+      "success": true,
+      "symbol": "NQ",
+      "name": "E-mini NASDAQ",
+      "price": 2.2,
+      "change": -0.06,
+      "change_percent": -2.6549,
+      "point_value": 20,
+      "dollar_change": -1.2,
+      "dollar_value": 44.0,
+      "margin_day": 300,
+      "margin_overnight": 7500,
+      "timestamp": "2025-09-29T21:53:19.127725",
+      "pricing_source": "DIRECT"
+    },
+    "technical_indicators": {
+      "rsi": 48.7,
+      "rsi_note": "Fallback value",
+      "momentum": "NEUTRAL"
+    },
+    "consensus": {
+      "total_score": 110,
+      "max_score": 250,
+      "components": {
+        "price_momentum": 5,
+        "technical_alignment": 25,
+        "contract_factors": 15,
+        "volume_context": 25,
+        "market_timing": 15,
+        "risk_assessment": 25
+      },
+      "direction": "BEARISH",
+      "confidence": "LOW",
+      "percentage": 44.0,
+      "timestamp": "2025-09-29T21:53:19.499051"
+    },
+    "position_sizing": {
+      "recommended_contracts": 1,
+      "margin_required": 7500,
+      "notional_value": 44.0,
+      "max_risk_dollar": 0.8800000000000001,
+      "risk_percent": 0.00352,
+      "stop_loss_points": 0.044000000000000004,
+      "profit_target_points": 0.08800000000000001,
+      "reasoning": "LOW confidence BEARISH setup"
+    },
+    "signals": [],
+    "timestamp": "2025-09-29T21:53:19.499076"
+  },
+  "enhanced_analysis": {
+    "symbol": "NQ",
+    "current_price": 2.2,
+    "change_percent": -2.6549,
+    "enhanced_analysis": {
+      "session": {
+        "current_hour": 21,
+        "current_day": 0,
+        "session": "asian",
+        "characteristics": "range_bound",
+        "recommended_strategy": "range_trading",
+        "position_multiplier": 0.8,
+        "risk_adjustment": 0.9,
+        "preferred_style": "fade_extremes"
+      },
+      "volatility": {
+        "regime": "high",
+        "daily_change_pct": 2.6549,
+        "estimated_atr": 0.0876117,
+        "position_multiplier": 0.7,
+        "stop_multiplier": 1.3,
+        "risk_level": "HIGH",
+        "recommended_stops": {
+          "tight": 0.04380585,
+          "normal": 0.0876117,
+          "wide": 0.13141755
+        }
+      },
+      "correlation": {
+        "spy_qqq_correlation": {
+          "strength": "HIGH",
+          "score": 85,
+          "same_direction": true,
+          "divergence": 0.18209999999999998
+        },
+        "tech_leadership": "QQQ",
+        "market_breadth": {
+          "positive_count": 3,
+          "total_count": 3,
+          "breadth_percentage": 100.0,
+          "status": "STRONG_BULLISH"
+        },
+        "risk_regime": "NEUTRAL",
+        "flight_to_quality": false,
+        "dollar_impact": {
+          "dxy_change": 0,
+          "impact": "MINIMAL",
+          "equity_pressure": "NEUTRAL"
+        }
+      },
+      "signal_strength": {
+        "score": 50,
+        "max_score": 100,
+        "percentage": 50.0,
+        "category": "MEDIUM",
+        "components": {
+          "session_score": 25,
+          "volatility_score": 25,
+          "correlation_score": 0,
+          "momentum_score": 0
+        }
+      }
+    },
+    "position_sizing": {
+      "base_position_pct": 1.0,
+      "session_multiplier": 0.8,
+      "volatility_multiplier": 0.7,
+      "correlation_adjustment": 1.0,
+      "final_position_pct": 0.5599999999999999,
+      "position_dollars": 140.0,
+      "recommended_contracts": 1,
+      "max_risk_dollars": 4.380585,
+      "risk_percent_of_account": 0.017522339999999997,
+      "stop_distance_points": 0.0876117,
+      "session_info": {
+        "current_hour": 21,
+        "current_day": 0,
+        "session": "asian",
+        "characteristics": "range_bound",
+        "recommended_strategy": "range_trading",
+        "position_multiplier": 0.8,
+        "risk_adjustment": 0.9,
+        "preferred_style": "fade_extremes"
+      },
+      "volatility_info": {
+        "regime": "high",
+        "daily_change_pct": 2.6549,
+        "estimated_atr": 0.0876117,
+        "position_multiplier": 0.7,
+        "stop_multiplier": 1.3,
+        "risk_level": "HIGH",
+        "recommended_stops": {
+          "tight": 0.04380585,
+          "normal": 0.0876117,
+          "wide": 0.13141755
+        }
+      },
+      "correlation_info": {
+        "spy_qqq_correlation": {
+          "strength": "HIGH",
+          "score": 85,
+          "same_direction": true,
+          "divergence": 0.18209999999999998
+        },
+        "tech_leadership": "QQQ",
+        "market_breadth": {
+          "positive_count": 3,
+          "total_count": 3,
+          "breadth_percentage": 100.0,
+          "status": "STRONG_BULLISH"
+        },
+        "risk_regime": "NEUTRAL",
+        "flight_to_quality": false,
+        "dollar_impact": {
+          "dxy_change": 0,
+          "impact": "MINIMAL",
+          "equity_pressure": "NEUTRAL"
+        }
+      }
+    },
+    "recommendation": {
+      "action": "CONSIDER",
+      "confidence": "LOW",
+      "contracts": 1,
+      "session_strategy": "range_trading",
+      "reasoning": "MEDIUM signal strength (50.0%) during asian session",
+      "risk_percent": 0.017522339999999997,
+      "stop_distance": 0.0876117
+    },
+    "timestamp": "2025-09-29T21:53:23.109472"
+  },
+  "combined_insights": {
+    "combined_score": 46.4,
+    "base_score": 44.0,
+    "enhanced_score": 50.0,
+    "direction_agreement": false,
+    "base_direction": "BEARISH",
+    "enhanced_direction": "NEUTRAL",
+    "smart_position_size": 1,
+    "combined_risk_percent": 0.010521169999999998,
+    "market_conditions": {
+      "session": {
+        "current_hour": 21,
+        "current_day": 0,
+        "session": "asian",
+        "characteristics": "range_bound",
+        "recommended_strategy": "range_trading",
+        "position_multiplier": 0.8,
+        "risk_adjustment": 0.9,
+        "preferred_style": "fade_extremes"
+      },
+      "volatility": {
+        "regime": "high",
+        "daily_change_pct": 2.6549,
+        "estimated_atr": 0.0876117,
+        "position_multiplier": 0.7,
+        "stop_multiplier": 1.3,
+        "risk_level": "HIGH",
+        "recommended_stops": {
+          "tight": 0.04380585,
+          "normal": 0.0876117,
+          "wide": 0.13141755
+        }
+      },
+      "correlation": {
+        "spy_qqq_correlation": {
+          "strength": "HIGH",
+          "score": 85,
+          "same_direction": true,
+          "divergence": 0.18209999999999998
+        },
+        "tech_leadership": "QQQ",
+        "market_breadth": {
+          "positive_count": 3,
+          "total_count": 3,
+          "breadth_percentage": 100.0,
+          "status": "STRONG_BULLISH"
+        },
+        "risk_regime": "NEUTRAL",
+        "flight_to_quality": false,
+        "dollar_impact": {
+          "dxy_change": 0,
+          "impact": "MINIMAL",
+          "equity_pressure": "NEUTRAL"
+        }
+      },
+      "signal_strength": {
+        "score": 50,
+        "max_score": 100,
+        "percentage": 50.0,
+        "category": "MEDIUM",
+        "components": {
+          "session_score": 25,
+          "volatility_score": 25,
+          "correlation_score": 0,
+          "momentum_score": 0
+        }
+      }
+    },
+    "account_size": 25000
+  },
+  "final_recommendation": {
+    "action": "AVOID",
+    "confidence": "VERY_LOW",
+    "contracts": 0,
+    "combined_score": 46.4,
+    "direction_agreement": false,
+    "risk_percent": 0.010521169999999998,
+    "reasoning": "Weak consensus (46.4%); Systems disagree on direction; Low risk (0.0%)",
+    "market_session": "asian",
+    "volatility_regime": "high",
+    "risk_regime": "NEUTRAL"
+  },
+  "timestamp": "2025-09-29T21:53:23.109495"
+}

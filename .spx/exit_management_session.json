@@ -1,0 +1,58 @@
+{
+  "timestamp": "2025-09-29T20:43:19.481626",
+  "positions": {
+    "TEST_SPXW_6650C": {
+      "position_id": "TEST_SPXW_6650C",
+      "symbol": "SPXW",
+      "strike": 6650,
+      "option_type": "CALL",
+      "entry_price": 5.5,
+      "current_price": 7.25,
+      "quantity": 10,
+      "remaining_quantity": 10,
+      "entry_time": "2025-09-29 20:43:19.481438",
+      "expiration_time": "2025-09-29 22:43:19.481382",
+      "entry_confidence": 85,
+      "current_confidence": 82,
+      "status": "ACTIVE",
+      "profit_targets_hit": [],
+      "exit_triggers": {
+        "profit_targets": {
+          "profit_50": 8.25,
+          "profit_100": 11.0,
+          "profit_200": 16.5
+        },
+        "stop_loss": 2.4475,
+        "time_exit_minutes": 17.5,
+        "confidence_floor": 59.49999999999999
+      },
+      "pnl_history": [
+        {
+          "timestamp": "2025-09-29 20:43:19.481557",
+          "price": 7.25,
+          "pnl_dollar": 1750.0,
+          "pnl_percentage": 31.818181818181817
+        }
+      ],
+      "last_update": "2025-09-29 20:43:19.481551"
+    }
+  },
+  "exit_alerts": [],
+  "portfolio_summary": {
+    "active_positions": 1,
+    "total_unrealized_pnl": 1750.0,
+    "total_realized_pnl": 0,
+    "total_pnl": 1750.0,
+    "portfolio_heat": 0.02,
+    "positions": [
+      {
+        "position_id": "TEST_SPXW_6650C",
+        "symbol": "SPXW",
+        "unrealized_pnl": 1750.0,
+        "pnl_percentage": 31.818181818181817,
+        "time_to_expiry": 119.99999638333334
+      }
+    ],
+    "last_update": "2025-09-29 20:43:19.481606"
+  }
+}
