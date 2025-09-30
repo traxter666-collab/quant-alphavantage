@@ -130,55 +130,34 @@ class DualAPISystem:
                     'timestamp': datetime.now()
                 }
 
+    # This is the replacement for the get_spx_data_with_failover function
     def get_spx_data_with_failover(self):
-        """Get SPX data using Polygon indices endpoint (primary) with SPY fallback"""
+        """Get SPX data using Polygon indices endpoint - works both during and after market hours"""
         print("Getting SPX data with dual API failover...")
-
-        # Check market hours first
+        
         from datetime import datetime
-        current_hour = datetime.now().hour
-        if current_hour < 9 or current_hour >= 16:
-            print("[INFO] Market closed - using SPY fallback")
-            # Skip direct I:SPX call after hours, go straight to SPY
-            spy_result = self.get_stock_quote_with_failover('SPY')
-            if spy_result['success']:
-                spy_price = spy_result['price']
-                spx_price = spy_price * 10
-                return {
-                    'success': True,
-                    'spx_price': spx_price,
-                    'spy_price': spy_price,
-                    'api_used': spy_result['api_used'],
-                    'conversion_method': 'SPY × 10 (After Hours)',
-                    'timestamp': spy_result['timestamp'],
-                    'reliability': 'HIGH' if spy_result['api_used'] == 'polygon' else 'MEDIUM'
-                }
-            else:
-                return {
-                    'success': False,
-                    'error': 'Market closed and SPY data unavailable',
-                    'details': spy_result
-                }
-
-        # Try Polygon I:SPX first (most accurate) - only during market hours
+        today = datetime.now().strftime('%Y-%m-%d')
+        
+        # STANDARD APPROACH: Always try I:SPX daily bars endpoint first
+        # This endpoint works both during market hours and after close
+        # It gives the ACTUAL closing data, not the previous day
         try:
-            today = datetime.now().strftime('%Y-%m-%d')
-            url = f'https://api.polygon.io/v2/aggs/ticker/I:SPX/range/1/minute/{today}/{today}?adjusted=true&sort=desc&limit=1&apikey={self.polygon_api_key}'
-
+            url = f'https://api.polygon.io/v2/aggs/ticker/I:SPX/range/1/day/{today}/{today}?adjusted=true&apikey={self.polygon_api_key}'
+            
             response = requests.get(url, timeout=20)
             data = response.json()
-
+            
             if 'results' in data and data['results']:
                 bar = data['results'][0]
-                spx_price = bar['c']  # Close price
-
-                print(f"[PASS] Polygon I:SPX direct: ${spx_price:.2f}")
-
+                spx_price = bar['c']  # Close price (or latest if market open)
+                
+                print(f"[PASS] Polygon I:SPX daily bar: ${spx_price:.2f}")
+                
                 return {
                     'success': True,
                     'spx_price': spx_price,
                     'api_used': 'polygon_indices',
-                    'conversion_method': 'Direct I:SPX',
+                    'conversion_method': 'Direct I:SPX Daily Bar',
                     'timestamp': datetime.fromtimestamp(bar['t'] / 1000),
                     'reliability': 'VERY_HIGH',
                     'open': bar['o'],
@@ -186,32 +165,30 @@ class DualAPISystem:
                     'low': bar['l']
                 }
         except Exception as e:
-            print(f"[FAIL] Polygon I:SPX failed: {e}")
-
-        # Fallback: Get SPY and convert
+            print(f"[FAIL] Polygon I:SPX daily bar failed: {e}")
+        
+        # Fallback: Get SPY and convert (only if daily bar fails)
         print("Falling back to SPY conversion...")
         spy_result = self.get_stock_quote_with_failover('SPY')
-
+        
         if spy_result['success']:
             spy_price = spy_result['price']
             spx_price = spy_price * 10
-
+            
             return {
                 'success': True,
                 'spx_price': spx_price,
                 'spy_price': spy_price,
                 'api_used': spy_result['api_used'],
-                'conversion_method': 'SPY × 10',
+                'conversion_method': 'SPY × 10 Fallback',
                 'timestamp': spy_result['timestamp'],
-                'reliability': 'HIGH' if spy_result['api_used'] == 'polygon' else 'MEDIUM'
+                'reliability': 'MEDIUM'
             }
-        else:
-            return {
-                'success': False,
-                'error': 'Failed to get SPY data for SPX conversion',
-                'details': spy_result
-            }
-
+        
+        return {
+            'success': False,
+            'error': 'All SPX data sources failed'
+        }
     def get_after_hours_data_with_failover(self, symbol):
         """Get after-hours data with failover"""
         print(f"Getting after-hours data for {symbol.upper()}...")
