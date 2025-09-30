@@ -18,6 +18,13 @@ class EnhancedMultiAssetMonitor:
     def __init__(self):
         self.dual_api = DualAPISystem()
         self.last_alerts = {}
+        self.alert_thresholds = {
+            'price_change': 0.5,  # Alert on 0.5%+ price moves
+            'vix_change': 1.0,     # Alert on 1.0+ VIX moves
+            'volume_surge': 2.0,   # Alert on 2x+ volume spikes
+            'correlation_break': 0.2  # Alert on 0.2+ correlation changes
+        }
+        self.last_discord_alert = {}  # Track last Discord alert time
 
         # Price history for correlation tracking (last 20 data points)
         self.price_history = {
@@ -254,6 +261,35 @@ class EnhancedMultiAssetMonitor:
         else:
             return 'VERY_WEAK'
 
+    def should_send_alert(self, alert_type, value, symbol=None):
+        """Determine if alert meets significance threshold for Discord notification"""
+        import time
+
+        current_time = time.time()
+        alert_key = f"{alert_type}_{symbol}" if symbol else alert_type
+
+        # Check if enough time has passed since last alert (minimum 5 minutes)
+        if alert_key in self.last_discord_alert:
+            if current_time - self.last_discord_alert[alert_key] < 300:
+                return False
+
+        # Check alert significance thresholds
+        should_alert = False
+
+        if alert_type == 'price_move' and abs(value) >= self.alert_thresholds['price_change']:
+            should_alert = True
+        elif alert_type == 'vix_move' and abs(value) >= self.alert_thresholds['vix_change']:
+            should_alert = True
+        elif alert_type == 'volume_surge' and value >= self.alert_thresholds['volume_surge']:
+            should_alert = True
+        elif alert_type == 'correlation_break' and abs(value) >= self.alert_thresholds['correlation_break']:
+            should_alert = True
+
+        if should_alert:
+            self.last_discord_alert[alert_key] = current_time
+
+        return should_alert
+
     def get_asset_price(self, symbol):
         """Get current price for any asset"""
         if symbol == 'SPX':
@@ -335,7 +371,7 @@ class EnhancedMultiAssetMonitor:
 
         print(f"{'='*80}\n")
 
-    def run(self, update_interval=15):
+    def run(self, update_interval=10):
         """Run enhanced monitor with specified update interval"""
         print(f"\n🚀 ENHANCED MULTI-ASSET MONITOR STARTED")
         print(f"📊 Monitoring: SPX, SPY, QQQ, IWM, NDX + VIX")
@@ -357,7 +393,7 @@ class EnhancedMultiAssetMonitor:
 
 def main():
     monitor = EnhancedMultiAssetMonitor()
-    monitor.run(update_interval=15)
+    monitor.run(update_interval=10)
 
 if __name__ == "__main__":
     main()
