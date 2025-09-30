@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-09-30T09:16:18.225426",
+  "historical_nodes": {},
+  "touch_history": {
+    "SPY_664.0": {
+      "count": 5,
+      "sequence": "THIRD_PLUS",
+      "last_touch": "2025-09-30T09:16:16.657082",
+      "first_touch": "2025-09-30T09:12:49.157179"
+    },
+    "QQQ_599.0": {
+      "count": 5,
+      "sequence": "THIRD_PLUS",
+      "last_touch": "2025-09-30T09:16:17.266479",
+      "first_touch": "2025-09-30T09:12:49.603944"
+    }
+  }
+}

@@ -1,58 +1,104 @@
 {
   "spx_levels": {
-    "timestamp": "2025-09-30T00:18:00",
+    "timestamp": "2025-09-30T09:10:00",
     "current_price": 6661.21,
+    "date": "2025-09-30",
+    "session": "pre_market",
     "support_levels": [
       {
-        "level": 6560,
+        "level": 6626,
         "strength": "HIGH",
-        "type": "reversal_probability",
-        "description": "High reversal probability zone"
+        "type": "support_zone_upper",
+        "description": "Support zone upper bound (6620-6626)"
       },
       {
-        "level": 6542,
+        "level": 6620,
+        "strength": "HIGH",
+        "type": "support_zone_lower",
+        "description": "Support zone lower bound (6620-6626)"
+      },
+      {
+        "level": 6610,
+        "strength": "VERY_HIGH",
+        "type": "gamma_flip",
+        "description": "Gamma flip - high reversal probability (6607-6610)"
+      },
+      {
+        "level": 6607,
+        "strength": "VERY_HIGH",
+        "type": "gamma_flip",
+        "description": "Gamma flip lower bound - high reversal probability"
+      },
+      {
+        "level": 6579,
         "strength": "MEDIUM",
-        "type": "resistance_zone",
-        "description": "Resistance zone"
-      },
-      {
-        "level": 6510,
-        "strength": "HIGH",
-        "type": "key_resistance",
-        "description": "Key resistance level"
-      },
-      {
-        "level": 6498,
-        "strength": "HIGH",
-        "type": "strong_support",
-        "description": "Strong support level"
+        "type": "key_level",
+        "description": "Lower key support level"
       }
     ],
     "resistance_levels": [
       {
-        "level": 6677,
-        "strength": "MEDIUM",
-        "type": "daily_high",
-        "description": "Current session high"
-      },
-      {
-        "level": 6700,
+        "level": 6680,
         "strength": "HIGH",
-        "type": "psychological",
-        "description": "Major psychological resistance"
+        "type": "resistance_zone_lower",
+        "description": "Resistance zone lower bound (6680-6694)"
       },
       {
-        "level": 6750,
+        "level": 6694,
+        "strength": "HIGH",
+        "type": "strong_resistance",
+        "description": "Strong resistance - zone upper bound (6680-6694)"
+      },
+      {
+        "level": 6716,
+        "strength": "VERY_HIGH",
+        "type": "reversal_zone",
+        "description": "High likelihood of reversal"
+      },
+      {
+        "level": 6730,
+        "strength": "HIGH",
+        "type": "key_resistance",
+        "description": "Major resistance level"
+      }
+    ],
+    "intermediate_levels": [
+      {
+        "level": 6656,
         "strength": "MEDIUM",
-        "type": "weekly_resistance",
-        "description": "Weekly resistance zone"
+        "type": "key_level",
+        "description": "Intermediate level"
+      },
+      {
+        "level": 6641,
+        "strength": "MEDIUM",
+        "type": "key_level",
+        "description": "Intermediate level"
       }
     ],
     "trading_range": {
-      "lower": 6560,
-      "upper": 6700,
-      "bias": "BEARISH_REVERSAL",
-      "confidence": "HIGH"
+      "lower": 6620,
+      "upper": 6694,
+      "bias": "NEUTRAL_TO_BULLISH",
+      "confidence": "HIGH",
+      "description": "Trading between support zone (6620-6626) and resistance zone (6680-6694)"
+    },
+    "critical_zones": {
+      "resistance_zone": {
+        "lower": 6680,
+        "upper": 6694,
+        "strength": "HIGH"
+      },
+      "support_zone": {
+        "lower": 6620,
+        "upper": 6626,
+        "strength": "HIGH"
+      },
+      "gamma_flip_zone": {
+        "lower": 6607,
+        "upper": 6610,
+        "strength": "VERY_HIGH"
+      }
     }
   }
 }

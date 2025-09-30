@@ -204,6 +204,49 @@ class SeamlessMarketSystem:
 
         return results
 
+    def get_dealer_positioning(self):
+        """Get King Nodes and Gatekeeper positioning"""
+        try:
+            result = subprocess.run(
+                ['python', os.path.join(self.base_path, 'dealer_positioning_engine.py')],
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+
+            positioning = {
+                'timestamp': datetime.now().isoformat(),
+                'spx': {'king_nodes': [], 'gatekeepers': [], 'primary_magnet': None},
+                'spy': {'king_nodes': [], 'gatekeepers': [], 'primary_magnet': None},
+                'qqq': {'king_nodes': [], 'gatekeepers': [], 'primary_magnet': None}
+            }
+
+            current_symbol = None
+            for line in result.stdout.split('\n'):
+                if 'SPX DEALER POSITIONING:' in line:
+                    current_symbol = 'spx'
+                elif 'SPY DEALER POSITIONING:' in line:
+                    current_symbol = 'spy'
+                elif 'QQQ DEALER POSITIONING:' in line:
+                    current_symbol = 'qqq'
+                elif 'PRIMARY MAGNET:' in line and current_symbol:
+                    # Next lines contain magnet info
+                    pass
+                elif 'Strike: $' in line and current_symbol:
+                    strike = float(line.split('$')[1].split()[0])
+                    if 'PRIMARY MAGNET' in result.stdout[max(0, result.stdout.index(line)-100):result.stdout.index(line)]:
+                        positioning[current_symbol]['primary_magnet'] = strike
+                elif 'KING NODES' in line and current_symbol:
+                    # Parse king nodes from next lines
+                    pass
+                elif 'GATEKEEPER NODES' in line and current_symbol:
+                    # Parse gatekeepers from next lines
+                    pass
+
+            return positioning
+        except:
+            return None
+
     def get_market_snapshot(self):
         """Get current prices for all major assets"""
         snapshot = {
@@ -211,7 +254,8 @@ class SeamlessMarketSystem:
             'spy': 0.0,
             'qqq': 0.0,
             'iwm': 0.0,
-            'spx': 0.0
+            'spx': 0.0,
+            'dealer_positioning': None
         }
 
         symbols = ['SPY', 'QQQ', 'IWM']
@@ -252,6 +296,9 @@ class SeamlessMarketSystem:
             if snapshot['spy'] > 0:
                 snapshot['spx'] = snapshot['spy'] * 10
 
+        # Get dealer positioning (King Nodes and Gatekeepers)
+        snapshot['dealer_positioning'] = self.get_dealer_positioning()
+
         return snapshot
 
     def save_results(self, results, filename):
@@ -267,13 +314,60 @@ class SeamlessMarketSystem:
         """Continuous monitoring mode - updates every N seconds"""
         print(f"\n🔄 CONTINUOUS MONITORING MODE")
         print(f"   Updates every {interval} seconds")
+        print(f"   Includes: Prices + King Nodes + Gatekeepers")
         print(f"   Press Ctrl+C to stop\n")
 
         try:
+            cycle = 0
             while True:
-                print("=" * 60)
-                self.get_current_analysis()
+                cycle += 1
+                print("=" * 70)
+                print(f"📊 UPDATE #{cycle} - {datetime.now().strftime('%I:%M:%S %p ET')}")
+                print("=" * 70)
+
+                # Get market data with dealer positioning
+                snapshot = self.get_market_snapshot()
+
+                # Display prices
+                print(f"\n💰 CURRENT PRICES:")
+                print(f"   SPX: ${snapshot['spx']:.2f}")
+                print(f"   SPY: ${snapshot['spy']:.2f}")
+                print(f"   QQQ: ${snapshot['qqq']:.2f}")
+                print(f"   IWM: ${snapshot['iwm']:.2f}")
+
+                # Display dealer positioning
+                if snapshot.get('dealer_positioning'):
+                    dp = snapshot['dealer_positioning']
+
+                    print(f"\n🎯 KING NODES (Primary Magnets):")
+                    for symbol in ['spx', 'spy', 'qqq']:
+                        if dp[symbol].get('primary_magnet'):
+                            magnet = dp[symbol]['primary_magnet']
+                            current = snapshot[symbol]
+                            distance = magnet - current
+                            print(f"   {symbol.upper()}: ${magnet:.2f} ({distance:+.2f} pts)")
+
+                    print(f"\n🚪 GATEKEEPER NODES (Range Boundaries):")
+                    for symbol in ['spx', 'spy', 'qqq']:
+                        gatekeepers = dp[symbol].get('gatekeepers', [])
+                        if gatekeepers:
+                            print(f"   {symbol.upper()}: {len(gatekeepers)} active")
+                else:
+                    print(f"\n⚠️  Dealer positioning unavailable this cycle")
+
+                # Load today's levels if available
+                try:
+                    with open(os.path.join(self.spx_path, 'todays_levels.json'), 'r') as f:
+                        levels = json.load(f)
+                        print(f"\n📊 TODAY'S KEY LEVELS:")
+                        print(f"   Resistance: {levels['zones']['resistance_zone']['range']}")
+                        print(f"   Support: {levels['zones']['support_zone']['range']}")
+                        print(f"   Gamma Flip: {levels['zones']['gamma_flip_zone']['range']}")
+                except:
+                    pass
+
                 print(f"\n⏱️  Next update in {interval} seconds...")
+                print("=" * 70)
                 time.sleep(interval)
 
         except KeyboardInterrupt:
