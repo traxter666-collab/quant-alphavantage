@@ -317,60 +317,6 @@ class DualAPISystem:
             'timestamp': datetime.now().isoformat()
         }
 
-    def get_ndx_data_with_failover(self):
-        """Get NDX data using Polygon indices endpoint - works both during and after market hours"""
-        print("Getting NDX data with dual API failover...")
-        
-        from datetime import datetime
-        today = datetime.now().strftime('%Y-%m-%d')
-        
-        # STANDARD APPROACH: Always try I:NDX daily bars endpoint first
-        try:
-            url = f'https://api.polygon.io/v2/aggs/ticker/I:NDX/range/1/day/{today}/{today}?adjusted=true&apikey={self.polygon_api_key}'
-            response = requests.get(url, timeout=20)
-            data = response.json()
-            
-            if 'results' in data and data['results']:
-                bar = data['results'][0]
-                ndx_price = bar['c']
-                print(f"[PASS] Polygon I:NDX daily bar: ${ndx_price:.2f}")
-                
-                return {
-                    'success': True,
-                    'ndx_price': ndx_price,
-                    'api_used': 'polygon_indices',
-                    'conversion_method': 'Direct I:NDX Daily Bar',
-                    'timestamp': datetime.fromtimestamp(bar['t'] / 1000),
-                    'reliability': 'VERY_HIGH',
-                    'open': bar['o'],
-                    'high': bar['h'],
-                    'low': bar['l']
-                }
-        except Exception as e:
-            print(f"[FAIL] Polygon I:NDX daily bar failed: {e}")
-        
-        # Fallback: Get QQQ and convert
-        print("Falling back to QQQ conversion...")
-        qqq_result = self.get_stock_quote_with_failover('QQQ')
-        
-        if qqq_result['success']:
-            ndx_price = qqq_result['price'] * 41.11
-            return {
-                'success': True,
-                'ndx_price': ndx_price,
-                'qqq_price': qqq_result['price'],
-                'api_used': qqq_result['api_used'],
-                'conversion_method': 'QQQ × 41.11 Fallback',
-                'timestamp': qqq_result['timestamp'],
-                'reliability': 'MEDIUM'
-            }
-        
-        return {
-            'success': False,
-            'error': 'All NDX data sources failed'
-        }
-
-
 def main():
     dual_api = DualAPISystem()
     dual_api.test_dual_api_system()

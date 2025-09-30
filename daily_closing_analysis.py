@@ -39,7 +39,13 @@ def generate_closing_analysis():
     spy_close = spy_result['price']
     qqq_close = qqq_result['price']
     iwm_close = iwm_result['price']
-    ndx_close = qqq_close * 34.4
+    # Get NDX directly
+    ndx_result = api.get_ndx_data_with_failover()
+    if not ndx_result['success']:
+        print('⚠️ Failed to get NDX data, using QQQ fallback')
+        ndx_close = qqq_close * 41.11
+    else:
+        ndx_close = ndx_result['ndx_price']
 
     print('📊 FINAL CLOSING PRICES:')
     print('='*70)

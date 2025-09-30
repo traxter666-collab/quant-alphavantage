@@ -56,10 +56,10 @@ class MultiAssetTradeMonitor:
             if result['success']:
                 return result['spx_price']
         elif symbol == 'NDX':
-            # NDX via QQQ proxy (approximately 34.4x multiplier)
-            result = self.dual_api.get_stock_quote_with_failover('QQQ')
+            # NDX via direct I:NDX endpoint (ACCURATE)
+            result = self.dual_api.get_ndx_data_with_failover()
             if result['success']:
-                return result['price'] * 34.4
+                return result['ndx_price']
         else:
             result = self.dual_api.get_stock_quote_with_failover(symbol)
             if result['success']:
