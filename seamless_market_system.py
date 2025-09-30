@@ -314,8 +314,21 @@ class SeamlessMarketSystem:
         """Continuous monitoring mode - updates every N seconds"""
         print(f"\n🔄 CONTINUOUS MONITORING MODE")
         print(f"   Updates every {interval} seconds")
-        print(f"   Includes: Prices + King Nodes + Gatekeepers")
+        print(f"   Includes: Prices + King Nodes + Gatekeepers + Trade Signals")
+        print(f"   🚨 Auto-generates trade ideas at 75%+ confidence")
+        print(f"   📱 Discord notifications for high-probability setups")
         print(f"   Press Ctrl+C to stop\n")
+
+        # Initialize trade signal engine
+        try:
+            import sys
+            sys.path.insert(0, self.base_path)
+            from trade_signal_engine import TradeSignalEngine
+            signal_engine = TradeSignalEngine()
+            print("✅ Trade Signal Engine active\n")
+        except Exception as e:
+            print(f"⚠️  Trade signals unavailable: {e}\n")
+            signal_engine = None
 
         try:
             cycle = 0
@@ -365,6 +378,22 @@ class SeamlessMarketSystem:
                         print(f"   Gamma Flip: {levels['zones']['gamma_flip_zone']['range']}")
                 except:
                     pass
+
+                # CHECK FOR TRADE SIGNALS
+                if signal_engine:
+                    signal = signal_engine.analyze_trade_setup(snapshot)
+                    if signal:
+                        # Display trade signal
+                        print(signal_engine.format_signal_for_display(signal))
+
+                        # Send to Discord
+                        print("📱 Sending to Discord...")
+                        signal_engine.send_to_discord(signal)
+
+                        # Save signal
+                        signal_engine.save_signal(signal)
+
+                        print("✅ Trade signal processed\n")
 
                 print(f"\n⏱️  Next update in {interval} seconds...")
                 print("=" * 70)
