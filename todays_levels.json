@@ -1,0 +1,72 @@
+{
+  "date": "2025-10-01",
+  "updated": "2025-09-30 18:30:00 ET",
+  "spx": {
+    "close_previous": 6651.20,
+    "resistance": {
+      "r1": 6680.0,
+      "r2": 6690.0,
+      "description": "Key resistance zone from previous session highs"
+    },
+    "support": {
+      "s1": 6630.0,
+      "s2": 6635.0,
+      "description": "Support zone near yesterday's close"
+    },
+    "gamma_flip": {
+      "level": 6610.0,
+      "range": [6610.0, 6615.0],
+      "description": "Critical gamma flip zone - volatility regime change"
+    },
+    "key_levels": [6610.0, 6635.0, 6651.0, 6680.0, 6690.0]
+  },
+  "spy": {
+    "close_previous": 665.12,
+    "resistance": {
+      "r1": 668.0,
+      "r2": 669.0
+    },
+    "support": {
+      "s1": 663.0,
+      "s2": 661.0
+    },
+    "key_levels": [661.0, 663.0, 665.0, 668.0, 669.0]
+  },
+  "qqq": {
+    "close_previous": 599.25,
+    "resistance": {
+      "r1": 602.0,
+      "r2": 604.0
+    },
+    "support": {
+      "s1": 597.0,
+      "s2": 595.0
+    },
+    "key_levels": [595.0, 597.0, 599.0, 602.0, 604.0]
+  },
+  "iwm": {
+    "close_previous": 241.40,
+    "resistance": {
+      "r1": 243.0,
+      "r2": 244.0
+    },
+    "support": {
+      "s1": 239.0,
+      "s2": 237.0
+    },
+    "key_levels": [237.0, 239.0, 241.0, 243.0, 244.0]
+  },
+  "ndx": {
+    "close_previous": 24679.99,
+    "resistance": {
+      "r1": 24800.0,
+      "r2": 24900.0
+    },
+    "support": {
+      "s1": 24600.0,
+      "s2": 24500.0
+    },
+    "key_levels": [24500.0, 24600.0, 24680.0, 24800.0, 24900.0]
+  },
+  "notes": "Updated for October 1, 2025 trading session. All levels calculated from September 30 closing prices. SPX focus on 6680-6690 resistance and 6630-6635 support zones."
+}
