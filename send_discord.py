@@ -35,7 +35,7 @@ def send_to_discord(title, content):
         "color": color,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "footer": {
-            "text": "Multi-Asset Trading Monitor"
+            "text": "🤖 Powered by TraxterAI"
         }
     }
 
