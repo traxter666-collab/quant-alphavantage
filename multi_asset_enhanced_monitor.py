@@ -8,6 +8,7 @@ import os
 import sys
 import time
 import json
+import subprocess
 from datetime import datetime
 from collections import deque
 
@@ -290,6 +291,29 @@ class EnhancedMultiAssetMonitor:
 
         return should_alert
 
+    def send_discord_alert(self, title, message, priority='medium'):
+        """Send alert to Discord with priority-based formatting"""
+        try:
+            # Priority colors: critical=red, high=orange, medium=yellow, info=blue
+            priority_emojis = {
+                'critical': '🚨',
+                'high': '⚠️',
+                'medium': '📊',
+                'info': 'ℹ️'
+            }
+
+            emoji = priority_emojis.get(priority, '📊')
+            formatted_title = f"{emoji} {title}"
+
+            subprocess.run(
+                ['python', 'send_discord.py', formatted_title, message],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+        except Exception as e:
+            print(f"Discord alert failed: {e}")
+
     def get_asset_price(self, symbol):
         """Get current price for any asset"""
         if symbol == 'SPX':
@@ -318,6 +342,26 @@ class EnhancedMultiAssetMonitor:
         vix_analysis = self.analyze_vix_regime(vix_price)
 
         if vix_price:
+            # Check for VIX spike/drop before adding to history
+            if len(self.price_history['VIX']) > 0:
+                prev_vix = self.price_history['VIX'][-1]
+                vix_change = vix_price - prev_vix
+
+                # Send alert if VIX moves significantly
+                if self.should_send_alert('vix_move', vix_change):
+                    priority = 'critical' if abs(vix_change) >= 2.0 else 'high'
+                    direction = 'SPIKE' if vix_change > 0 else 'DROP'
+                    self.send_discord_alert(
+                        f'VIX {direction}: {abs(vix_change):.2f} pts',
+                        f"**VIX Alert**\n"
+                        f"Previous: ${prev_vix:.2f}\n"
+                        f"Current: ${vix_price:.2f}\n"
+                        f"Change: {vix_change:+.2f} pts\n"
+                        f"Regime: {vix_analysis['regime']}\n"
+                        f"Position Multiplier: {vix_analysis['position_multiplier']:.2f}x",
+                        priority=priority
+                    )
+
             self.price_history['VIX'].append(vix_price)
             print(f"📊 VIX: ${vix_price:.2f} | Regime: {vix_analysis['regime']} | "
                   f"Risk: {vix_analysis['risk_level']} | "
@@ -328,6 +372,25 @@ class EnhancedMultiAssetMonitor:
         for symbol in ['SPX', 'NDX', 'SPY', 'QQQ', 'IWM']:
             price = self.get_asset_price(symbol)
             if price:
+                # Check for significant price moves
+                if len(self.price_history[symbol]) > 0:
+                    prev_price = self.price_history[symbol][-1]
+                    price_change_pct = ((price - prev_price) / prev_price) * 100
+
+                    # Send alert if price moves significantly
+                    if self.should_send_alert('price_move', price_change_pct, symbol):
+                        priority = 'high' if abs(price_change_pct) >= 1.0 else 'medium'
+                        direction = 'BREAKOUT' if price_change_pct > 0 else 'BREAKDOWN'
+                        self.send_discord_alert(
+                            f'{symbol} {direction}: {abs(price_change_pct):.2f}%',
+                            f"**{symbol} Price Alert**\n"
+                            f"Previous: ${prev_price:.2f}\n"
+                            f"Current: ${price:.2f}\n"
+                            f"Change: {price_change_pct:+.2f}%\n"
+                            f"Move: ${price - prev_price:+.2f}",
+                            priority=priority
+                        )
+
                 prices[symbol] = price
                 self.price_history[symbol].append(price)
                 print(f"{symbol}: ${price:.2f}")
