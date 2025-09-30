@@ -1,0 +1,171 @@
+{
+  "backtest_period": {
+    "start_date": "2025-09-01",
+    "end_date": "2025-09-30"
+  },
+  "historical_data_loaded": [
+    "SPX",
+    "SPY"
+  ],
+  "performance_metrics": {
+    "spy_support_resistance": {
+      "symbol": "SPY",
+      "strategy": "Support/Resistance Bounce",
+      "support_level": 663,
+      "resistance_level": 668,
+      "total_trades": 8,
+      "winners": 0,
+      "losers": 8,
+      "win_rate": 0.0,
+      "avg_win_pct": 0,
+      "avg_loss_pct": -0.5000000000000082,
+      "total_pnl_pct": -4.000000000000066,
+      "trades": [
+        {
+          "entry_date": "2025-09-02",
+          "exit_date": "2025-09-03",
+          "type": "LONG",
+          "entry_price": 663,
+          "exit_price": 659.685,
+          "exit_reason": "STOP",
+          "pnl": -3.3150000000000546,
+          "pnl_pct": -0.5000000000000082
+        },
+        {
+          "entry_date": "2025-09-04",
+          "exit_date": "2025-09-05",
+          "type": "LONG",
+          "entry_price": 663,
+          "exit_price": 659.685,
+          "exit_reason": "STOP",
+          "pnl": -3.3150000000000546,
+          "pnl_pct": -0.5000000000000082
+        },
+        {
+          "entry_date": "2025-09-08",
+          "exit_date": "2025-09-09",
+          "type": "LONG",
+          "entry_price": 663,
+          "exit_price": 659.685,
+          "exit_reason": "STOP",
+          "pnl": -3.3150000000000546,
+          "pnl_pct": -0.5000000000000082
+        },
+        {
+          "entry_date": "2025-09-10",
+          "exit_date": "2025-09-11",
+          "type": "LONG",
+          "entry_price": 663,
+          "exit_price": 659.685,
+          "exit_reason": "STOP",
+          "pnl": -3.3150000000000546,
+          "pnl_pct": -0.5000000000000082
+        },
+        {
+          "entry_date": "2025-09-12",
+          "exit_date": "2025-09-15",
+          "type": "LONG",
+          "entry_price": 663,
+          "exit_price": 659.685,
+          "exit_reason": "STOP",
+          "pnl": -3.3150000000000546,
+          "pnl_pct": -0.5000000000000082
+        },
+        {
+          "entry_date": "2025-09-16",
+          "exit_date": "2025-09-17",
+          "type": "LONG",
+          "entry_price": 663,
+          "exit_price": 659.685,
+          "exit_reason": "STOP",
+          "pnl": -3.3150000000000546,
+          "pnl_pct": -0.5000000000000082
+        },
+        {
+          "entry_date": "2025-09-18",
+          "exit_date": "2025-09-24",
+          "type": "LONG",
+          "entry_price": 663,
+          "exit_price": 659.685,
+          "exit_reason": "STOP",
+          "pnl": -3.3150000000000546,
+          "pnl_pct": -0.5000000000000082
+        },
+        {
+          "entry_date": "2025-09-25",
+          "exit_date": "2025-09-26",
+          "type": "LONG",
+          "entry_price": 663,
+          "exit_price": 659.685,
+          "exit_reason": "STOP",
+          "pnl": -3.3150000000000546,
+          "pnl_pct": -0.5000000000000082
+        }
+      ]
+    }
+  },
+  "pattern_results": {
+    "spx_gamma_flip": {
+      "symbol": "SPX",
+      "gamma_flip_level": 6610,
+      "total_events": 5,
+      "up_crosses": 3,
+      "down_crosses": 2,
+      "accelerated_moves": 0,
+      "events": [
+        {
+          "date": "2025-09-15",
+          "direction": "UP",
+          "gamma_level": 6610,
+          "price_at_cross": 6615.28,
+          "price_5d_later": 6693.75,
+          "change_pct": 1.1861931770083844,
+          "volatility_expansion_pct": 26.46107439820451,
+          "behavior": "NORMAL"
+        },
+        {
+          "date": "2025-09-16",
+          "direction": "DOWN",
+          "gamma_level": 6610,
+          "price_at_cross": 6606.76,
+          "price_5d_later": 6656.92,
+          "change_pct": 0.7592223722369187,
+          "volatility_expansion_pct": 51.58090837183964,
+          "behavior": "NORMAL"
+        },
+        {
+          "date": "2025-09-18",
+          "direction": "UP",
+          "gamma_level": 6610,
+          "price_at_cross": 6631.96,
+          "price_5d_later": 6604.72,
+          "change_pct": -0.410738303608583,
+          "volatility_expansion_pct": 31.123750988426487,
+          "behavior": "NORMAL"
+        },
+        {
+          "date": "2025-09-25",
+          "direction": "DOWN",
+          "gamma_level": 6610,
+          "price_at_cross": 6604.72,
+          "price_5d_later": 6688.46,
+          "change_pct": 1.267881151661233,
+          "volatility_expansion_pct": -8.399429916965893,
+          "behavior": "NORMAL"
+        },
+        {
+          "date": "2025-09-26",
+          "direction": "UP",
+          "gamma_level": 6610,
+          "price_at_cross": 6643.7,
+          "price_5d_later": 6688.46,
+          "change_pct": 0.6737209687373032,
+          "volatility_expansion_pct": -13.872465646175328,
+          "behavior": "NORMAL"
+        }
+      ]
+    }
+  },
+  "trades": [],
+  "generated_at": "2025-09-30 19:03:49 ET"
+}
