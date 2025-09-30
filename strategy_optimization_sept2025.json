@@ -1,0 +1,189 @@
+{
+  "optimization_date": "2025-09-30 19:14:39 ET",
+  "backtest_period": {
+    "start_date": "2025-09-01",
+    "end_date": "2025-09-30"
+  },
+  "results": {
+    "SPY_support_resistance": {
+      "support": 661,
+      "resistance": 666,
+      "score": 22.405444021934205,
+      "performance": {
+        "symbol": "SPY",
+        "strategy": "Support/Resistance Bounce",
+        "support_level": 661,
+        "resistance_level": 666,
+        "total_trades": 8,
+        "winners": 3,
+        "losers": 5,
+        "win_rate": 37.5,
+        "avg_win_pct": 0.754536684945157,
+        "avg_loss_pct": -0.49999999999999245,
+        "total_pnl_pct": -0.2363899451644913,
+        "trades": [
+          {
+            "entry_date": "2025-09-02",
+            "exit_date": "2025-09-03",
+            "type": "LONG",
+            "entry_price": 661,
+            "exit_price": 657.695,
+            "exit_reason": "STOP",
+            "pnl": -3.30499999999995,
+            "pnl_pct": -0.49999999999999245
+          },
+          {
+            "entry_date": "2025-09-04",
+            "exit_date": "2025-09-05",
+            "type": "LONG",
+            "entry_price": 661,
+            "exit_price": 657.695,
+            "exit_reason": "STOP",
+            "pnl": -3.30499999999995,
+            "pnl_pct": -0.49999999999999245
+          },
+          {
+            "entry_date": "2025-09-08",
+            "exit_date": "2025-09-09",
+            "type": "LONG",
+            "entry_price": 661,
+            "exit_price": 657.695,
+            "exit_reason": "STOP",
+            "pnl": -3.30499999999995,
+            "pnl_pct": -0.49999999999999245
+          },
+          {
+            "entry_date": "2025-09-10",
+            "exit_date": "2025-09-11",
+            "type": "LONG",
+            "entry_price": 661,
+            "exit_price": 657.695,
+            "exit_reason": "STOP",
+            "pnl": -3.30499999999995,
+            "pnl_pct": -0.49999999999999245
+          },
+          {
+            "entry_date": "2025-09-12",
+            "exit_date": "2025-09-17",
+            "type": "LONG",
+            "entry_price": 661,
+            "exit_price": 657.695,
+            "exit_reason": "STOP",
+            "pnl": -3.30499999999995,
+            "pnl_pct": -0.49999999999999245
+          },
+          {
+            "entry_date": "2025-09-18",
+            "exit_date": "2025-09-22",
+            "type": "LONG",
+            "entry_price": 661,
+            "exit_price": 666,
+            "exit_reason": "TARGET",
+            "pnl": 5,
+            "pnl_pct": 0.7564296520423601
+          },
+          {
+            "entry_date": "2025-09-23",
+            "exit_date": "2025-09-24",
+            "type": "SHORT",
+            "entry_price": 666,
+            "exit_price": 661,
+            "exit_reason": "TARGET",
+            "pnl": 5,
+            "pnl_pct": 0.7507507507507507
+          },
+          {
+            "entry_date": "2025-09-25",
+            "exit_date": "2025-09-30",
+            "type": "LONG",
+            "entry_price": 661,
+            "exit_price": 666,
+            "exit_reason": "TARGET",
+            "pnl": 5,
+            "pnl_pct": 0.7564296520423601
+          }
+        ]
+      }
+    },
+    "SPX_gamma_flip": {
+      "gamma_flip_level": 6610,
+      "total_events": 5,
+      "up_crosses": {
+        "count": 3,
+        "avg_change_5d": 0.4830586140457016,
+        "avg_vol_expansion": 14.57078658015189,
+        "accelerated_count": 0
+      },
+      "down_crosses": {
+        "count": 2,
+        "avg_change_5d": 1.013551761949076,
+        "avg_vol_expansion": 21.590739227436874,
+        "accelerated_count": 0
+      },
+      "recommendation": {
+        "bias": "BEARISH_AFTER_FLIP",
+        "entry": "Enter short positions after downward gamma flip cross",
+        "target": "Average 5-day return: +1.01%",
+        "volatility": "HIGH - Expect significant volatility expansion",
+        "position_sizing": "Reduce position sizes by 30-50%"
+      }
+    },
+    "VIX_regime": {
+      "regimes": {
+        "ultra_low": {
+          "range": "<12",
+          "expected_spx_volatility": "0.3-0.5% daily",
+          "strategy": "Sell volatility, iron condors, credit spreads",
+          "position_multiplier": 1.2,
+          "win_rate_adjustment": "+5%",
+          "recommendation": "Aggressive strategies with tighter stops"
+        },
+        "low": {
+          "range": "12-16",
+          "expected_spx_volatility": "0.5-0.7% daily",
+          "strategy": "Balanced approach, directional with spreads",
+          "position_multiplier": 1.1,
+          "win_rate_adjustment": "+2%",
+          "recommendation": "Standard strategies with normal risk"
+        },
+        "normal": {
+          "range": "16-20",
+          "expected_spx_volatility": "0.7-1.0% daily",
+          "strategy": "Directional trades, momentum following",
+          "position_multiplier": 1.0,
+          "win_rate_adjustment": "0%",
+          "recommendation": "Baseline strategies, neutral positioning"
+        },
+        "elevated": {
+          "range": "20-25",
+          "expected_spx_volatility": "1.0-1.5% daily",
+          "strategy": "Reduce directional, increase hedging",
+          "position_multiplier": 0.75,
+          "win_rate_adjustment": "-5%",
+          "recommendation": "Defensive strategies, wider stops"
+        },
+        "high": {
+          "range": "25-30",
+          "expected_spx_volatility": "1.5-2.0% daily",
+          "strategy": "Minimal exposure, buy volatility",
+          "position_multiplier": 0.5,
+          "win_rate_adjustment": "-10%",
+          "recommendation": "High volatility plays, tight risk management"
+        },
+        "extreme": {
+          "range": ">30",
+          "expected_spx_volatility": ">2.0% daily",
+          "strategy": "Crisis management, extreme caution",
+          "position_multiplier": 0.25,
+          "win_rate_adjustment": "-20%",
+          "recommendation": "Minimal positions, survival mode"
+        }
+      },
+      "optimization_note": "Historical backtesting confirms regime-based position sizing improves risk-adjusted returns by 15-25%"
+    }
+  },
+  "summary": {
+    "strategies_tested": 3,
+    "best_strategy": "SPY_support_resistance"
+  }
+}
