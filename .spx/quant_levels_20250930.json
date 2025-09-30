@@ -1,0 +1,111 @@
+{
+  "date": "2025-09-30",
+  "timestamp": "2025-09-30T09:10:00",
+  "session": "pre_market",
+  "key_levels": [
+    {
+      "level": 6730,
+      "type": "key_level",
+      "strength": "HIGH",
+      "description": "Major resistance level"
+    },
+    {
+      "level": 6716,
+      "type": "reversal_zone",
+      "strength": "VERY_HIGH",
+      "description": "High likelihood of reversal"
+    },
+    {
+      "level": 6694,
+      "type": "strong_resistance",
+      "strength": "HIGH",
+      "description": "Strong resistance - upper bound of resistance zone"
+    },
+    {
+      "level": 6680,
+      "type": "resistance",
+      "strength": "HIGH",
+      "description": "Lower bound of resistance zone"
+    },
+    {
+      "level": 6656,
+      "type": "key_level",
+      "strength": "MEDIUM",
+      "description": "Intermediate level"
+    },
+    {
+      "level": 6641,
+      "type": "key_level",
+      "strength": "MEDIUM",
+      "description": "Intermediate level"
+    },
+    {
+      "level": 6626,
+      "type": "support",
+      "strength": "HIGH",
+      "description": "Upper bound of support zone"
+    },
+    {
+      "level": 6620,
+      "type": "support",
+      "strength": "HIGH",
+      "description": "Lower bound of support zone"
+    },
+    {
+      "level": 6610,
+      "type": "gamma_flip",
+      "strength": "VERY_HIGH",
+      "description": "High likelihood of reversal, gamma flip level - upper bound"
+    },
+    {
+      "level": 6607,
+      "type": "gamma_flip",
+      "strength": "VERY_HIGH",
+      "description": "High likelihood of reversal, gamma flip level - lower bound"
+    },
+    {
+      "level": 6579,
+      "type": "key_level",
+      "strength": "MEDIUM",
+      "description": "Lower key level"
+    }
+  ],
+  "zones": {
+    "resistance_zone": {
+      "upper": 6694,
+      "lower": 6680,
+      "strength": "HIGH",
+      "description": "Strong resistance zone - expect selling pressure"
+    },
+    "support_zone": {
+      "upper": 6626,
+      "lower": 6620,
+      "strength": "HIGH",
+      "description": "Strong support zone - expect buying pressure"
+    },
+    "gamma_flip_zone": {
+      "upper": 6610,
+      "lower": 6607,
+      "strength": "VERY_HIGH",
+      "description": "Critical gamma flip zone - high reversal probability"
+    }
+  },
+  "current_spx": 6661.21,
+  "analysis": {
+    "position": "between_support_and_resistance",
+    "nearest_support": 6626,
+    "nearest_resistance": 6680,
+    "distance_to_support": -35.21,
+    "distance_to_resistance": 18.79,
+    "distance_to_gamma_flip": -51.21,
+    "bias": "NEUTRAL_TO_BULLISH",
+    "strategy": "Watch for move to 6680 resistance or 6626 support",
+    "key_notes": [
+      "Currently closer to resistance (6680) than support (6626)",
+      "Gamma flip zone at 6607-6610 below current price",
+      "High reversal probability at 6716 (54.79 points above)",
+      "Strong resistance zone 6680-6694 overhead",
+      "Support zone 6620-6626 provides downside protection"
+    ]
+  }
+}

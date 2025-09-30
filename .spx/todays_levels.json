@@ -1,0 +1,50 @@
+{
+  "date": "2025-09-30",
+  "session": "intraday_trading",
+  "timestamp": "2025-09-30T09:10:00",
+  "valid_until": "2025-09-30T16:00:00",
+  "note": "These levels are for today's session only - will reset tomorrow",
+
+  "key_levels": [
+    6730,
+    6716,
+    6694,
+    6680,
+    6656,
+    6641,
+    6626,
+    6620,
+    6610,
+    6607,
+    6579
+  ],
+
+  "critical_levels": {
+    "6716": "High likelihood of reversal",
+    "6694": "Strong resistance",
+    "6680": "Resistance zone lower bound",
+    "6626": "Support zone upper bound",
+    "6620": "Support zone lower bound",
+    "6610": "High likelihood of reversal, gamma flip upper",
+    "6607": "Gamma flip lower bound"
+  },
+
+  "zones": {
+    "resistance_zone": {
+      "range": "6680-6694",
+      "description": "Strong resistance zone"
+    },
+    "support_zone": {
+      "range": "6620-6626",
+      "description": "Strong support zone"
+    },
+    "gamma_flip_zone": {
+      "range": "6607-6610",
+      "description": "High reversal probability zone"
+    }
+  },
+
+  "current_spx": 6661.21,
+  "current_position": "Between support (6620-6626) and resistance (6680-6694)",
+  "intraday_bias": "NEUTRAL - Watch for zone breaks"
+}
