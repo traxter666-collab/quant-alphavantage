@@ -1,0 +1,20 @@
+{
+  "signals": [
+    {
+      "timestamp": "2025-09-30T09:35:33.702589",
+      "type": "SUPPORT_BOUNCE",
+      "symbol": "SPY",
+      "strike": 664,
+      "direction": "CALL",
+      "entry": 663.68,
+      "target": 668,
+      "stop": 661.68,
+      "size": "1-2%",
+      "confidence": 75,
+      "reasoning": [
+        "Price at support zone 6620-6626",
+        "High probability bounce zone"
+      ]
+    }
+  ]
+}

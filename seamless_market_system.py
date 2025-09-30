@@ -12,11 +12,18 @@ import requests
 from datetime import datetime, timedelta
 import json
 
+# Import dual API system
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from dual_api_system import DualAPISystem
+
 class SeamlessMarketSystem:
     def __init__(self):
         self.api_key = 'ZFL38ZY98GSN7E1S'
         self.base_path = os.path.dirname(os.path.abspath(__file__))
         self.spx_path = os.path.join(self.base_path, '.spx')
+
+        # Initialize dual API system (Polygon primary, AlphaVantage backup)
+        self.dual_api = DualAPISystem()
 
         # Ensure .spx directory exists
         os.makedirs(self.spx_path, exist_ok=True)
@@ -248,7 +255,7 @@ class SeamlessMarketSystem:
             return None
 
     def get_market_snapshot(self):
-        """Get current prices for all major assets"""
+        """Get current prices for all major assets using Polygon API (primary)"""
         snapshot = {
             'timestamp': datetime.now().isoformat(),
             'spy': 0.0,
@@ -260,18 +267,12 @@ class SeamlessMarketSystem:
 
         symbols = ['SPY', 'QQQ', 'IWM']
 
+        # Use dual API system with Polygon primary
         for symbol in symbols:
             try:
-                url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={self.api_key}'
-                r = requests.get(url, timeout=10)
-                data = r.json()
-
-                if 'Global Quote' in data and '05. price' in data['Global Quote']:
-                    price = float(data['Global Quote']['05. price'])
-                    snapshot[symbol.lower()] = price
-
-                time.sleep(0.3)  # Rate limiting
-
+                result = self.dual_api.get_stock_quote_with_failover(symbol)
+                if result['success'] and result['price'] > 0:
+                    snapshot[symbol.lower()] = result['price']
             except:
                 pass
 
@@ -306,9 +307,16 @@ class SeamlessMarketSystem:
         except:
             pass
 
-        # Fallback only if unified script fails
-        if snapshot['spx'] == 0.0 and snapshot['spy'] > 0:
-            snapshot['spx'] = snapshot['spy'] * 10
+        # Fallback: use dual API system for SPX conversion
+        if snapshot['spx'] == 0.0:
+            try:
+                spx_result = self.dual_api.get_spx_data_with_failover()
+                if spx_result['success']:
+                    snapshot['spx'] = spx_result['spx_price']
+            except:
+                # Final fallback: SPY × 10
+                if snapshot['spy'] > 0:
+                    snapshot['spx'] = snapshot['spy'] * 10
 
         # Get dealer positioning (King Nodes and Gatekeepers)
         snapshot['dealer_positioning'] = self.get_dealer_positioning()
