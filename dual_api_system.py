@@ -370,10 +370,71 @@ class DualAPISystem:
             'error': 'All NDX data sources failed'
         }
 
+    def get_etf_data_with_failover(self, symbol):
+        """Get ETF data using Polygon daily bars - works both during and after market hours"""
+        print(f"Getting {symbol} data with dual API failover...")
+
+        from datetime import datetime
+        today = datetime.now().strftime('%Y-%m-%d')
+
+        # STANDARD APPROACH: Always try daily bars endpoint first
+        try:
+            url = f'https://api.polygon.io/v2/aggs/ticker/{symbol}/range/1/day/{today}/{today}?adjusted=true&apikey={self.polygon_api_key}'
+
+            response = requests.get(url, timeout=20)
+            data = response.json()
+
+            if 'results' in data and data['results']:
+                bar = data['results'][0]
+                price = bar['c']
+
+                print(f"[PASS] Polygon {symbol} daily bar: ${price:.2f}")
+
+                return {
+                    'success': True,
+                    'symbol': symbol,
+                    'price': price,
+                    'api_used': 'polygon_daily_bars',
+                    'conversion_method': f'Direct {symbol} Daily Bar',
+                    'timestamp': datetime.fromtimestamp(bar['t'] / 1000),
+                    'reliability': 'VERY_HIGH',
+                    'open': bar['o'],
+                    'high': bar['h'],
+                    'low': bar['l'],
+                    'volume': bar.get('v', 0)
+                }
+        except Exception as e:
+            print(f"[FAIL] Polygon {symbol} daily bar failed: {e}")
+
+        # Fallback: Use quote endpoint
+        print(f"Falling back to {symbol} quote...")
+        quote_result = self.get_stock_quote_with_failover(symbol)
+
+        if quote_result['success']:
+            return quote_result
+
+        return {
+            'success': False,
+            'error': f'All {symbol} data sources failed'
+        }
+
+    def get_spy_data_with_failover(self):
+        """Get SPY data using standardized ETF endpoint"""
+        return self.get_etf_data_with_failover('SPY')
+
+    def get_qqq_data_with_failover(self):
+        """Get QQQ data using standardized ETF endpoint"""
+        return self.get_etf_data_with_failover('QQQ')
+
+    def get_iwm_data_with_failover(self):
+        """Get IWM data using standardized ETF endpoint"""
+        return self.get_etf_data_with_failover('IWM')
+
 
 def main():
     dual_api = DualAPISystem()
     dual_api.test_dual_api_system()
+
 
 if __name__ == "__main__":
     main()
