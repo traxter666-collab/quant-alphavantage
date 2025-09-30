@@ -1,0 +1,104 @@
+{
+  "system_monitor": {
+    "timestamp": "2025-09-30T00:06:19.959689",
+    "monitoring_start": "2025-09-30T00:06:09.547768",
+    "system_status": {
+      "streaming_systems": {
+        "total_processes": 2,
+        "systems": {
+          "high_frequency_spx": {
+            "expected": true,
+            "refresh": "10s",
+            "status": "STOPPED"
+          },
+          "best_options_scanner": {
+            "expected": true,
+            "refresh": "20s",
+            "status": "STOPPED"
+          },
+          "ndx_tech_monitor": {
+            "expected": true,
+            "refresh": "25s",
+            "status": "STOPPED"
+          },
+          "es_futures_stream": {
+            "expected": true,
+            "refresh": "30s",
+            "status": "STOPPED"
+          },
+          "multi_asset_monitor": {
+            "expected": true,
+            "refresh": "30s",
+            "status": "STOPPED"
+          }
+        },
+        "overall_status": "DEGRADED"
+      },
+      "api_endpoints": {
+        "alphavantage": {
+          "status": "HEALTHY",
+          "response_time": "4.31s"
+        },
+        "polygon": {
+          "status": "UNHEALTHY",
+          "error": "  File \"C:\\Users\\traxt\\quant-alphavantage\\polygon_realtime_spx.py\", line 25\n    def get_aapl_polygon(api_key='_u0zA0CH5ZspOHecb2G8uBxd2DUo4r9D'):\nSyntaxError: expected 'except' or 'finally' block\n"
+        },
+        "after_hours": {
+          "status": "HEALTHY",
+          "response_time": "2.59s"
+        },
+        "discord": {
+          "status": "HEALTHY",
+          "response_time": "0.82s"
+        }
+      },
+      "data_pipeline": {
+        "spx_data": "OPERATIONAL",
+        "current_spx": "SPX: $6661.21 (+17.51, +0.26%)",
+        "last_update": "2025-09-30T00:06:18.692227",
+        "options_chain": "ACCESSIBLE"
+      },
+      "trading_infrastructure": {
+        "session_files": {
+          ".spx/session.json": {
+            "status": "CURRENT",
+            "size": 284,
+            "age_minutes": 260
+          },
+          ".spx/levels.json": {
+            "status": "MISSING"
+          },
+          ".spx/market_open_status.json": {
+            "status": "CURRENT",
+            "size": 723,
+            "age_minutes": 6
+          }
+        },
+        "risk_management": {
+          "controls": {
+            "position_tracking": false,
+            "portfolio_heat_monitoring": false,
+            "stop_loss_management": false
+          },
+          "parameters": {
+            "max_portfolio_heat": "15%",
+            "max_position_size": "2%",
+            "max_daily_loss": "6%",
+            "stop_loss_limit": "50%"
+          },
+          "overall_status": "OPERATIONAL"
+        }
+      }
+    },
+    "performance_metrics": {
+      "health_percentage": 71.42857142857143,
+      "healthy_systems": 5,
+      "total_systems": 7,
+      "overall_status": "DEGRADED",
+      "trading_readiness": "LIMITED FUNCTIONALITY",
+      "market_status": "[TIMEOUT] OPENS IN 9:23:40",
+      "last_update": "2025-09-30T00:06:19.959508"
+    },
+    "uptime_minutes": 0.1735321
+  }
+}

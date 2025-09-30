@@ -1,0 +1,47 @@
+{
+  "monitoring_start": "2025-09-30T00:11:00.791116",
+  "last_update": "2025-09-30T00:11:05.646189",
+  "check_interval": 60,
+  "api_health_status": {
+    "alphavantage": {
+      "status": "HEALTHY",
+      "response_time": "<30s",
+      "last_check": "2025-09-30T00:11:03.133076",
+      "details": "API key validated successfully"
+    },
+    "polygon": {
+      "status": "UNHEALTHY",
+      "response_time": null,
+      "last_check": "2025-09-30T00:11:03.179932",
+      "error": "  File \"C:\\Users\\traxt\\quant-alphavantage\\polygon_realtime_spx.py\", line 25\n    def get_aapl_polygon(api_key='_u0zA0CH5ZspOHecb2G8uBxd2DUo4r9D'):\nSyntaxError: expected 'except' or 'finally' block\n",
+      "details": "Polygon API validation failed"
+    },
+    "after_hours": {
+      "status": "HEALTHY",
+      "response_time": "<15s",
+      "last_check": "2025-09-30T00:11:03.749533",
+      "details": "After-hours API responding normally"
+    },
+    "discord": {
+      "status": "HEALTHY",
+      "response_time": "<10s",
+      "last_check": "2025-09-30T00:11:04.418779",
+      "details": "Discord webhook responding normally"
+    },
+    "spx_pipeline": {
+      "status": "HEALTHY",
+      "response_time": "<30s",
+      "last_check": "2025-09-30T00:11:05.645908",
+      "details": "SPX data pipeline operational: SPX: $6661.21 (+17.51, +0.26%)"
+    }
+  },
+  "failure_counts": {
+    "alphavantage": 0,
+    "polygon": 1,
+    "after_hours": 0,
+    "discord": 0,
+    "spx_pipeline": 0
+  },
+  "total_apis_monitored": 5,
+  "healthy_apis": 4
+}
