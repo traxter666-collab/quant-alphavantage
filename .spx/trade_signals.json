@@ -15,6 +15,38 @@
         "Price at support zone 6620-6626",
         "High probability bounce zone"
       ]
+    },
+    {
+      "timestamp": "2025-09-30T09:52:32.024721",
+      "type": "SUPPORT_BOUNCE",
+      "symbol": "SPY",
+      "strike": 663,
+      "direction": "CALL",
+      "entry": 662.445,
+      "target": 668,
+      "stop": 660.445,
+      "size": "1-2%",
+      "confidence": 75,
+      "reasoning": [
+        "Price at support zone 6620-6626",
+        "High probability bounce zone"
+      ]
+    },
+    {
+      "timestamp": "2025-09-30T09:53:45.392102",
+      "type": "SUPPORT_BOUNCE",
+      "symbol": "SPY",
+      "strike": 663,
+      "direction": "CALL",
+      "entry": 662.625,
+      "target": 668,
+      "stop": 660.625,
+      "size": "1-2%",
+      "confidence": 75,
+      "reasoning": [
+        "Price at support zone 6620-6626",
+        "High probability bounce zone"
+      ]
     }
   ]
 }
