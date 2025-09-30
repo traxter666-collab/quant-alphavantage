@@ -1,6 +1,6 @@
 {
-  "backtest_date": "2025-09-29T20:30:10.624966",
-  "period_days": 14,
+  "backtest_date": "2025-09-29T23:35:45.233753",
+  "period_days": 30,
   "symbols": [
     "SPY",
     "QQQ",
@@ -27,13 +27,48 @@
       "EMA_MOMENTUM": {
         "backtest": {
           "strategy": "EMA_MOMENTUM",
-          "trades": [],
-          "final_account_value": 10000,
-          "total_return": 0.0,
-          "trade_count": 0
+          "trades": [
+            {
+              "trade_id": 1,
+              "type": "PUT",
+              "entry_date": "2025-09-15 00:00:00",
+              "exit_date": "2025-09-18 00:00:00",
+              "entry_price": 659.64,
+              "exit_price": 662.26,
+              "exit_reason": "TIME_EXIT",
+              "hold_days": 3,
+              "pnl_pct": -0.9929658601661528,
+              "pnl_dollar": -1.9859317203323057
+            },
+            {
+              "trade_id": 2,
+              "type": "CALL",
+              "entry_date": "2025-09-25 00:00:00",
+              "exit_date": "2025-09-29 00:00:00",
+              "entry_price": 657.94,
+              "exit_price": 663.68,
+              "exit_reason": "TIME_EXIT",
+              "hold_days": 4,
+              "pnl_pct": 2.181049943763829,
+              "pnl_dollar": 4.361233604274268
+            }
+          ],
+          "final_account_value": 10002.375301883942,
+          "total_return": 0.023753018839415743,
+          "trade_count": 2
         },
         "metrics": {
-          "error": "No trades to analyze"
+          "total_trades": 2,
+          "winning_trades": 1,
+          "losing_trades": 1,
+          "win_rate": 50.0,
+          "average_win": 4.36,
+          "average_loss": -1.99,
+          "profit_factor": 2.2,
+          "total_return": 0.02,
+          "max_drawdown": 0.02,
+          "average_hold_time": 3.5,
+          "final_account_value": 10002.38
         }
       }
     },
@@ -53,13 +88,48 @@
       "EMA_MOMENTUM": {
         "backtest": {
           "strategy": "EMA_MOMENTUM",
-          "trades": [],
-          "final_account_value": 10000,
-          "total_return": 0.0,
-          "trade_count": 0
+          "trades": [
+            {
+              "trade_id": 1,
+              "type": "PUT",
+              "entry_date": "2025-09-15 00:00:00",
+              "exit_date": "2025-09-18 00:00:00",
+              "entry_price": 588.44,
+              "exit_price": 595.32,
+              "exit_reason": "TIME_EXIT",
+              "hold_days": 3,
+              "pnl_pct": -2.922982801984907,
+              "pnl_dollar": -5.845965603969814
+            },
+            {
+              "trade_id": 2,
+              "type": "CALL",
+              "entry_date": "2025-09-26 00:00:00",
+              "exit_date": "2025-09-29 00:00:00",
+              "entry_price": 594.35,
+              "exit_price": 598.73,
+              "exit_reason": "TIME_EXIT",
+              "hold_days": 3,
+              "pnl_pct": 1.8423487843863025,
+              "pnl_dollar": 3.682543507247797
+            }
+          ],
+          "final_account_value": 9997.836577903277,
+          "total_return": -0.0216342209672257,
+          "trade_count": 2
         },
         "metrics": {
-          "error": "No trades to analyze"
+          "total_trades": 2,
+          "winning_trades": 1,
+          "losing_trades": 1,
+          "win_rate": 50.0,
+          "average_win": 3.68,
+          "average_loss": -5.85,
+          "profit_factor": 0.63,
+          "total_return": -0.02,
+          "max_drawdown": 0.06,
+          "average_hold_time": 3.0,
+          "final_account_value": 9997.84
         }
       }
     },
@@ -67,25 +137,83 @@
       "RSI_REVERSAL": {
         "backtest": {
           "strategy": "RSI_REVERSAL",
-          "trades": [],
-          "final_account_value": 10000,
-          "total_return": 0.0,
-          "trade_count": 0
+          "trades": [
+            {
+              "trade_id": 1,
+              "type": "PUT",
+              "entry_date": "2025-09-23 00:00:00",
+              "exit_date": "2025-09-29 00:00:00",
+              "entry_price": 245.01,
+              "exit_price": 241.62,
+              "exit_reason": "TIME_EXIT",
+              "hold_days": 6,
+              "pnl_pct": 4.150850985674038,
+              "pnl_dollar": 8.301701971348075
+            }
+          ],
+          "final_account_value": 10008.301701971348,
+          "total_return": 0.08301701971347938,
+          "trade_count": 1
         },
         "metrics": {
-          "error": "No trades to analyze"
+          "total_trades": 1,
+          "winning_trades": 1,
+          "losing_trades": 0,
+          "win_rate": 100.0,
+          "average_win": 8.3,
+          "average_loss": 0,
+          "profit_factor": Infinity,
+          "total_return": 0.08,
+          "max_drawdown": 0,
+          "average_hold_time": 6.0,
+          "final_account_value": 10008.3
         }
       },
       "EMA_MOMENTUM": {
         "backtest": {
           "strategy": "EMA_MOMENTUM",
-          "trades": [],
-          "final_account_value": 10000,
-          "total_return": 0.0,
-          "trade_count": 0
+          "trades": [
+            {
+              "trade_id": 1,
+              "type": "PUT",
+              "entry_date": "2025-09-15 00:00:00",
+              "exit_date": "2025-09-18 00:00:00",
+              "entry_price": 239.23,
+              "exit_price": 244.84,
+              "exit_reason": "TIME_EXIT",
+              "hold_days": 3,
+              "pnl_pct": -5.8625590435982255,
+              "pnl_dollar": -11.725118087196451
+            },
+            {
+              "trade_id": 2,
+              "type": "CALL",
+              "entry_date": "2025-09-26 00:00:00",
+              "exit_date": "2025-09-29 00:00:00",
+              "entry_price": 239.62,
+              "exit_price": 241.62,
+              "exit_reason": "TIME_EXIT",
+              "hold_days": 3,
+              "pnl_pct": 2.086637175527919,
+              "pnl_dollar": 4.168381137598198
+            }
+          ],
+          "final_account_value": 9992.443263050402,
+          "total_return": -0.07556736949598417,
+          "trade_count": 2
         },
         "metrics": {
-          "error": "No trades to analyze"
+          "total_trades": 2,
+          "winning_trades": 1,
+          "losing_trades": 1,
+          "win_rate": 50.0,
+          "average_win": 4.17,
+          "average_loss": -11.73,
+          "profit_factor": 0.36,
+          "total_return": -0.08,
+          "max_drawdown": 0.12,
+          "average_hold_time": 3.0,
+          "final_account_value": 9992.44
         }
       }
     }
