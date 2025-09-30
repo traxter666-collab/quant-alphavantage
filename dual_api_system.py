@@ -134,13 +134,38 @@ class DualAPISystem:
         """Get SPX data using Polygon indices endpoint (primary) with SPY fallback"""
         print("Getting SPX data with dual API failover...")
 
-        # Try Polygon I:SPX first (most accurate)
+        # Check market hours first
+        from datetime import datetime
+        current_hour = datetime.now().hour
+        if current_hour < 9 or current_hour >= 16:
+            print("[INFO] Market closed - using SPY fallback")
+            # Skip direct I:SPX call after hours, go straight to SPY
+            spy_result = self.get_stock_quote_with_failover('SPY')
+            if spy_result['success']:
+                spy_price = spy_result['price']
+                spx_price = spy_price * 10
+                return {
+                    'success': True,
+                    'spx_price': spx_price,
+                    'spy_price': spy_price,
+                    'api_used': spy_result['api_used'],
+                    'conversion_method': 'SPY × 10 (After Hours)',
+                    'timestamp': spy_result['timestamp'],
+                    'reliability': 'HIGH' if spy_result['api_used'] == 'polygon' else 'MEDIUM'
+                }
+            else:
+                return {
+                    'success': False,
+                    'error': 'Market closed and SPY data unavailable',
+                    'details': spy_result
+                }
+
+        # Try Polygon I:SPX first (most accurate) - only during market hours
         try:
-            from datetime import datetime
             today = datetime.now().strftime('%Y-%m-%d')
             url = f'https://api.polygon.io/v2/aggs/ticker/I:SPX/range/1/minute/{today}/{today}?adjusted=true&sort=desc&limit=1&apikey={self.polygon_api_key}'
 
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, timeout=20)
             data = response.json()
 
             if 'results' in data and data['results']:
