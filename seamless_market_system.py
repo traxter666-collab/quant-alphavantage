@@ -285,16 +285,30 @@ class SeamlessMarketSystem:
                 text=True,
                 timeout=10
             )
+            # Try multiple parsing patterns
             for line in result.stdout.split('\n'):
                 if 'Current:' in line and '$' in line:
-                    # Extract SPX price from "Current: $6661.21"
-                    price_str = line.split('$')[1].split()[0]
-                    snapshot['spx'] = float(price_str.replace(',', ''))
-                    break
+                    # Extract SPX price from "Current: $6625.18 (-11.62, -0.18%)"
+                    try:
+                        price_str = line.split('$')[1].split()[0]
+                        snapshot['spx'] = float(price_str.replace(',', ''))
+                        break
+                    except:
+                        pass
+                elif 'SUCCESS Alphavantage: SPX' in line and '$' in line:
+                    # Extract from "SUCCESS Alphavantage: SPX $6625.18 (current)"
+                    try:
+                        price_str = line.split('$')[1].split()[0]
+                        snapshot['spx'] = float(price_str.replace(',', ''))
+                        break
+                    except:
+                        pass
         except:
-            # Fallback only if unified script fails
-            if snapshot['spy'] > 0:
-                snapshot['spx'] = snapshot['spy'] * 10
+            pass
+
+        # Fallback only if unified script fails
+        if snapshot['spx'] == 0.0 and snapshot['spy'] > 0:
+            snapshot['spx'] = snapshot['spy'] * 10
 
         # Get dealer positioning (King Nodes and Gatekeepers)
         snapshot['dealer_positioning'] = self.get_dealer_positioning()
