@@ -13,6 +13,7 @@ import os
 # API Keys
 POLYGON_PRIMARY = "_u0zA0CH5ZspOHecb2G8uBxd2DUo4r9D"
 POLYGON_BACKUP = "CiDDZJqQS88A0QhaoJbn0rLqaenps6Pq"
+ALPHAVANTAGE_KEY = "ZFL38ZY98GSN7E1S"
 
 # Discord Webhooks
 WEBHOOK_SPX = "https://discord.com/api/webhooks/1422930069290225694/PKiahdQzpgIZuceHRU254dgpmSEOcgho0-o-DpkQXeCUsQ5AYH1mv3OmJ_gG-1eB7FU-"
@@ -48,6 +49,8 @@ class DealerPositioningScanner:
         self.running = False
         self.prices = {}
         self.previous_prices = {}
+        self.news_cache = {}  # Cache news sentiment
+        self.last_news_fetch = {}
         self.price_history = {}
         self.active_trades = {}
         self.trade_history = []
@@ -190,23 +193,80 @@ class DealerPositioningScanner:
             pass  # Suppress error messages
             return None
 
+    def get_news_sentiment(self, asset_name):
+        """Fetch news sentiment for asset (cached for 5 minutes)"""
+        try:
+            current_time = time.time()
+
+            # Check cache
+            if asset_name in self.news_cache:
+                if current_time - self.last_news_fetch.get(asset_name, 0) < 300:  # 5 minutes
+                    return self.news_cache[asset_name]
+
+            # Fetch news
+            ticker = ASSETS[asset_name]['ticker'].replace('I:', '')  # Remove I: prefix for indices
+            url = f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={ticker}&apikey={ALPHAVANTAGE_KEY}&limit=10"
+            response = requests.get(url, timeout=5)
+
+            if response.status_code == 200:
+                data = response.json()
+                if 'feed' in data and len(data['feed']) > 0:
+                    # Calculate average sentiment
+                    sentiments = []
+                    for article in data['feed'][:5]:  # Top 5 articles
+                        if 'overall_sentiment_score' in article:
+                            sentiments.append(float(article['overall_sentiment_score']))
+
+                    if sentiments:
+                        avg_sentiment = sum(sentiments) / len(sentiments)
+                        sentiment_label = 'BULLISH' if avg_sentiment > 0.15 else 'BEARISH' if avg_sentiment < -0.15 else 'NEUTRAL'
+
+                        result = {
+                            'score': avg_sentiment,
+                            'label': sentiment_label,
+                            'article_count': len(sentiments)
+                        }
+
+                        # Cache result
+                        self.news_cache[asset_name] = result
+                        self.last_news_fetch[asset_name] = current_time
+
+                        return result
+
+            return None
+        except Exception as e:
+            return None
+
     def calculate_confidence_score(self, asset_name, price, momentum, trade_type, positioning=None):
-        """Enhanced confidence scoring with dealer positioning"""
+        """Enhanced confidence scoring with dealer positioning and news sentiment"""
         score = 0
         reasons = []
 
-        # Factor 1: Momentum alignment (25 points)
+        # Factor 1: Momentum alignment (20 points) - reduced from 25
         if trade_type == 'LONG' and momentum == 'BULLISH':
-            score += 25
+            score += 20
             reasons.append('Strong bullish momentum')
         elif trade_type == 'SHORT' and momentum == 'BEARISH':
-            score += 25
+            score += 20
             reasons.append('Strong bearish momentum')
         elif momentum == 'NEUTRAL':
-            score += 12
+            score += 10
             reasons.append('Neutral momentum')
 
-        # Factor 2: Dealer positioning (30 points) - NEW
+        # Factor 2: News Sentiment (15 points) - NEW
+        news = self.get_news_sentiment(asset_name)
+        if news:
+            if trade_type == 'LONG' and news['label'] == 'BULLISH':
+                score += 15
+                reasons.append(f"📰 Bullish news sentiment ({news['score']:.2f})")
+            elif trade_type == 'SHORT' and news['label'] == 'BEARISH':
+                score += 15
+                reasons.append(f"📰 Bearish news sentiment ({news['score']:.2f})")
+            elif news['label'] == 'NEUTRAL':
+                score += 7
+                reasons.append(f"📰 Neutral news sentiment")
+
+        # Factor 3: Dealer positioning (30 points)
         if positioning:
             if trade_type == 'LONG':
                 # Long at put wall = high confidence
@@ -242,7 +302,7 @@ class DealerPositioningScanner:
                         score += 10
                         reasons.append(f"👑 KING NODE at {positioning['king_node']['strike']}")
 
-        # Factor 3: Level proximity (20 points)
+        # Factor 4: Level proximity (20 points)
         if asset_name in ['SPX', 'NDX']:
             support, resistance = self.find_nearest_levels(asset_name, price)
             if support and resistance:
