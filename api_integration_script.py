@@ -18,6 +18,7 @@ import requests
 from concurrent.futures import ThreadPoolExecutor
 import signal
 import sys
+import os
 
 # Import our probability scorer
 from ema_probability_algorithm import EMAProbabilityScorer, EMAData, SMAData, ContractSelector
@@ -29,13 +30,18 @@ from ema_probability_algorithm import EMAProbabilityScorer, EMAData, SMAData, Co
 @dataclass
 class Config:
     """Configuration settings"""
-    # API Keys (replace with your actual keys)
-    ALPHA_VANTAGE_KEY: str = "YOUR_ALPHA_VANTAGE_API_KEY"
-    POLYGON_API_KEY: str = "YOUR_POLYGON_API_KEY"
-    TRADIER_TOKEN: str = "YOUR_TRADIER_ACCESS_TOKEN"
+    # API Keys (Dual Polygon setup for redundancy)
+    ALPHA_VANTAGE_KEY: str = "ZFL38ZY98GSN7E1S"
+    POLYGON_API_KEY: str = "_u0zA0CH5ZspOHecb2G8uBxd2DUo4r9D"
+    POLYGON_API_KEY_BACKUP: str = "CiDDZJqQS88A0QhaoJbn0rLqaenps6Pq"
+    TRADIER_TOKEN: str = os.getenv('TRADIER_TOKEN', '')
     
-    # Discord Webhook
-    DISCORD_WEBHOOK_URL: str = "https://discord.com/api/webhooks/1413434367853990019/QBe2jVMUDxt5x42ZNlWWxzHrexyq2oxW1OwT1-xwXbg5fY9CDIeYNDWfCYg7Vqxfdbtr"
+    # Discord Webhooks (Quad Channel Setup)
+    DISCORD_WEBHOOK_TESTING: str = "https://discord.com/api/webhooks/1422928703972970516/59EBn9XvN6VautbSfjE8p_pFDNX4qIrU6ephGS--UvSiD7nSahftbhQDSW66fQwfXajp"
+    DISCORD_WEBHOOK_ALERTS: str = "https://discord.com/api/webhooks/1422763517974417478/0AAxHmLLjC389OXRi5KY_P2puAY8BhGAgEYTXSxj7TiKlqK_WH1PXPW6d_osA219ZFPu"
+    DISCORD_WEBHOOK_SPX: str = "https://discord.com/api/webhooks/1422930069290225694/PKiahdQzpgIZuceHRU254dgpmSEOcgho0-o-DpkQXeCUsQ5AYH1mv3OmJ_gG-1eB7FU-"
+    DISCORD_WEBHOOK_SPX_PREMIUM: str = "https://discord.com/api/webhooks/1422931192205807677/fddndOqTq-nS1e9Mtevrh7EhR-6ikKNoLWvYvSjUdydCwor9TkwYvJrukPX6TFo-T64a"
+    DISCORD_WEBHOOK_URL: str = DISCORD_WEBHOOK_ALERTS  # Default to alerts channel
     
     # Refresh intervals
     FAST_REFRESH_INTERVAL: float = 1.0  # 1 second for EMA strength alerts
@@ -281,28 +287,31 @@ class EMACalculator:
         }
 
 class DiscordAlerter:
-    """Handle Discord webhook alerts"""
-    
-    def __init__(self, webhook_url: str):
-        self.webhook_url = webhook_url
+    """Handle Discord webhook alerts with quad channel support"""
+
+    def __init__(self, webhook_url: str, testing_webhook_url: str = None, spx_webhook_url: str = None, spx_premium_webhook_url: str = None):
+        self.webhook_url = webhook_url  # General alerts channel
+        self.testing_webhook_url = testing_webhook_url  # Testing channel
+        self.spx_webhook_url = spx_webhook_url  # SPX-specific trades channel
+        self.spx_premium_webhook_url = spx_premium_webhook_url  # High-value SPX trades (>$11 or >$1000)
         self.last_alert_time = {}
         self.alert_cooldown = 30  # 30 second cooldown between similar alerts
         
-    async def send_ema_alert(self, session: aiohttp.ClientSession, 
-                           alert_type: str, probability_data: Dict, 
-                           contract_data: Optional[Dict] = None):
-        """Send EMA-based alert to Discord"""
-        
+    async def send_ema_alert(self, session: aiohttp.ClientSession,
+                           alert_type: str, probability_data: Dict,
+                           contract_data: Optional[Dict] = None, is_test: bool = False, is_spx: bool = True):
+        """Send EMA-based alert to Discord (alerts/testing/SPX/SPX premium channel based on flags and value)"""
+
         # Check cooldown
         cooldown_key = f"{alert_type}_{probability_data.get('direction', 'UNKNOWN')}"
         current_time = time.time()
-        
+
         if cooldown_key in self.last_alert_time:
             if current_time - self.last_alert_time[cooldown_key] < self.alert_cooldown:
                 return  # Skip alert due to cooldown
-                
+
         self.last_alert_time[cooldown_key] = current_time
-        
+
         # Format alert based on type
         if alert_type == "HIGH_PROBABILITY":
             embed = self._create_high_prob_embed(probability_data, contract_data)
@@ -312,19 +321,44 @@ class DiscordAlerter:
             embed = self._create_cross_embed(probability_data)
         else:
             embed = self._create_generic_embed(probability_data)
-            
+
         payload = {
             "username": "SPX EMA Probability Bot",
             "embeds": [embed]
         }
-        
+
         try:
-            async with session.post(self.webhook_url, json=payload) as response:
+            # Determine if this is a high-value SPX trade
+            is_premium_spx = False
+            if is_spx and contract_data:
+                contract_price = contract_data.get('price', 0)
+                position_size = contract_data.get('position_size', 1)
+                total_value = contract_price * position_size * 100  # Options are 100x multiplier
+
+                # High-value threshold: contract >$11 OR total position >$1000
+                if contract_price > 11 or total_value > 1000:
+                    is_premium_spx = True
+
+            # Choose webhook based on flags (priority: test > SPX premium > SPX > general alerts)
+            if is_test and self.testing_webhook_url:
+                webhook = self.testing_webhook_url
+                channel_type = "TESTING"
+            elif is_premium_spx and self.spx_premium_webhook_url:
+                webhook = self.spx_premium_webhook_url
+                channel_type = "SPX_PREMIUM"
+            elif is_spx and self.spx_webhook_url:
+                webhook = self.spx_webhook_url
+                channel_type = "SPX_TRADES"
+            else:
+                webhook = self.webhook_url
+                channel_type = "ALERTS"
+
+            async with session.post(webhook, json=payload) as response:
                 if response.status == 204:
-                    logging.info(f"Successfully sent {alert_type} alert to Discord")
+                    logging.info(f"Successfully sent {alert_type} alert to Discord {channel_type} channel")
                 else:
                     logging.error(f"Failed to send Discord alert: {response.status}")
-                    
+
         except Exception as e:
             logging.error(f"Error sending Discord alert: {e}")
     
@@ -444,7 +478,12 @@ class RealTimeEMAMonitor:
         self.ema_calculator = EMACalculator()
         self.probability_scorer = EMAProbabilityScorer()
         self.contract_selector = ContractSelector()
-        self.discord_alerter = DiscordAlerter(config.DISCORD_WEBHOOK_URL)
+        self.discord_alerter = DiscordAlerter(
+            config.DISCORD_WEBHOOK_ALERTS,
+            config.DISCORD_WEBHOOK_TESTING,
+            config.DISCORD_WEBHOOK_SPX,
+            config.DISCORD_WEBHOOK_SPX_PREMIUM
+        )
         
         self.running = False
         self.last_probability_score = None

@@ -187,7 +187,7 @@ class DealerPositioningScanner:
             }
 
         except Exception as e:
-            print(f"❌ Error analyzing options for {asset_name}: {e}")
+            pass  # Suppress error messages
             return None
 
     def calculate_confidence_score(self, asset_name, price, momentum, trade_type, positioning=None):
@@ -728,10 +728,6 @@ class DealerPositioningScanner:
 
     def scan_markets(self):
         """Scan with dealer positioning"""
-        print(f"\n{'='*80}")
-        print(f"👑 DEALER POSITIONING SCAN - {datetime.now().strftime('%H:%M:%S')} | Active: {len(self.active_trades)}")
-        print(f"{'='*80}")
-
         self.previous_prices = self.prices.copy()
 
         for asset_name in ASSETS.keys():
@@ -761,24 +757,16 @@ class DealerPositioningScanner:
             if asset_name in self.prices:
                 trade = self.generate_trade_setup(asset_name, self.prices[asset_name], self.calculate_momentum(asset_name))
                 if trade:
-                    print(f"\n🎯 {trade['asset']} {trade['type']} @ ${trade['entry']:,.2f} - {trade['confidence_score']}%")
+                    print(f"\n{'='*80}")
+                    print(f"🎯 {trade['asset']} {trade['type']} @ ${trade['entry']:,.2f} - {trade['confidence_score']}%")
                     if trade.get('positioning', {}).get('king_node'):
                         print(f"   👑 King Node: {trade['positioning']['king_node']['strike']}")
+                    print(f"{'='*80}\n")
                     self.send_trade_alert(trade)
-
-        print(f"{'='*80}\n")
 
     def start(self):
         """Start scanner"""
-        print("="*80)
-        print("👑 DEALER POSITIONING SCANNER WITH KING NODES & WALLS")
-        print("="*80)
-        print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S ET')}")
-        print(f"Assets: SPX, NDX (85% min), QQQ, SPY, IWM (80% min)")
-        print(f"Features: King Nodes, Call/Put Walls, Dealer Positioning")
-        print(f"Scan Interval: 10 seconds")
-        print("="*80)
-
+        # Silent start - only show trades
         self.running = True
         while self.running:
             self.scan_markets()

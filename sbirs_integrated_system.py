@@ -843,7 +843,7 @@ if __name__ == "__main__":
     async def main():
         # Enhanced configuration
         config = EnhancedConfig()
-        config.DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/YOUR_WEBHOOK_HERE"
+        config.DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1422928703972970516/59EBn9XvN6VautbSfjE8p_pFDNX4qIrU6ephGS--UvSiD7nSahftbhQDSW66fQwfXajp"
         
         # Initialize SBIRS integrated system
         sbirs_system = SBIRSIntegratedUltimateTradingSystem(config)

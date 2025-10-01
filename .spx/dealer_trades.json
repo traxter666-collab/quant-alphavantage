@@ -1,0 +1,1365 @@
+{
+  "active": {
+    "SPX_2025-10-01T11:33:08.981608": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6691.36,
+      "stop": 6705,
+      "target1": 6669.18,
+      "target2": 6652,
+      "confidence_score": 82,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (8.6 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Good resistance proximity (8.6 pts)",
+        "Recent downward movement",
+        "Excellent R:R 2.9:1"
+      ],
+      "contract": "SPXW20251001P6685",
+      "strike": 6685,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T11:33:08.981608",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 8.64,
+            "strength": 98.7,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 38.64,
+            "strength": 94.2,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 42.64,
+            "strength": 93.6,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 44.36,
+            "strength": 93.4,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 49.36,
+            "strength": 92.6,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 58.36,
+            "strength": 91.3,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 8.64,
+          "strength": 98.7,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 8.64,
+          "strength": 98.7,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 44.36,
+          "strength": 93.4,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T11:45:16.259388": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6695.16,
+      "stop": 6705,
+      "target1": 6671.08,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (4.8 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (4.8 pts)",
+        "Recent downward movement",
+        "Excellent R:R 4.4:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T11:45:16.259388",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 4.84,
+            "strength": 99.3,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 34.84,
+            "strength": 94.8,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 38.84,
+            "strength": 94.2,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 48.16,
+            "strength": 92.8,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 53.16,
+            "strength": 92.1,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 62.16,
+            "strength": 90.7,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 4.84,
+          "strength": 99.3,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 4.84,
+          "strength": 99.3,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 48.16,
+          "strength": 92.8,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T11:46:25.572457": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6696.06,
+      "stop": 6705,
+      "target1": 6671.53,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (3.9 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (3.9 pts)",
+        "Recent downward movement",
+        "Excellent R:R 4.9:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T11:46:25.572457",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 3.94,
+            "strength": 99.4,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 33.94,
+            "strength": 94.9,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 37.94,
+            "strength": 94.3,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 49.06,
+            "strength": 92.7,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 54.06,
+            "strength": 91.9,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 63.06,
+            "strength": 90.6,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 3.94,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 3.94,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 49.06,
+          "strength": 92.7,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T11:51:59.958048": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6696.63,
+      "stop": 6705,
+      "target1": 6671.82,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (3.4 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (3.4 pts)",
+        "Recent downward movement",
+        "Excellent R:R 5.3:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T11:51:59.958048",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 3.37,
+            "strength": 99.5,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 33.37,
+            "strength": 95.0,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 37.37,
+            "strength": 94.4,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 49.63,
+            "strength": 92.6,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 54.63,
+            "strength": 91.8,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 63.63,
+            "strength": 90.5,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 3.37,
+          "strength": 99.5,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 3.37,
+          "strength": 99.5,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 49.63,
+          "strength": 92.6,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T11:53:17.533403": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6696.12,
+      "stop": 6705,
+      "target1": 6671.56,
+      "target2": 6652,
+      "confidence_score": 97,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (3.9 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (3.9 pts)",
+        "Consistent downtrend",
+        "Excellent R:R 5.0:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T11:53:17.533403",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 3.88,
+            "strength": 99.4,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 33.88,
+            "strength": 94.9,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 37.88,
+            "strength": 94.3,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 49.12,
+            "strength": 92.7,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 54.12,
+            "strength": 91.9,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 63.12,
+            "strength": 90.6,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 3.88,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 3.88,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 49.12,
+          "strength": 92.7,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T11:53:36.288590": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6695.77,
+      "stop": 6705,
+      "target1": 6671.39,
+      "target2": 6652,
+      "confidence_score": 97,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (4.2 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (4.2 pts)",
+        "Consistent downtrend",
+        "Excellent R:R 4.7:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T11:53:36.288590",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 4.23,
+            "strength": 99.4,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 34.23,
+            "strength": 94.9,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 38.23,
+            "strength": 94.3,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 48.77,
+            "strength": 92.7,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 53.77,
+            "strength": 92.0,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 62.77,
+            "strength": 90.6,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 4.23,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 4.23,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 48.77,
+          "strength": 92.7,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T11:58:46.344986": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6696.09,
+      "stop": 6705,
+      "target1": 6671.55,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (3.9 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (3.9 pts)",
+        "Recent downward movement",
+        "Excellent R:R 4.9:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T11:58:46.344986",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 3.91,
+            "strength": 99.4,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 33.91,
+            "strength": 94.9,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 37.91,
+            "strength": 94.3,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 49.09,
+            "strength": 92.7,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 54.09,
+            "strength": 91.9,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 63.09,
+            "strength": 90.6,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 3.91,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 3.91,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 49.09,
+          "strength": 92.7,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T11:59:07.787417": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6695.85,
+      "stop": 6705,
+      "target1": 6671.43,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (4.2 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (4.1 pts)",
+        "Recent downward movement",
+        "Excellent R:R 4.8:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T11:59:07.787417",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 4.15,
+            "strength": 99.4,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 34.15,
+            "strength": 94.9,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 38.15,
+            "strength": 94.3,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 48.85,
+            "strength": 92.7,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 53.85,
+            "strength": 92.0,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 62.85,
+            "strength": 90.6,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 4.15,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 4.15,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 48.85,
+          "strength": 92.7,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T12:03:47.624177": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6696.35,
+      "stop": 6705,
+      "target1": 6671.68,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (3.6 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (3.6 pts)",
+        "Recent downward movement",
+        "Excellent R:R 5.1:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T12:03:47.624177",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 3.65,
+            "strength": 99.5,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 33.65,
+            "strength": 95.0,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 37.65,
+            "strength": 94.4,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 49.35,
+            "strength": 92.6,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 54.35,
+            "strength": 91.9,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 63.35,
+            "strength": 90.5,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 3.65,
+          "strength": 99.5,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 3.65,
+          "strength": 99.5,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 49.35,
+          "strength": 92.6,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T12:04:10.033076": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6695.11,
+      "stop": 6705,
+      "target1": 6671.06,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (4.9 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (4.9 pts)",
+        "Recent downward movement",
+        "Excellent R:R 4.4:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T12:04:10.033076",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 4.89,
+            "strength": 99.3,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 34.89,
+            "strength": 94.8,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 38.89,
+            "strength": 94.2,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 48.11,
+            "strength": 92.8,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 53.11,
+            "strength": 92.1,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 62.11,
+            "strength": 90.7,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 4.89,
+          "strength": 99.3,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 4.89,
+          "strength": 99.3,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 48.11,
+          "strength": 92.8,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T12:09:30.423717": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6695.56,
+      "stop": 6705,
+      "target1": 6671.28,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (4.4 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (4.4 pts)",
+        "Recent downward movement",
+        "Excellent R:R 4.6:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T12:09:30.423717",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 4.44,
+            "strength": 99.3,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 34.44,
+            "strength": 94.9,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 38.44,
+            "strength": 94.3,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 48.56,
+            "strength": 92.7,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 53.56,
+            "strength": 92.0,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 62.56,
+            "strength": 90.7,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 4.44,
+          "strength": 99.3,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 4.44,
+          "strength": 99.3,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 48.56,
+          "strength": 92.7,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T12:11:09.753262": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6696.39,
+      "stop": 6705,
+      "target1": 6671.69,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (3.6 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (3.6 pts)",
+        "Recent downward movement",
+        "Excellent R:R 5.2:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T12:11:09.753262",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 3.61,
+            "strength": 99.5,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 33.61,
+            "strength": 95.0,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 37.61,
+            "strength": 94.4,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 49.39,
+            "strength": 92.6,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 54.39,
+            "strength": 91.9,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 63.39,
+            "strength": 90.5,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 3.61,
+          "strength": 99.5,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 3.61,
+          "strength": 99.5,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 49.39,
+          "strength": 92.6,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T12:14:37.045912": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6695.81,
+      "stop": 6705,
+      "target1": 6671.41,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (4.2 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (4.2 pts)",
+        "Recent downward movement",
+        "Excellent R:R 4.8:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T12:14:37.045912",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 4.19,
+            "strength": 99.4,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 34.19,
+            "strength": 94.9,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 38.19,
+            "strength": 94.3,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 48.81,
+            "strength": 92.7,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 53.81,
+            "strength": 92.0,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 62.81,
+            "strength": 90.6,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 4.19,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 4.19,
+          "strength": 99.4,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 48.81,
+          "strength": 92.7,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T12:17:41.380092": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6696.39,
+      "stop": 6705,
+      "target1": 6671.69,
+      "target2": 6652,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (3.6 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (3.6 pts)",
+        "Recent downward movement",
+        "Excellent R:R 5.2:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T12:17:41.380092",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 3.61,
+            "strength": 99.5,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 33.61,
+            "strength": 95.0,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 37.61,
+            "strength": 94.4,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 49.39,
+            "strength": 92.6,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 54.39,
+            "strength": 91.9,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 63.39,
+            "strength": 90.5,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 3.61,
+          "strength": 99.5,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 3.61,
+          "strength": 99.5,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 49.39,
+          "strength": 92.6,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T12:32:05.447767": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6695.12,
+      "stop": 6705,
+      "target1": 6671.06,
+      "target2": 6637,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (4.9 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (4.9 pts)",
+        "Recent downward movement",
+        "Excellent R:R 4.4:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T12:32:05.447767",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 4.88,
+            "strength": 99.3,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 34.88,
+            "strength": 94.8,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 38.88,
+            "strength": 94.2,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 48.12,
+            "strength": 92.8,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 53.12,
+            "strength": 92.1,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 62.12,
+            "strength": 90.7,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 4.88,
+          "strength": 99.3,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 4.88,
+          "strength": 99.3,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 48.12,
+          "strength": 92.8,
+          "type": "PUT_WALL"
+        }
+      }
+    },
+    "SPX_2025-10-01T12:37:15.291993": {
+      "asset": "SPX",
+      "type": "SHORT",
+      "reason": "Near resistance 6700 with NEUTRAL momentum",
+      "entry": 6695.29,
+      "stop": 6705,
+      "target1": 6671.15,
+      "target2": 6637,
+      "confidence_score": 90,
+      "confidence_reasons": [
+        "Neutral momentum",
+        "\ud83e\uddf1 Strong CALL WALL at 6700 (4.7 pts)",
+        "\ud83d\udc51 KING NODE at 6700",
+        "Excellent resistance proximity (4.7 pts)",
+        "Recent downward movement",
+        "Excellent R:R 4.5:1"
+      ],
+      "contract": "SPXW20251001P6690",
+      "strike": 6690,
+      "option_type": "PUT",
+      "timestamp": "2025-10-01T12:37:15.291993",
+      "positioning": {
+        "call_walls": [
+          {
+            "strike": 6700,
+            "distance": 4.71,
+            "strength": 99.3,
+            "type": "CALL_WALL",
+            "is_king_node": true
+          },
+          {
+            "strike": 6730,
+            "distance": 34.71,
+            "strength": 94.8,
+            "type": "CALL_WALL"
+          },
+          {
+            "strike": 6734,
+            "distance": 38.71,
+            "strength": 94.2,
+            "type": "CALL_WALL"
+          }
+        ],
+        "put_walls": [
+          {
+            "strike": 6647,
+            "distance": 48.29,
+            "strength": 92.8,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6642,
+            "distance": 53.29,
+            "strength": 92.0,
+            "type": "PUT_WALL"
+          },
+          {
+            "strike": 6633,
+            "distance": 62.29,
+            "strength": 90.7,
+            "type": "PUT_WALL"
+          }
+        ],
+        "king_node": {
+          "strike": 6700,
+          "distance": 4.71,
+          "strength": 99.3,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_call_wall": {
+          "strike": 6700,
+          "distance": 4.71,
+          "strength": 99.3,
+          "type": "CALL_WALL",
+          "is_king_node": true
+        },
+        "nearest_put_wall": {
+          "strike": 6647,
+          "distance": 48.29,
+          "strength": 92.8,
+          "type": "PUT_WALL"
+        }
+      }
+    }
+  },
+  "history": []
+}

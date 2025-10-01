@@ -1,0 +1,122 @@
+═══════════════════════════════════════════════════════════════
+   DUAL WEBHOOK CONFIGURATION - ACTIVE
+═══════════════════════════════════════════════════════════════
+
+CONFIGURED: 2025-10-01 08:55 ET
+STATUS: ✅ BOTH CHANNELS OPERATIONAL
+
+───────────────────────────────────────────────────────────────
+🧪 TESTING CHANNEL (Gold Color)
+───────────────────────────────────────────────────────────────
+
+Webhook ID: 1422928703972970516
+Purpose: Development & Testing Messages Only
+Color: Gold/Yellow (15844367)
+Status: ✅ TESTED AND WORKING
+
+Usage:
+  • System tests
+  • Development messages
+  • Configuration validation
+  • Pre-production testing
+
+───────────────────────────────────────────────────────────────
+🚨 ALERTS CHANNEL (Green Color)
+───────────────────────────────────────────────────────────────
+
+Webhook ID: 1422763517974417478
+Purpose: Live Trading Alerts Only
+Color: Green (3066993)
+Status: ✅ TESTED AND WORKING
+
+Usage:
+  • Pre-market analysis
+  • Market open signals
+  • High-probability trade setups
+  • SBIRS pattern detections
+  • Performance updates
+  • Risk management alerts
+
+───────────────────────────────────────────────────────────────
+📋 CONFIGURATION DETAILS
+───────────────────────────────────────────────────────────────
+
+File: api_integration_script.py
+Lines: 38-40
+
+Configuration:
+  DISCORD_WEBHOOK_TESTING: Testing channel webhook
+  DISCORD_WEBHOOK_ALERTS: Alerts channel webhook
+  DISCORD_WEBHOOK_URL: Defaults to ALERTS channel
+
+DiscordAlerter Class:
+  • Accepts both webhooks in constructor
+  • Routes messages based on is_test flag
+  • is_test=True → TESTING channel
+  • is_test=False → ALERTS channel (default)
+
+───────────────────────────────────────────────────────────────
+🎯 HOW TO USE
+───────────────────────────────────────────────────────────────
+
+In Python Code:
+
+# Send to ALERTS channel (default)
+await discord_alerter.send_ema_alert(
+    session, "HIGH_PROBABILITY", data
+)
+
+# Send to TESTING channel
+await discord_alerter.send_ema_alert(
+    session, "HIGH_PROBABILITY", data, is_test=True
+)
+
+Testing Script:
+  python test_dual_webhooks.py
+
+───────────────────────────────────────────────────────────────
+✅ VERIFICATION RESULTS
+───────────────────────────────────────────────────────────────
+
+Test Date: 2025-10-01 08:55 ET
+
+TESTING Channel: ✅ Message delivered (204 response)
+ALERTS Channel: ✅ Message delivered (204 response)
+
+Both channels confirmed working correctly!
+
+───────────────────────────────────────────────────────────────
+📱 DISCORD CHANNEL IDENTIFICATION
+───────────────────────────────────────────────────────────────
+
+TESTING Channel Messages:
+  • Username: Varies (includes "Testing" in name)
+  • Color: Gold/Yellow embeds
+  • Purpose: Development only
+
+ALERTS Channel Messages:
+  • Username: SPX Trading System / SPX EMA Probability Bot
+  • Color: Green (bullish), Red (bearish), Blue (info)
+  • Purpose: Live trading signals
+
+───────────────────────────────────────────────────────────────
+🔧 MAINTENANCE
+───────────────────────────────────────────────────────────────
+
+To Change Webhooks:
+1. Update lines 38-40 in api_integration_script.py
+2. Run: python test_dual_webhooks.py
+3. Verify both channels receive messages
+
+To Add More Channels:
+1. Add new DISCORD_WEBHOOK_[NAME] variable
+2. Pass to DiscordAlerter constructor
+3. Add routing logic in send_ema_alert method
+
+═══════════════════════════════════════════════════════════════
+
+Current Configuration: PRODUCTION READY ✅
+Both channels tested and operational
+Ready for live trading with dual webhook support
+
+═══════════════════════════════════════════════════════════════
