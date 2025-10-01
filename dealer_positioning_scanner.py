@@ -55,6 +55,7 @@ class DealerPositioningScanner:
         self.active_trades = {}
         self.trade_history = []
         self.last_trade_alert = {}
+        self.last_exit_alert = {}  # Track last exit alert per trade
         self.dealer_positioning = {}
         self.king_nodes = {}
         self.call_walls = {}
@@ -738,8 +739,22 @@ class DealerPositioningScanner:
         return None
 
     def send_exit_alert(self, exit_info):
-        """Send exit alert"""
+        """Send exit alert with cooldown to prevent spam"""
         trade = exit_info['trade']
+        trade_id = exit_info['trade_id']
+
+        # Cooldown check: Only alert once per minute for same trade
+        current_time = time.time()
+        alert_key = f"{trade_id}_{exit_info['exit_action']}"
+
+        if alert_key in self.last_exit_alert:
+            time_since_last = current_time - self.last_exit_alert[alert_key]
+            if time_since_last < 60:  # 60 second cooldown
+                return  # Skip this alert
+
+        # Update last alert time
+        self.last_exit_alert[alert_key] = current_time
+
         webhook = ASSETS[trade['asset']]['webhook']
 
         color = 3066993 if exit_info['pnl_pct'] > 0 else 15158332
