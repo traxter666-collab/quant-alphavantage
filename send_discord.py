@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 if sys.platform == 'win32':
     sys.stdout.reconfigure(encoding='utf-8')
 
-WEBHOOK_URL = "https://discord.com/api/webhooks/1409686499745595432/BcxhXaFGMLy2rSPBMsN9Tb0wpKWxVYOnZnsfmETvHOeEJGsRep3N-lhZQcKxzrbMfHgk"
+WEBHOOK_URL = "https://discord.com/api/webhooks/1422763517974417478/0AAxHmLLjC389OXRi5KY_P2puAY8BhGAgEYTXSxj7TiKlqK_WH1PXPW6d_osA219ZFPu"
 
 def send_to_discord(title, content):
     """Send message to Discord with proper formatting and error handling"""

@@ -1,0 +1,174 @@
+#!/usr/bin/env python3
+"""
+Multi-Channel Discord Integration
+Usage:
+  python send_discord_multi.py "title" "content"                    # Default channel (alerts)
+  python send_discord_multi.py "title" "content" alerts            # Specific channel
+  python send_discord_multi.py "title" "content" performance       # Performance channel
+  python send_discord_multi.py "title" "content" research          # Research channel
+  python send_discord_multi.py "title" "content" system            # System channel
+"""
+import requests
+import json
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+# Set UTF-8 encoding for Windows
+if sys.platform == 'win32':
+    sys.stdout.reconfigure(encoding='utf-8')
+
+def load_config():
+    """Load Discord channel configuration"""
+    config_path = Path(__file__).parent / "discord_config.json"
+    try:
+        with open(config_path, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"ERROR: discord_config.json not found at {config_path}")
+        sys.exit(1)
+    except json.JSONDecodeError as e:
+        print(f"ERROR: Invalid JSON in discord_config.json: {e}")
+        sys.exit(1)
+
+def send_to_discord(title, content, channel='alerts'):
+    """Send message to specific Discord channel"""
+
+    config = load_config()
+
+    # Validate channel
+    if channel not in config['channels']:
+        print(f"ERROR: Unknown channel '{channel}'. Available: {', '.join(config['channels'].keys())}")
+        return False
+
+    channel_config = config['channels'][channel]
+    webhook_url = channel_config['webhook']
+
+    # Check if webhook is configured
+    if 'YOUR_' in webhook_url:
+        print(f"WARNING: Channel '{channel}' webhook not configured. Using default 'alerts' channel.")
+        webhook_url = config['channels'][config['default_channel']]['webhook']
+        channel_config = config['channels'][config['default_channel']]
+
+    # Determine color based on title/content and channel
+    color = 3447003  # Default blue
+
+    if channel == 'performance':
+        # Green for profit, red for loss
+        if "PROFIT" in content.upper() or "WIN" in content.upper():
+            color = 65280  # Green
+        elif "LOSS" in content.upper() or "LOSE" in content.upper():
+            color = 16711680  # Red
+        else:
+            color = 3447003  # Blue for neutral performance
+    elif channel == 'system':
+        # Red for errors, yellow for warnings, green for success
+        if "ERROR" in title.upper() or "FAILED" in title.upper():
+            color = 16711680  # Red
+        elif "WARNING" in title.upper():
+            color = 16776960  # Yellow
+        elif "SUCCESS" in title.upper() or "✅" in title:
+            color = 65280  # Green
+    elif channel == 'research':
+        color = 10181046  # Purple for research
+    else:  # alerts channel
+        if "🚨" in title or "CRITICAL" in title.upper() or "ACTIVE" in title.upper():
+            color = 16711680  # Red for active alerts
+        elif "🟢" in content or "BUY" in content or "CALL" in content:
+            color = 65280  # Green for bullish
+        elif "🟡" in content or "CONSIDER" in content or "STANDBY" in title.upper():
+            color = 16776960  # Yellow for standby
+        elif "🔴" in content or "AVOID" in content or "PUT" in content:
+            color = 16711680  # Red for bearish
+
+    # Create embed payload
+    embed = {
+        "title": title[:256],  # Discord title limit
+        "description": content[:4096],  # Discord description limit
+        "color": color,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "footer": {
+            "text": f"🤖 Powered by TraxterAI | Channel: {channel}"
+        }
+    }
+
+    payload = {
+        "username": channel_config['username'],
+        "embeds": [embed]
+    }
+
+    # Retry logic with exponential backoff
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = requests.post(
+                webhook_url,
+                json=payload,
+                headers={"Content-Type": "application/json"},
+                timeout=15
+            )
+
+            if response.status_code == 204:
+                print(f"SUCCESS: Sent to Discord channel '{channel}'")
+                return True
+            elif response.status_code == 429:  # Rate limited
+                retry_after = int(response.headers.get('Retry-After', 5))
+                print(f"RATE LIMITED: Retry after {retry_after}s (attempt {attempt + 1})")
+                if attempt < max_retries - 1:
+                    import time
+                    time.sleep(retry_after)
+                    continue
+            else:
+                print(f"ERROR: Discord {response.status_code} - {response.text}")
+                if attempt < max_retries - 1:
+                    import time
+                    time.sleep(2 * (attempt + 1))
+                    continue
+                return False
+
+        except requests.exceptions.Timeout:
+            print(f"TIMEOUT: Attempt {attempt + 1} (15s timeout exceeded)")
+            if attempt < max_retries - 1:
+                import time
+                time.sleep(2 * (attempt + 1))
+                continue
+            return False
+
+        except requests.exceptions.RequestException as e:
+            print(f"NETWORK ERROR: {e} (attempt {attempt + 1})")
+            if attempt < max_retries - 1:
+                import time
+                time.sleep(2 * (attempt + 1))
+                continue
+            return False
+
+        except Exception as e:
+            print(f"ERROR: {e} (attempt {attempt + 1})")
+            if attempt < max_retries - 1:
+                import time
+                time.sleep(2 * (attempt + 1))
+                continue
+            return False
+
+    print(f"FAILED: All {max_retries} attempts exhausted")
+    return False
+
+def main():
+    if len(sys.argv) < 3:
+        print("Usage: python send_discord_multi.py 'title' 'content' [channel]")
+        print("\nAvailable channels:")
+        config = load_config()
+        for channel, info in config['channels'].items():
+            print(f"  {channel:12} - {info['description']}")
+        print(f"\nDefault channel: {config['default_channel']}")
+        sys.exit(1)
+
+    title = sys.argv[1]
+    content = sys.argv[2]
+    channel = sys.argv[3] if len(sys.argv) > 3 else 'alerts'
+
+    success = send_to_discord(title, content, channel)
+    sys.exit(0 if success else 1)
+
+if __name__ == "__main__":
+    main()

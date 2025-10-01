@@ -1,0 +1,30 @@
+{
+  "channels": {
+    "alerts": {
+      "webhook": "https://discord.com/api/webhooks/1422763517974417478/0AAxHmLLjC389OXRi5KY_P2puAY8BhGAgEYTXSxj7TiKlqK_WH1PXPW6d_osA219ZFPu",
+      "description": "Main trading alerts and market updates",
+      "username": "Trading Monitor Bot"
+    },
+    "lab": {
+      "webhook": "https://discord.com/api/webhooks/1409686499745595432/BcxhXaFGMLy2rSPBMsN9Tb0wpKWxVYOnZnsfmETvHOeEJGsRep3N-lhZQcKxzrbMfHgk",
+      "description": "Lab testing and development",
+      "username": "Lab Bot"
+    },
+    "performance": {
+      "webhook": "YOUR_PERFORMANCE_WEBHOOK_HERE",
+      "description": "Trade performance, P&L, analytics",
+      "username": "Performance Tracker"
+    },
+    "research": {
+      "webhook": "YOUR_RESEARCH_WEBHOOK_HERE",
+      "description": "Market research, backtest results, strategy optimization",
+      "username": "Research Bot"
+    },
+    "system": {
+      "webhook": "YOUR_SYSTEM_WEBHOOK_HERE",
+      "description": "System status, errors, testing results",
+      "username": "System Monitor"
+    }
+  },
+  "default_channel": "alerts"
+}
