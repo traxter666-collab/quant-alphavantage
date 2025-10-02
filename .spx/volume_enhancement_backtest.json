@@ -1,0 +1,69 @@
+{
+  "backtest_date": "2025-10-01T20:09:03.504736",
+  "summary": {
+    "without_volume": {
+      "total": 1000,
+      "wins": 823,
+      "losses": 177,
+      "win_rate": 82.3
+    },
+    "with_volume": {
+      "total": 968,
+      "wins": 823,
+      "losses": 145,
+      "win_rate": 85.02066115702479
+    }
+  },
+  "by_zone": {
+    "REJECTION_ZONE": {
+      "without_volume": {
+        "total": 246,
+        "wins": 193,
+        "win_rate": 78.45528455284553
+      },
+      "with_volume": {
+        "total": 214,
+        "wins": 193,
+        "win_rate": 90.18691588785047
+      }
+    },
+    "CAUTION_ZONE": {
+      "without_volume": {
+        "total": 214,
+        "wins": 173,
+        "win_rate": 80.8411214953271
+      },
+      "with_volume": {
+        "total": 214,
+        "wins": 173,
+        "win_rate": 80.8411214953271
+      }
+    },
+    "GATEKEEPER_ZONE": {
+      "without_volume": {
+        "total": 297,
+        "wins": 247,
+        "win_rate": 83.16498316498317
+      },
+      "with_volume": {
+        "total": 297,
+        "wins": 247,
+        "win_rate": 83.16498316498317
+      }
+    },
+    "FAR_ZONE": {
+      "without_volume": {
+        "total": 243,
+        "wins": 210,
+        "win_rate": 86.41975308641975
+      },
+      "with_volume": {
+        "total": 243,
+        "wins": 210,
+        "win_rate": 86.41975308641975
+      }
+    }
+  },
+  "filtered_count": 32,
+  "improvement_pct": 2.720661157024793
+}
