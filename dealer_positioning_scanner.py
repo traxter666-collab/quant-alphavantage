@@ -8,7 +8,7 @@ Includes Scalping Engine for quick profit-taking with abort conditions
 import requests
 import json
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 import os
 from scalping_engine import ScalpingEngine
 
@@ -37,13 +37,34 @@ NDX_LEVELS = {
     'high_probability_reversal': [24800, 24750, 24400]
 }
 
+SPY_LEVELS = {
+    'resistance': [674, 672, 670, 668, 665],
+    'support': [665, 662, 660, 658, 655, 650],
+    'pivot': 666,
+    'high_probability_reversal': [672, 670, 660]
+}
+
+QQQ_LEVELS = {
+    'resistance': [515, 512, 510, 508, 505],
+    'support': [500, 498, 495, 492, 490, 485],
+    'pivot': 502,
+    'high_probability_reversal': [512, 510, 495]
+}
+
+IWM_LEVELS = {
+    'resistance': [225, 223, 220, 218, 215],
+    'support': [210, 208, 205, 202, 200, 198],
+    'pivot': 212,
+    'high_probability_reversal': [223, 220, 205]
+}
+
 # Asset Configuration
 ASSETS = {
     'SPX': {'type': 'index', 'ticker': 'I:SPX', 'levels': SPX_LEVELS, 'webhook': WEBHOOK_SPX, 'options_ticker': 'SPXW', 'min_confidence': 90},
     'NDX': {'type': 'index', 'ticker': 'I:NDX', 'levels': NDX_LEVELS, 'webhook': WEBHOOK_NDX, 'options_ticker': 'NDXP', 'min_confidence': 90},
-    'QQQ': {'type': 'etf', 'ticker': 'QQQ', 'webhook': WEBHOOK_ALERTS, 'options_ticker': 'QQQ', 'min_confidence': 85},
-    'SPY': {'type': 'etf', 'ticker': 'SPY', 'webhook': WEBHOOK_ALERTS, 'options_ticker': 'SPY', 'min_confidence': 85},
-    'IWM': {'type': 'etf', 'ticker': 'IWM', 'webhook': WEBHOOK_ALERTS, 'options_ticker': 'IWM', 'min_confidence': 85},
+    'QQQ': {'type': 'etf', 'ticker': 'QQQ', 'levels': QQQ_LEVELS, 'webhook': WEBHOOK_ALERTS, 'options_ticker': 'QQQ', 'min_confidence': 85},
+    'SPY': {'type': 'etf', 'ticker': 'SPY', 'levels': SPY_LEVELS, 'webhook': WEBHOOK_ALERTS, 'options_ticker': 'SPY', 'min_confidence': 85},
+    'IWM': {'type': 'etf', 'ticker': 'IWM', 'levels': IWM_LEVELS, 'webhook': WEBHOOK_ALERTS, 'options_ticker': 'IWM', 'min_confidence': 85},
 }
 
 class DealerPositioningScanner:
@@ -84,8 +105,13 @@ class DealerPositioningScanner:
         # Volume Enhancement: Track latest volume for scoring
         self.latest_volume = {}  # Store latest volume reading per asset
 
+        # Pullback Entry Logic (FR-118 to FR-122): Detect overextension and calculate pullback levels
+        self.pullback_alerts = {}  # Track active pullback scenarios per asset
+        self.velocity_history = {}  # Track price velocity for overextension detection
+
         os.makedirs('.spx', exist_ok=True)
         self.load_trade_history()
+        self.load_migration_state()  # Load persisted migrations on startup
 
     def get_price(self, asset_name):
         """Get current price for any asset and capture volume for enhancements"""
@@ -863,6 +889,125 @@ class DealerPositioningScanner:
 
         return support, resistance
 
+    def detect_pullback_scenario(self, asset_name, current_price, king_node_strike, king_node_type):
+        """
+        FR-118: Detect potential pullback scenarios before entry
+
+        Returns: (is_pullback_scenario, pullback_entry_level, velocity, entry_type)
+        """
+        # Calculate price velocity (points per minute)
+        if asset_name not in self.price_history or len(self.price_history[asset_name]) < 2:
+            return False, None, 0.0, "IMMEDIATE"
+
+        prices = self.price_history[asset_name]
+        time_diff = 1  # 10-second intervals = 6 prices per minute
+
+        # Calculate velocity over last 30 seconds (3 prices)
+        if len(prices) >= 3:
+            velocity = (prices[-1] - prices[-3]) / (time_diff * 0.5)  # Points per minute
+        else:
+            velocity = 0.0
+
+        # Calculate distance to king node
+        distance_to_node = abs(current_price - king_node_strike)
+
+        # FR-118 Pullback Criteria:
+        # 1. Velocity > 3 points per minute
+        # 2. Distance to untouched node > 5 points
+        # 3. Price overextended beyond node
+
+        # Check if node is untouched
+        node_key = f"{asset_name}_{king_node_strike}"
+        is_untouched = node_key not in self.king_node_touch_history
+
+        # Check if price is overextended (moving away from node rapidly)
+        is_overextended = abs(velocity) > 3.0 and distance_to_node > 5.0
+
+        # Determine if pullback scenario
+        is_pullback_scenario = is_overextended and is_untouched
+
+        if not is_pullback_scenario:
+            return False, None, velocity, "IMMEDIATE"
+
+        # FR-119: Calculate pullback entry level
+        # Formula: current_price - (0.3 to 0.5 × distance_to_node)
+        # Use 0.3 for high velocity, 0.5 for moderate velocity
+
+        if abs(velocity) > 5.0:
+            pullback_factor = 0.3  # High velocity = shallow pullback
+        else:
+            pullback_factor = 0.5  # Moderate velocity = deeper pullback
+
+        # Calculate pullback entry
+        if king_node_type == "CALL_WALL":
+            # Price above call wall, expect pullback down
+            pullback_entry = current_price - (pullback_factor * distance_to_node)
+        else:
+            # Price below put wall, expect pullback up
+            pullback_entry = current_price + (pullback_factor * distance_to_node)
+
+        # Round to nearest 5 points
+        pullback_entry = round(pullback_entry / 5) * 5
+
+        return True, pullback_entry, velocity, "PULLBACK"
+
+    def update_pullback_alerts(self, asset_name, current_price, king_node_strike, king_node_type):
+        """
+        FR-121: Update pullback alerts based on price behavior
+
+        Monitors active pullback scenarios and updates alerts
+        """
+        # Check if we have an active pullback alert for this asset
+        if asset_name not in self.pullback_alerts:
+            return None
+
+        pullback_info = self.pullback_alerts[asset_name]
+        pullback_entry = pullback_info['entry_level']
+        entry_type = pullback_info['entry_type']
+
+        # Check if price has reached pullback entry level
+        if entry_type == "PULLBACK":
+            distance_to_entry = abs(current_price - pullback_entry)
+
+            # If within 2 points of pullback entry, convert to IMMEDIATE
+            if distance_to_entry <= 2.0:
+                print(f"\n🎯 PULLBACK ENTRY REACHED: {asset_name} at {current_price:.2f}")
+                print(f"   Target Entry: {pullback_entry:.2f} | Converting to IMMEDIATE entry")
+
+                # Update alert to IMMEDIATE
+                self.pullback_alerts[asset_name]['entry_type'] = "IMMEDIATE"
+                return "PULLBACK_REACHED"
+
+        return None
+
+    def should_recommend_pullback(self, asset_name, current_price, king_node_strike,
+                                  confidence_score, velocity):
+        """
+        FR-122: Determine if pullback entry should be recommended
+
+        Don't recommend pullback if:
+        - Already at node (within 3 points)
+        - High urgency (confidence > 95%)
+        - Low liquidity conditions
+        """
+        # Check if already at node
+        distance_to_node = abs(current_price - king_node_strike)
+        if distance_to_node <= 3.0:
+            return False  # Already at node, use immediate entry
+
+        # Check if high urgency (very high confidence)
+        if confidence_score >= 95:
+            return False  # Too high confidence to wait for pullback
+
+        # Check liquidity (simplified - could be enhanced with volume data)
+        # For now, assume liquidity is adequate during market hours
+
+        # Check if velocity is too low (no momentum)
+        if abs(velocity) < 3.0:
+            return False  # Not enough momentum for pullback scenario
+
+        return True  # Recommend pullback entry
+
     def calculate_option_strike(self, asset_name, price, trade_type, target):
         """Calculate optimal strike"""
         now = datetime.now()
@@ -997,6 +1142,9 @@ class DealerPositioningScanner:
                     self.recent_migrations = {}
                 self.recent_migrations[asset_name] = migration_event
 
+                # Save migration state for persistence across restarts
+                self.save_migration_state()
+
         if asset_name in ['SPX', 'NDX']:
             support, resistance = self.find_nearest_levels(asset_name, price)
 
@@ -1019,9 +1167,25 @@ class DealerPositioningScanner:
                         asset_name, price, momentum, 'LONG', positioning
                     )
 
+                    # SMART PROXIMITY FILTER: Trade both directions intelligently
+                    # - ALLOW LONG on bounce (price at/below support, bullish momentum)
+                    # - BLOCK LONG on approach (price falling into support, bearish momentum)
+                    distance_to_put_wall = price - support
+
+                    if distance_to_put_wall < 5 and distance_to_put_wall > 0:  # Approaching support
+                        if momentum == 'BEARISH':  # Falling into PUT wall
+                            print(f"🚫 LONG blocked: {asset_name} @ ${price:.2f} falling into PUT WALL {support} ({distance_to_put_wall:.1f}pts away, BEARISH momentum)")
+                            return None  # Don't long into support with bearish momentum - likely to break through or bounce lower
+                        # ALLOW LONG with BULLISH momentum near support (bounce setup)
+
                     # Apply migration confidence boost if applicable
                     if hasattr(self, 'recent_migrations') and asset_name in self.recent_migrations:
                         migration = self.recent_migrations[asset_name]
+
+                        # BLOCK counter-bias trades - PUT WALLs are magnets during bearish migrations
+                        if migration['bias'] in ['BEARISH', 'VERY_BEARISH']:
+                            return None  # Don't long during bearish migration - support becomes breakdown level
+
                         # Check if migration bias aligns with trade direction
                         if migration['bias'] in ['BULLISH', 'VERY_BULLISH']:
                             confidence_score += migration['confidence_boost']
@@ -1037,6 +1201,38 @@ class DealerPositioningScanner:
                     # WIDER STOPS: NDX 15-20pts, SPX 20-30pts to avoid getting stopped by normal volatility
                     stop_distance = 20 if asset_name == 'NDX' else 25
                     stop_price = round(support - stop_distance, 2) if distance_to_support <= 10 else round(resistance - stop_distance, 2)
+
+                    # PULLBACK ENTRY LOGIC INTEGRATION (FR-118 to FR-122)
+                    entry_type = "IMMEDIATE"  # Default to immediate entry
+                    pullback_entry = None
+                    velocity = 0.0
+
+                    if positioning and positioning.get('king_node'):
+                        king_node = positioning['king_node']
+                        king_node_strike = king_node['strike']
+                        king_node_type = king_node['type']
+
+                        # Detect pullback scenario
+                        is_pullback, pullback_level, vel, entry_t = self.detect_pullback_scenario(
+                            asset_name, price, king_node_strike, king_node_type
+                        )
+                        velocity = vel
+
+                        # Check if we should recommend pullback (FR-122)
+                        if is_pullback and self.should_recommend_pullback(
+                            asset_name, price, king_node_strike, confidence_score, velocity
+                        ):
+                            entry_type = entry_t
+                            pullback_entry = pullback_level
+
+                            # Store pullback alert for monitoring
+                            self.pullback_alerts[asset_name] = {
+                                'entry_level': pullback_entry,
+                                'entry_type': entry_type,
+                                'king_node': king_node_strike,
+                                'velocity': velocity,
+                                'timestamp': datetime.now()
+                            }
 
                     # ZONE-BASED POSITION SIZING INTEGRATION
                     touch_count = 0
@@ -1064,6 +1260,9 @@ class DealerPositioningScanner:
                         'type': 'LONG',
                         'reason': setup_reason,
                         'entry': round(price, 2),
+                        'pullback_entry': pullback_entry,
+                        'entry_type': entry_type,
+                        'velocity': velocity,
                         'stop': stop_price,
                         'target1': target1,
                         'target2': round(resistance + 10, 2) if distance_to_support <= 10 else round(resistance + 20, 2),
@@ -1105,9 +1304,25 @@ class DealerPositioningScanner:
                         asset_name, price, momentum, 'SHORT', positioning
                     )
 
+                    # SMART PROXIMITY FILTER: Trade both directions intelligently
+                    # - ALLOW SHORT on rejection (price at/above resistance, bearish momentum)
+                    # - BLOCK SHORT on approach (price rising into resistance, bullish momentum)
+                    distance_to_call_wall = resistance - price
+
+                    if distance_to_call_wall < 5 and distance_to_call_wall > 0:  # Approaching resistance
+                        if momentum == 'BULLISH':  # Rising into CALL wall
+                            print(f"🚫 SHORT blocked: {asset_name} @ ${price:.2f} rising into CALL WALL {resistance} ({distance_to_call_wall:.1f}pts away, BULLISH momentum)")
+                            return None  # Don't short into resistance with bullish momentum - likely to break through or bounce higher
+                        # ALLOW SHORT with BEARISH momentum near resistance (rejection setup)
+
                     # Apply migration confidence boost if applicable
                     if hasattr(self, 'recent_migrations') and asset_name in self.recent_migrations:
                         migration = self.recent_migrations[asset_name]
+
+                        # BLOCK counter-bias trades - CALL WALLs are magnets during bullish migrations
+                        if migration['bias'] in ['BULLISH', 'VERY_BULLISH']:
+                            return None  # Don't short during bullish migration - resistance becomes target
+
                         # Check if migration bias aligns with trade direction
                         if migration['bias'] in ['BEARISH', 'VERY_BEARISH']:
                             confidence_score += migration['confidence_boost']
@@ -1123,6 +1338,38 @@ class DealerPositioningScanner:
                     # WIDER STOPS: NDX 15-20pts, SPX 20-30pts to avoid getting stopped by normal volatility
                     stop_distance = 20 if asset_name == 'NDX' else 25
                     stop_price = round(resistance + stop_distance, 2) if distance_to_resistance <= 10 else round(support + stop_distance, 2)
+
+                    # PULLBACK ENTRY LOGIC INTEGRATION (FR-118 to FR-122)
+                    entry_type = "IMMEDIATE"  # Default to immediate entry
+                    pullback_entry = None
+                    velocity = 0.0
+
+                    if positioning and positioning.get('king_node'):
+                        king_node = positioning['king_node']
+                        king_node_strike = king_node['strike']
+                        king_node_type = king_node['type']
+
+                        # Detect pullback scenario
+                        is_pullback, pullback_level, vel, entry_t = self.detect_pullback_scenario(
+                            asset_name, price, king_node_strike, king_node_type
+                        )
+                        velocity = vel
+
+                        # Check if we should recommend pullback (FR-122)
+                        if is_pullback and self.should_recommend_pullback(
+                            asset_name, price, king_node_strike, confidence_score, velocity
+                        ):
+                            entry_type = entry_t
+                            pullback_entry = pullback_level
+
+                            # Store pullback alert for monitoring
+                            self.pullback_alerts[asset_name] = {
+                                'entry_level': pullback_entry,
+                                'entry_type': entry_type,
+                                'king_node': king_node_strike,
+                                'velocity': velocity,
+                                'timestamp': datetime.now()
+                            }
 
                     # ZONE-BASED POSITION SIZING INTEGRATION
                     touch_count = 0
@@ -1150,6 +1397,9 @@ class DealerPositioningScanner:
                         'type': 'SHORT',
                         'reason': setup_reason,
                         'entry': round(price, 2),
+                        'pullback_entry': pullback_entry,
+                        'entry_type': entry_type,
+                        'velocity': velocity,
                         'stop': stop_price,
                         'target1': target1,
                         'target2': round(support - 10, 2) if distance_to_resistance <= 10 else round(support - 20, 2),
@@ -1257,8 +1507,16 @@ class DealerPositioningScanner:
         asset = trade['asset']
         webhook = ASSETS[asset]['webhook']
 
-        color = 3066993 if trade['type'] == 'LONG' else 15158332
-        emoji = '🟢' if trade['type'] == 'LONG' else '🔴'
+        # FR-120: Color coding for entry types - GREEN for immediate, YELLOW for pullback
+        entry_type = trade.get('entry_type', 'IMMEDIATE')
+        if entry_type == 'PULLBACK':
+            color = 16776960  # Yellow for pullback entries
+            emoji = '🟡'
+            entry_emoji = '⏳'
+        else:
+            color = 3066993 if trade['type'] == 'LONG' else 15158332  # Green/Red for immediate
+            emoji = '🟢' if trade['type'] == 'LONG' else '🔴'
+            entry_emoji = '⚡'
 
         title = f"{emoji} 👑 {asset} {trade['type']} - {trade['confidence_score']}% CONFIDENCE"
 
@@ -1280,6 +1538,17 @@ class DealerPositioningScanner:
                 cw = pos['nearest_call_wall']
                 positioning_text += f"\n**🧱 CALL WALL:** {cw['strike']} - Strength {cw['strength']:.0f}%"
 
+        # Add pullback entry info (FR-120)
+        pullback_text = ""
+        if entry_type == 'PULLBACK' and trade.get('pullback_entry'):
+            velocity = trade.get('velocity', 0.0)
+            pullback_text += f"\n\n**{entry_emoji} ENTRY TYPE:** PULLBACK ENTRY (Wait for better price)"
+            pullback_text += f"\n**Current Price:** ${trade['entry']:,.2f}"
+            pullback_text += f"\n**Pullback Entry:** ${trade['pullback_entry']:,.2f} (Better fill)"
+            pullback_text += f"\n**Velocity:** {abs(velocity):.1f} pts/min"
+        else:
+            pullback_text += f"\n\n**{entry_emoji} ENTRY TYPE:** IMMEDIATE ENTRY"
+
         # Add position sizing info (ENHANCEMENT DATA)
         sizing_text = ""
         if trade.get('position_size') and trade.get('size_reasoning'):
@@ -1294,22 +1563,27 @@ class DealerPositioningScanner:
             migration_text += f"\n\n**🔄 MIGRATION ALERT:** {migration['message']}"
             migration_text += f"\n**Significance:** {migration['significance']} | **Bias:** {migration['bias']}"
 
+        # Determine entry field value
+        entry_value = f"${trade['entry']:,.2f}"
+        if entry_type == 'PULLBACK' and trade.get('pullback_entry'):
+            entry_value += f"\n⏳ Pullback: ${trade['pullback_entry']:,.2f}"
+
         payload = {
             'username': f'{emoji} Dealer Positioning Scanner',
             'embeds': [{
                 'title': title,
-                'description': f"**{trade['reason']}**\n\n📄 **CONTRACT:** `{trade['contract']}`{positioning_text}{sizing_text}{migration_text}\n\n**Confidence Factors:**\n{reasons_text}",
+                'description': f"**{trade['reason']}**\n\n📄 **CONTRACT:** `{trade['contract']}`{positioning_text}{pullback_text}{sizing_text}{migration_text}\n\n**Confidence Factors:**\n{reasons_text}",
                 'color': color,
-                'timestamp': datetime.utcnow().isoformat(),
+                'timestamp': datetime.now(timezone.utc).isoformat(),
                 'fields': [
-                    {'name': '📍 Entry', 'value': f"${trade['entry']:,.2f}", 'inline': True},
+                    {'name': '📍 Entry', 'value': entry_value, 'inline': True},
                     {'name': '📄 Strike', 'value': f"${trade['strike']:,} {trade['option_type']}", 'inline': True},
                     {'name': '🛑 Stop', 'value': f"${trade['stop']:,.2f}", 'inline': True},
                     {'name': '🎯 Target 1', 'value': f"${trade['target1']:,.2f}", 'inline': True},
                     {'name': '🎯 Target 2', 'value': f"${trade['target2']:,.2f}", 'inline': True},
                     {'name': '🔥 Confidence', 'value': f"{trade['confidence_score']}%", 'inline': True}
                 ],
-                'footer': {'text': f'Dealer Positioning Scanner | {asset} {trade["type"]}'}
+                'footer': {'text': f'Dealer Positioning Scanner | {asset} {trade["type"]} | {entry_type} ENTRY'}
             }]
         }
 
@@ -1494,7 +1768,7 @@ class DealerPositioningScanner:
                 'title': f"{emoji} {trade['asset']} {trade['type']} - {exit_info['exit_action']}",
                 'description': f"**{exit_info['exit_reason']}**\n\n📄 `{trade['contract']}`",
                 'color': color,
-                'timestamp': datetime.utcnow().isoformat(),
+                'timestamp': datetime.now(timezone.utc).isoformat(),
                 'fields': fields
             }]
         }
@@ -1525,6 +1799,44 @@ class DealerPositioningScanner:
         except Exception as e:
             print(f"❌ Load error: {e}")
 
+    def load_migration_state(self):
+        """Load persisted migration state from previous session"""
+        try:
+            if os.path.exists('.spx/dealer_migrations.json'):
+                with open('.spx/dealer_migrations.json', 'r') as f:
+                    data = json.load(f)
+                    # Only load migrations from the last 1 hour
+                    current_time = time.time()
+                    self.recent_migrations = {}
+                    for asset_name, migration in data.items():
+                        if current_time - migration.get('timestamp', 0) < 3600:  # 1 hour expiry
+                            self.recent_migrations[asset_name] = migration
+                            print(f"✅ Loaded {asset_name} migration: {migration['bias']} ({migration['migration_type']})")
+        except json.JSONDecodeError:
+            # Corrupted JSON - delete and start fresh
+            if os.path.exists('.spx/dealer_migrations.json'):
+                os.remove('.spx/dealer_migrations.json')
+            self.recent_migrations = {}
+        except Exception as e:
+            print(f"❌ Migration load error: {e}")
+            self.recent_migrations = {}
+
+    def save_migration_state(self):
+        """Save migration state to persist across scanner restarts"""
+        try:
+            # Add timestamps to migrations
+            migrations_to_save = {}
+            for asset_name, migration in self.recent_migrations.items():
+                migration_copy = migration.copy()
+                if 'timestamp' not in migration_copy:
+                    migration_copy['timestamp'] = time.time()
+                migrations_to_save[asset_name] = migration_copy
+
+            with open('.spx/dealer_migrations.json', 'w') as f:
+                json.dump(migrations_to_save, f, indent=2)
+        except Exception as e:
+            print(f"❌ Migration save error: {e}")
+
     def scan_markets(self):
         """Scan with dealer positioning"""
         self.previous_prices = self.prices.copy()
@@ -1534,6 +1846,19 @@ class DealerPositioningScanner:
             if price:
                 self.prices[asset_name] = price
                 self.update_price_history(asset_name, price)
+
+        # FR-121: Monitor pullback alerts and update when price reaches pullback entry
+        for asset_name in list(self.pullback_alerts.keys()):
+            if asset_name in self.prices:
+                current_price = self.prices[asset_name]
+                pullback_status = self.update_pullback_alerts(
+                    asset_name, current_price,
+                    self.pullback_alerts[asset_name]['king_node'],
+                    'CALL_WALL' if current_price < self.pullback_alerts[asset_name]['king_node'] else 'PUT_WALL'
+                )
+
+                # If pullback entry reached, alert will have been printed by update_pullback_alerts
+                # The alert's entry_type is automatically updated to IMMEDIATE
 
         # Check exits
         exits = []
